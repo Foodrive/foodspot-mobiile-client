@@ -1,23 +1,23 @@
-# Expo Typescript Boilerplate
+# Foodspot Mobile Client
 
-## Description
-Boilerplate for expo react native mobile applications. Code is implemented
-using expo's Typescript template.
+## Getting Started
 
-## Additional dependencies
-- @react-navigation/native
-- @react-navigation/stack
-- @reduxjs/toolkit
-- redux-thunk
-- expo-constants
-- eslint
-- prettier
-- axios (note: uninstall this if you're not doing HTTP requests)
-- react-native-responsive-fontsize
+Step 1: Modify configurations in app.json
 
-## Development improvements
-- Built in ErrorBoundary
-- Built in providers
-- Built in navigation structure
-- Sample screens
-- Auto-hide status bar
+```json
+{
+  ...,
+  "extras": {
+    "serverUrl": "<FOODSPOT_SERVER_URL>"
+  }
+}
+```
+
+Step 2: Run the client
+```shell
+npm install # install dependencies
+```
+
+## Running Locally
+1. Run the graphql server. ([You can find it here](https://github.com/Foodrive/graphql-server))
+2. In `serverUrl`, add in `http://<YOUR_PUBLC_IP>:4000`
