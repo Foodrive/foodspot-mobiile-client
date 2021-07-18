@@ -5,12 +5,15 @@ import ErrorBoundary from "../ErrorBoundary";
 import store from "@app/redux/store";
 import { ApolloProvider } from "@apollo/client";
 import client from "@app/graphql/client";
+import { NavigationTheme } from "@app/utils";
 
 const AppProvider: React.FC = ({ children }) => (
   <ErrorBoundary>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <NavigationContainer>{children}</NavigationContainer>
+        <NavigationContainer theme={NavigationTheme}>
+          {children}
+        </NavigationContainer>
       </Provider>
     </ApolloProvider>
   </ErrorBoundary>
