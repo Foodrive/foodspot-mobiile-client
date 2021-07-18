@@ -1,14 +1,30 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import SCREEN_NAMES from "./screen.names";
-import { HomeScreen } from "@app/screens";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  HomeNavigation,
+  EventsNavigation,
+  ProfileNavigation,
+  RequestsNavigation,
+  VolunteerNavigation,
+} from "./page-navigators";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
-const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const RootStack = () => (
-  <Stack.Navigator initialRouteName={SCREEN_NAMES.home} headerMode="none">
-    <Stack.Screen name={SCREEN_NAMES.home} component={HomeScreen} />
-  </Stack.Navigator>
+const AppNavigation: React.FC = () => (
+  <Tab.Navigator>
+    <Tab.Screen name={SCREEN_NAMES.app.home} component={HomeNavigation} />
+    <Tab.Screen name={SCREEN_NAMES.app.events} component={EventsNavigation} />
+    <Tab.Screen name={SCREEN_NAMES.app.profile} component={ProfileNavigation} />
+    <Tab.Screen
+      name={SCREEN_NAMES.app.requests}
+      component={RequestsNavigation}
+    />
+    <Tab.Screen
+      name={SCREEN_NAMES.app.volunteer}
+      component={VolunteerNavigation}
+    />
+  </Tab.Navigator>
 );
 
-export default RootStack;
+export default AppNavigation;
