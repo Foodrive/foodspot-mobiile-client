@@ -12,21 +12,23 @@ interface InputProps extends Omit<RNInputProps, "leftIcon"> {
   type: InputType;
 }
 
+// Add more icons here
+const iconMap = {
+  user: { type: "ionicon", name: "person-outline" },
+  location: { type: "ionicon", name: "location-outline" },
+  number: { type: "font-awesome-5", name: "hashtag" },
+  email: { type: "ionicon", name: "mail-outline" },
+  text: { type: "ionicon", name: "chatbox-outline" },
+};
+
 const Input: React.FC<InputProps> = (props) => {
   const { id, type, keyboardType, ...rest } = props;
 
-  // Add more icons here
   const icon = useMemo(() => {
-    if (type === "user") {
-      return { type: "ionicon", name: "person-outline" };
-    } else if (type === "location") {
-      return { type: "ionicon", name: "location-outline" };
-    } else if (type === "number") {
-      return { type: "font-awesome-5", name: "hashtag" };
-    } else if (type === "email") {
-      return { type: "ionicon", name: "mail-outline" };
+    if (iconMap[type]) {
+      return iconMap[type];
     } else {
-      return { type: "ionicon", name: "chatbox-outline" };
+      return iconMap.text;
     }
   }, [type]);
 
