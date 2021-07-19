@@ -27,7 +27,7 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "serverUrl": "http://localhost:8080/graphql"
+      "serverUrl": "https://foodspot-server.mybluemix.net/graphql"
     }
   }
 }
