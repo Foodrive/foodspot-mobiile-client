@@ -1,4 +1,3 @@
-// TODO add reusable components here
 import React, { ReactNode } from "react";
 import {
   ListItem as RNListItem,
