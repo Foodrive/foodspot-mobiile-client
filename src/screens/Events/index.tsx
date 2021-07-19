@@ -31,25 +31,27 @@ mutation Mutation($createRequestRequestorId: ID!, $createRequestLocation: Locati
 `;
 
 const [claimFood, { data }] = useMutation(CREATE_REQUEST);
-const [isClaimed, updateClaim] = useState(false)
+const [isClaimed, updateClaim] = useState(false) // update to use app store
+
+const handlePress = () => {
+   updateClaim(oldState => !oldState)
+    claimFood({
+      variables: {
+        requestorId: UserId,
+        location: mockLocation,
+        numAttendees: 4,
+        food: mockFood
+      }
+    });
+}
 
 return (
   <View style={styles.container}>
     <Text style={styles.text}>Event Screen</Text>
-
     <View style={styles.buttonContainer}>
       <Button
         title={isClaimed ? "Unclaim" : "Claim"}
-        onPress={() => {
-          updateClaim(oldState => !oldState)
-          claimFood({ variables: {
-            requestorId: UserId,
-            location: mockLocation,
-            numAttendees: 4,
-            food: mockFood
-            }
-          });
-        }}
+        onPress={() => handlePress()}
         buttonStyle={isClaimed ? styles.buttonStyleClaimed : styles.buttonStyleUnclaimed}
       />
     </View>
