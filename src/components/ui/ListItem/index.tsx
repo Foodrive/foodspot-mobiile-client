@@ -25,7 +25,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     iconName = "md-basket",
     iconColor = "grey",
     iconFamily = "ionicon",
-    showNav = false,
+    showNav = true,
     onClick,
     ...rest
   } = props;
