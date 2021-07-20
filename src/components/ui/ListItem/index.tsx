@@ -3,8 +3,9 @@ import {
   ListItem as RNListItem,
   ListItemProps as RNListItemProps,
 } from "react-native-elements";
-import { Icon } from "..";
+import Icon from "../Icon";
 import { colors } from "@app/utils";
+import styles from "./styles";
 
 interface ListItemProps extends RNListItemProps {
   id: string;
@@ -13,7 +14,7 @@ interface ListItemProps extends RNListItemProps {
   iconName?: string;
   iconColor?: string;
   iconFamily?: string;
-  showNav: boolean; //show chevron right navigation icon
+  showNav?: boolean; //show chevron right navigation icon
   onClick?: () => void;
 }
 
@@ -31,14 +32,28 @@ const ListItem: React.FC<ListItemProps> = (props) => {
   } = props;
 
   return (
-    <RNListItem key={id} data-testid={id} {...rest}>
-      <Icon reverse name={iconName} type={iconFamily} color={iconColor} />
+    <RNListItem
+      onPress={onClick}
+      disabled={onClick === undefined}
+      key={id}
+      data-testid={id}
+      containerStyle={styles.listStyle}
+      {...rest}
+    >
+      <Icon
+        id={`${id}-icon`}
+        reverse
+        name={iconName}
+        type={iconFamily}
+        color={iconColor}
+      />
       <RNListItem.Content>
-        <RNListItem.Title>{title}</RNListItem.Title>
+        <RNListItem.Title style={styles.titleText}>{title}</RNListItem.Title>
         <RNListItem.Subtitle>{otherInformation}</RNListItem.Subtitle>
       </RNListItem.Content>
       {showNav && <RNListItem.Chevron size={50} color={colors.darkBrown} />}
     </RNListItem>
   );
 };
+
 export default ListItem;
