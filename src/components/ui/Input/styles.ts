@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colors } from "@app/utils";
+import { colors, montserrat } from "@app/utils";
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   },
   input: {
     paddingLeft: 5,
+    fontFamily: montserrat.regular,
   },
 });
 
