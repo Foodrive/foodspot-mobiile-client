@@ -5,6 +5,7 @@ export const colors = {
   white: "#fff",
   dark: "#222020",
   darkAccent: "#AA9F9E",
+  darkBrown: "#382C1E",
 };
 
 export const NavigationTheme = {
