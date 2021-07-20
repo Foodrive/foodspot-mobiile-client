@@ -3,15 +3,14 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { montserrat } from "@app/utils";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  listStyle: { elevation: 2, borderRadius: 10 },
+  titleText: {
+    fontSize: RFValue(18),
+    fontFamily: montserrat.bold,
   },
-  text: {
-    fontSize: RFValue(24),
-    textAlign: "center",
-    fontFamily: montserrat.light,
+  subtitleText: {
+    fontSize: RFValue(12),
+    fontFamily: montserrat.regular,
   },
 });
 

@@ -6,10 +6,12 @@ interface HomeScreenProps {
   appName: string;
 }
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => (
-  <View style={styles.container}>
-    <Text style={styles.text}>This is the home screen of {appName}</Text>
-  </View>
-);
+const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>This is the home screen of {appName}</Text>
+    </View>
+  );
+};
 
 export default HomeScreen;
