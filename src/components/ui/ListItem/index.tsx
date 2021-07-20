@@ -49,7 +49,9 @@ const ListItem: React.FC<ListItemProps> = (props) => {
       />
       <RNListItem.Content>
         <RNListItem.Title style={styles.titleText}>{title}</RNListItem.Title>
-        <RNListItem.Subtitle>{otherInformation}</RNListItem.Subtitle>
+        <RNListItem.Subtitle style={styles.subtitleText}>
+          {otherInformation}
+        </RNListItem.Subtitle>
       </RNListItem.Content>
       {showNav && <RNListItem.Chevron size={50} color={colors.darkBrown} />}
     </RNListItem>
