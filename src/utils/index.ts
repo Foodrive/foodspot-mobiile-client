@@ -6,6 +6,13 @@ export const colors = {
   dark: "#222020",
 };
 
+export enum IconSize {
+  Small = 12,
+  Medium = 24,
+  Large = 36,
+  ExtraLarge = 50
+}
+
 export const NavigationTheme = {
   ...DefaultTheme,
   colors: {
