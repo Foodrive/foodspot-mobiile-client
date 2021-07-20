@@ -3,15 +3,16 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { montserrat } from "@app/utils";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  listStyles: {
+    width: "100%",
+    padding: 20,
   },
-  text: {
-    fontSize: RFValue(24),
-    textAlign: "center",
-    fontFamily: montserrat.light,
+  sectionContainer: {
+    marginVertical: 10,
+  },
+  sectionText: {
+    fontSize: RFValue(16),
+    fontFamily: montserrat.semiBold,
   },
 });
 
