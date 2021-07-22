@@ -6,6 +6,7 @@ import { useStyles } from "./styles";
 import dayjs from "dayjs";
 
 interface DateTimeInputProps {
+  id: string;
   value?: string; // GMT format
   onConfirm: (date: string) => void;
   errorMessage?: string;
@@ -13,6 +14,7 @@ interface DateTimeInputProps {
 }
 
 const DateTimeInput: React.FC<DateTimeInputProps> = ({
+  id,
   value,
   onConfirm,
   errorMessage,
@@ -56,7 +58,7 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={showDatePicker}>
-        <View style={styles.inputContainer}>
+        <View style={styles.inputContainer} data-testid={`${id}-date-input`}>
           <View>
             <Icon id="date-picker" name="calendar" type="ionicon" />
           </View>
@@ -66,7 +68,11 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
         </View>
       </TouchableOpacity>
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{errorMessage}</Text>
+        {errorMessage && (
+          <Text style={styles.errorText} data-testid={`${id}-date-input-error`}>
+            {errorMessage}
+          </Text>
+        )}
       </View>
       <DateTimePickerModal
         date={currentDate}

@@ -13,7 +13,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => {
   return (
     <View style={styles.container}>
       <Input id="normal-input" type="email" placeholder="Enter email" />
-      <DateTimeInput onConfirm={(newDate) => setDate(newDate)} value={date} />
+      <DateTimeInput
+        id="date-input"
+        onConfirm={(newDate) => setDate(newDate)}
+        value={date}
+      />
       <Text style={styles.text}>This is the home screen of {appName}</Text>
     </View>
   );
