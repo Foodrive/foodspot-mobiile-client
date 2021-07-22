@@ -19,4 +19,8 @@ export const useStyles = ({ labelColor }: StyleProps) =>
       fontFamily: montserrat.semiBold,
       color: labelColor,
     },
+    progressBar: {
+      minHeight: 6,
+      borderRadius: 3,
+    },
   });

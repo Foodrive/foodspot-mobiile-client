@@ -64,7 +64,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
         variant="determinate"
         color={color}
         value={value}
-        style={{ minHeight: 6, borderRadius: 3 }}
+        style={styles.progressBar}
         {...rest}
       />
     </View>
