@@ -25,8 +25,6 @@ import {
   Montserrat_900Black_Italic,
 } from "@expo-google-fonts/montserrat";
 
-// ADD NOKORA FONT HERE
-
 const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
   const [fontsLoaded] = useFonts({

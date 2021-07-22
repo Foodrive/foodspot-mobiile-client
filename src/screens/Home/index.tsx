@@ -20,6 +20,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => {
       <Button
         id="my nem jeff"
         title="my nem jeff"
+        color="secondary"
         onPress={() => {
           alert("my nem jeff");
         }}

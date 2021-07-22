@@ -10,6 +10,9 @@ export const colors = {
   darkBrown: "#382C1E",
   teal: "#59BBD0",
   orange: "#FFAD61",
+  danger: "#C7736D",
+  success: "#8AA971",
+  secondary: "#5D6164",
   ui: {
     horizontalBar: "#D6D8D8",
   },

@@ -11,7 +11,6 @@
   "dependencies": {
     "@apollo/client": "^3.3.21",
     "@expo-google-fonts/montserrat": "^0.2.0",
-    "@expo-google-fonts/nokora": "^0.2.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",

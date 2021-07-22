@@ -1,9 +1,30 @@
 import { StyleSheet } from "react-native";
+import { colors, montserrat } from "@app/utils";
 
-const styles = StyleSheet.create({
-  defaultButtonStyle: {
-    width: "100%",
-  },
-});
+interface StyleProps {
+  color: "primary" | "secondary" | "danger" | "warning" | "success";
+}
 
-export default styles;
+const colorMap = {
+  primary: colors.teal,
+  secondary: colors.secondary,
+  danger: colors.danger,
+  warning: colors.orange,
+  success: colors.success,
+};
+
+export const useStyles = ({ color }: StyleProps) => {
+  return StyleSheet.create({
+    containerStyle: {
+      width: "100%",
+    },
+    buttonStyle: {
+      backgroundColor: colorMap[color],
+      padding: 10,
+    },
+    titleStyle: {
+      fontFamily: montserrat.semiBold,
+      textTransform: "capitalize",
+    },
+  });
+};
