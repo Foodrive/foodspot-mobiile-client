@@ -13,14 +13,21 @@ interface CardInputProps extends RNCardProps {
   info?: ReactNode;
 }
 
-const Card: React.FC<CardInputProps> = ({ id, title, children, info, ...rest }) => (
+const Card: React.FC<CardInputProps> = ({
+  id,
+  title,
+  children,
+  info,
+  ...rest
+}) => (
   <RNCard containerStyle={styles.cardStyle} data-testid={id} {...rest}>
     <View style={styles.cardHeader}>
       <RNCard.Title style={styles.titleText}>{title}</RNCard.Title>
       {info && info}
     </View>
-    <View style={styles.cardBar}/>
+    <View style={styles.cardBar} />
     {children}
-  </RNCard>);
+  </RNCard>
+);
 
 export default Card;

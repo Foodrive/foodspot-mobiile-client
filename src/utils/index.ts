@@ -12,7 +12,7 @@ export const colors = {
   orange: "#FFAD61",
   ui: {
     horizontalBar: "#D6D8D8",
-  }
+  },
 };
 
 export const NavigationTheme = {
@@ -25,7 +25,7 @@ export const NavigationTheme = {
 
 export const grid = {
   outerRule: 25,
-  genericSpacing: 20
+  genericSpacing: 20,
 };
 
 export const montserrat = {
@@ -47,8 +47,4 @@ export const montserrat = {
   extraBoldItalic: "Montserrat_800ExtraBold_Italic",
   black: "Montserrat_900Black",
   blackItalic: "Montserrat_900Black_Italic",
-};
-
-export const nokora = {
-  heading: "Nokora_700Bold",
 };
