@@ -9,7 +9,7 @@ export const colors = {
   darkBrown: "#382C1E",
   teal: "#59BBD0",
   orange: "#FFAD61",
-  darkBrown: "#382C1E",
+  danger: "#C7736D",
 };
 
 export const NavigationTheme = {
