@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { colors, grid } from "@app/utils";
+import { colors, grid, montserrat } from "@app/utils";
 
 const styles = StyleSheet.create({
   cardStyle: {
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontSize: RFValue(18),
-    // fontFamily: nokora.heading, // To DO: update to nokora
+    fontFamily: montserrat.bold,
     textAlign: "left",
     color: colors.black,
     margin: 0,
