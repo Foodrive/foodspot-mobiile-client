@@ -1,14 +1,26 @@
-import React from "react";
+import React, { ReactNode } from "react";
+import { View } from "react-native";
 import {
   Card as RNCard,
   CardProps as RNCardProps,
 } from "react-native-elements";
+import styles from "./styles";
 
-interface ButtonInputProps extends RNCardProps {
+interface CardInputProps extends RNCardProps {
   id: string;
+  title: string;
+  children?: ReactNode;
+  info?: ReactNode;
 }
 
-const Input: React.FC<ButtonInputProps> = ({ id, ...rest }) => (
-  <RNCard data-testid={id} {...rest}/>);
+const Card: React.FC<CardInputProps> = ({ id, title, children, info, ...rest }) => (
+  <RNCard containerStyle={styles.cardStyle} data-testid={id} {...rest}>
+    <View style={styles.cardHeader}>
+      <RNCard.Title style={styles.titleText}>{title}</RNCard.Title>
+      {info && info}
+    </View>
+    <View style={styles.cardBar}/>
+    {children}
+  </RNCard>);
 
-export default Input;
+export default Card;
