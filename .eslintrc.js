@@ -24,5 +24,6 @@ module.exports = {
     quotes: ["error", "double"],
     semi: ["error", "always"],
     "react/prop-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
   },
 };
