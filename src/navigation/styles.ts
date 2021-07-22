@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     height: "10%",
     backgroundColor: colors.white,
-  },
+  }
 });
 
 export default styles;

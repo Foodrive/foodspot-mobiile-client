@@ -8,8 +8,7 @@ interface IconProps extends RNIconProps {
   id: string;
 }
 
-const Icon: React.FC<IconProps> = (props) => {
-  const { id, ...rest } = props;
-  return <RNIcon data-testid={id} {...rest} />;
-};
+const Icon: React.FC<IconProps> = ({ id, ...rest}) => (
+  <RNIcon data-testid={id} {...rest} />
+);
 export default Icon;
