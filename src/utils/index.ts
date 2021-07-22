@@ -3,13 +3,19 @@ import { DefaultTheme } from "@react-navigation/native";
 export const colors = {
   background: "#F8F8F8",
   white: "#fff",
+  black: "#000000",
   dark: "#222020",
   darkAccent: "#AA9F9E",
   lightbrown: "#C1A495",
   darkBrown: "#382C1E",
   teal: "#59BBD0",
   orange: "#FFAD61",
+  danger: "#C7736D",
   success: "#8AA971",
+  secondary: "#5D6164",
+  ui: {
+    horizontalBar: "#D6D8D8",
+  },
 };
 
 export const NavigationTheme = {
@@ -18,6 +24,11 @@ export const NavigationTheme = {
     ...DefaultTheme.colors,
     background: colors.background,
   },
+};
+
+export const grid = {
+  outerRule: 25,
+  genericSpacing: 20,
 };
 
 export const montserrat = {
