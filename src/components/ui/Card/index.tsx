@@ -25,7 +25,7 @@ const Card: React.FC<CardInputProps> = ({
       <RNCard.Title style={styles.titleText}>{title}</RNCard.Title>
       {info && info}
     </View>
-    <View style={styles.cardBar} />
+    <RNCard.Divider />
     {children}
   </RNCard>
 );

@@ -20,11 +20,6 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
   },
-  cardBar: {
-    borderBottomColor: colors.ui.horizontalBar,
-    borderBottomWidth: 1,
-    marginBottom: 15,
-  },
   cardHeader: {
     flexDirection: "row",
     alignItems: "center",
