@@ -24,6 +24,7 @@ import {
   Montserrat_900Black,
   Montserrat_900Black_Italic,
 } from "@expo-google-fonts/montserrat";
+import Toast from "react-native-toast-message";
 
 const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
@@ -66,6 +67,7 @@ const App: React.FC = () => {
   return (
     <AppProvider>
       <RootStack />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       <StatusBar style="auto" hidden />
     </AppProvider>
   );
