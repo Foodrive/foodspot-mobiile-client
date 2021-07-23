@@ -6,8 +6,8 @@ interface CheckBoxItemProps extends CheckBoxProps {
   title: string;
 }
 
-const CheckBoxItem: React.FC<CheckBoxItemProps> = ({ id, title, ...rest}) => (
-  <CheckBox data-testid={id} title={title} {...rest} />
+const CheckBoxItem: React.FC<CheckBoxItemProps> = ({ id, ...rest}) => (
+  <CheckBox data-testid={id} {...rest} />
 );
 
 export default CheckBoxItem;

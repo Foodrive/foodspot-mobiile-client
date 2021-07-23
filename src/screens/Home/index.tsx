@@ -5,6 +5,7 @@ import DateTimeInput from "@app/components/ui/DateTimeInput/DateTimeInput";
 import Input from "@app/components/ui/Input";
 import Card from "@app/components/ui/Card";
 import Button from "@app/components/ui/Button";
+import CheckBoxItem from "@app/components/ui/CheckBoxItem";
 
 interface HomeScreenProps {
   appName: string;
@@ -12,6 +13,8 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => {
   const [date, setDate] = useState<string>("2021-07-22T10:18:00.000Z");
+  const [checkedItem, setCheckedItem] = useState<boolean>(false);
+
   return (
     <View style={styles.container}>
       <Input id="normal-input" type="email" placeholder="Enter email" />
@@ -32,6 +35,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => {
           alert("my nem jeff");
         }}
       />
+      <CheckBoxItem id="jeff" title="my nem jeff" onPress={() => setCheckedItem(!checkedItem)} checked={checkedItem}/>
     </View>
   );
 };
