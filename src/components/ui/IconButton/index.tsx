@@ -26,13 +26,13 @@ const IconButton: React.FC<IconButtonProps>  = ({
 
   return(
     <View style={buttonStyle}>
-      <TouchableOpacity onPress={() => onPress()}>
+      <TouchableOpacity onPress={onPress}>
         <Icon 
           id={`${id}-icon`}
           name={icon}
           color={color}
-          raised={raised}
-          reverse={reverse}
+          raised={true}
+          reverse={true}
           iconStyle={styles.button}
           size={size}
         />
