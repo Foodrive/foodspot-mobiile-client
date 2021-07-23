@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { montserrat } from "@app/utils";
+import { grid, montserrat } from "@app/utils";
 import { RFValue } from "react-native-responsive-fontsize";
 
 interface StyleProps {
@@ -14,7 +14,7 @@ export const useStyles = ({ labelColor }: StyleProps) =>
       marginVertical: 15,
     },
     labelText: {
-      marginBottom: 10,
+      marginBottom: grid.marginBottom,
       fontSize: RFValue(14),
       fontFamily: montserrat.semiBold,
       color: labelColor,

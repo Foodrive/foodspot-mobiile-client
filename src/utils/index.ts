@@ -29,6 +29,7 @@ export const NavigationTheme = {
 export const grid = {
   outerRule: 25,
   genericSpacing: 20,
+  marginBottom: 0,
 };
 
 export const montserrat = {
