@@ -26,7 +26,10 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
 
   useEffect(() => {
     if (value) {
-      setCurrentDate(new Date(value));
+      const newDate = new Date(value);
+      if (newDate.toString() !== "Invalid Date") {
+        setCurrentDate(newDate);
+      }
     }
   }, [value]);
 
