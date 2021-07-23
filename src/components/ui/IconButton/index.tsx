@@ -1,46 +1,56 @@
-import React from "react"; 
-import { View, TouchableOpacity, StyleProp, ViewStyle } from "react-native";
+import React, { useMemo } from "react";
+import { TouchableOpacity } from "react-native";
 import Icon from "@app/components/ui/Icon";
-import styles from "./styles";
+import { colors } from "@app/utils";
 
 interface IconButtonProps {
   id?: string;
-  onPress: () => void; 
+  onPress?: () => void;
   icon: string;
-  color?: string;
-  raised?: boolean;
-  reverse?: boolean;
-  buttonStyle?: StyleProp<ViewStyle>;
-  size: number;
+  color?: "primary" | "secondary" | "default";
+  size?: "sm" | "md" | "lg" | "xl" | number;
 }
 
-const IconButton: React.FC<IconButtonProps>  = ({ 
-  id, 
-  onPress, 
-  icon, 
-  color, 
-  raised, 
-  reverse, 
-  buttonStyle,
-  size }): JSX.Element => {
+const sizeMap = {
+  sm: 12,
+  md: 24,
+  lg: 36,
+  xl: 50,
+};
 
-  return(
-    <View style={buttonStyle}>
-      <TouchableOpacity onPress={onPress}>
-        <Icon 
-          id={`${id}-icon`}
-          name={icon}
-          color={color}
-          raised={true}
-          reverse={true}
-          iconStyle={styles.button}
-          size={size}
-        />
-      </TouchableOpacity>
-    </View>
+const colorMap = {
+  primary: colors.teal,
+  secondary: colors.secondary,
+  default: colors.dark,
+};
+
+const IconButton: React.FC<IconButtonProps> = ({
+  id,
+  onPress,
+  icon,
+  color = "default",
+  size = "md",
+}): JSX.Element => {
+  const iconSize = useMemo(() => {
+    if (typeof size === "number") {
+      return size;
+    } else {
+      return sizeMap[size];
+    }
+  }, [size]);
+
+  return (
+    <Icon
+      id={`${id}-icon`}
+      Component={TouchableOpacity}
+      onPress={onPress}
+      name={icon}
+      color={colorMap[color]}
+      raised
+      reverse
+      size={iconSize}
+    />
   );
 };
 
 export default IconButton;
-
-

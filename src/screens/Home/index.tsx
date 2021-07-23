@@ -4,6 +4,7 @@ import styles from "./styles";
 import Input from "@app/components/ui/Input";
 import Card from "@app/components/ui/Card";
 import Button from "@app/components/ui/Button";
+import IconButton from "@app/components/ui/IconButton";
 
 interface HomeScreenProps {
   appName: string;
@@ -15,6 +16,12 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ appName }) => {
       <Card id="home-Card" title="Free food!!" info={<Text>Info FC</Text>}>
         <Text>Add Children Here</Text>
       </Card>
+      <IconButton
+        icon="add"
+        color="secondary"
+        size="md"
+        onPress={() => console.log("bbb")}
+      />
       <Input id="home-input" type="email" />
       <Text style={styles.text}>This is the home screen of {appName}</Text>
       <Button
