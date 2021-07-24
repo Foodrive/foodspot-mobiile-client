@@ -5,8 +5,8 @@ import MapView from "react-native-maps";
 import * as Location from "expo-location";
 
 import Button from "@app/components/ui/Button";
-import Icon from "@app/components/ui/Icon";
-import { colors } from "@app/utils";
+import { IconButton } from "@app/components/ui";
+
 import styles from "./styles";
 
 interface coordinates {
@@ -53,14 +53,11 @@ const RequestMap: React.FC = () => {
           longitudeDelta: coordinates.longitudeDelta,
         }}
         zoomEnabled={true}
-      ></MapView>
+      />
       <View style={styles.backButton}>
-        <Icon
+        <IconButton
           id="back-icon-button"
-          reverse
-          name="chevron-back-outline"
-          type="ionicon"
-          color={colors.darkBrown}
+          icon="chevron-back-outline"
           onPress={() => navigation.navigate("Home")}
         />
       </View>
