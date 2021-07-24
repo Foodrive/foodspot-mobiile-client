@@ -8,6 +8,7 @@ import Button from "@app/components/ui/Button";
 import { IconButton } from "@app/components/ui";
 
 import styles from "./styles";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 interface coordinates {
   longitude: number;
@@ -58,7 +59,7 @@ const RequestMap: React.FC = () => {
         <IconButton
           id="back-icon-button"
           icon="chevron-back-outline"
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate(SCREEN_NAMES.app.home)}
         />
       </View>
       <View style={styles.button}>
