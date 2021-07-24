@@ -18,6 +18,7 @@ module.exports = {
         ],
         alias: {
           "@app": "./src",
+          "@assets": "./assets",
         },
       },
     ],

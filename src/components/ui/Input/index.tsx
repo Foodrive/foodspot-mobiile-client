@@ -5,7 +5,7 @@ import {
 } from "react-native-elements/dist/input/Input";
 import styles from "./styles";
 
-type InputType = "text" | "number" | "user" | "location" | "email";
+type InputType = "text" | "number" | "user" | "location" | "email" | "password";
 
 interface InputProps extends Omit<RNInputProps, "leftIcon"> {
   id: string;
@@ -19,6 +19,7 @@ const iconMap = {
   number: { type: "font-awesome-5", name: "hashtag" },
   email: { type: "ionicon", name: "mail-outline" },
   text: { type: "ionicon", name: "chatbox-outline" },
+  password: { type: "font-awesome-5", name: "lock" },
 };
 
 const Input: React.FC<InputProps> = (props) => {
@@ -51,6 +52,7 @@ const Input: React.FC<InputProps> = (props) => {
       keyboardType={keyboard}
       inputContainerStyle={styles.inputContainer}
       inputStyle={styles.input}
+      secureTextEntry={type === "password"}
       {...rest}
     />
   );
