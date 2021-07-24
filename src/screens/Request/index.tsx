@@ -6,7 +6,6 @@ import * as Location from "expo-location";
 
 import Button from "@app/components/ui/Button";
 import { IconButton } from "@app/components/ui";
-
 import styles from "./styles";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 
