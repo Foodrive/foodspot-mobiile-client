@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import AppLoading from "expo-app-loading";
 import AppProvider from "@app/components/common/AppProvider";
-import RootStack from "@app/navigation";
+import Navigation from "@app/navigation";
 import {
   useFonts,
   Montserrat_100Thin,
@@ -66,7 +66,7 @@ const App: React.FC = () => {
 
   return (
     <AppProvider>
-      <RootStack />
+      <Navigation />
       <Toast ref={(ref) => Toast.setRef(ref)} />
       <StatusBar style="auto" hidden />
     </AppProvider>
