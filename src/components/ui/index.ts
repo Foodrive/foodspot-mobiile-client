@@ -5,3 +5,4 @@ export { default as ListItem } from "./ListItem";
 export { default as SectionedList } from "./SectionedList";
 export { default as IconButton } from "./IconButton";
 export { ProgressBar } from "./ProgressBar";
+export { default as CheckboxItem } from "./CheckBoxItem";
