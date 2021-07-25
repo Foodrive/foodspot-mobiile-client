@@ -1,6 +1,12 @@
-import React from "react";
-import { Image, Text, View, Dimensions } from "react-native";
-import styles from "./styles";
+import React, { useState } from "react";
+import {
+  ImageBackground,
+  Text,
+  View,
+  Dimensions,
+  KeyboardAvoidingView,
+} from "react-native";
+import { useStyles } from "./styles";
 import { Logo } from "@app/components/common/Logo";
 import Card from "@app/components/ui/Card";
 import Input from "@app/components/ui/Input";
@@ -9,19 +15,26 @@ import { useNavigation } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 
 const LoginScreen: React.FC = () => {
+  const [hasKeyboard, setHasKeyboard] = useState(false);
+  const styles = useStyles({ hasKeyboard });
   const navigation = useNavigation();
   return (
-    <View>
-      <Image
+    <View style={{ flex: 1 }}>
+      <ImageBackground
         source={require("@assets/images/background.png")}
         style={styles.background}
-      />
-      <View style={styles.content}>
-        <View style={styles.logo}>
-          <Logo size={Dimensions.get("window").width / 2} />
-          <Text style={styles.logoText}>FoodSpot</Text>
+      >
+        <View style={styles.content}>
+          <View style={styles.logo}>
+            <Logo size={Dimensions.get("window").width / 2} />
+            <Text style={styles.logoText}>FoodSpot</Text>
+          </View>
         </View>
-        <Card id="login-card" containerStyle={{ flexDirection: "column" }}>
+      </ImageBackground>
+      <KeyboardAvoidingView
+        style={styles.cardContainer}
+      >
+        <Card id="login-card" containerStyle={styles.card}>
           <Input
             id="username"
             type="user"
@@ -44,7 +57,7 @@ const LoginScreen: React.FC = () => {
             }
           />
         </Card>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 };
