@@ -15,10 +15,16 @@ import { useNavigation } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { useForm } from "react-hook-form";
 import { FormInput, getErrorMessage } from "@app/components/forms";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "@app/graphql/mutations";
+import useToastProvider from "@app/hooks/useToastProvider";
+import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
 
 const LoginScreen: React.FC = () => {
   const [hasKeyboard, setHasKeyboard] = useState(false);
   const styles = useStyles({ hasKeyboard });
+  const [login, { data: loginData, error, loading }] = useMutation(LOGIN);
+  const toastProvider = useToastProvider();
   const navigation = useNavigation();
   const {
     control,
@@ -27,6 +33,7 @@ const LoginScreen: React.FC = () => {
   } = useForm();
 
   useEffect(() => {
+    // Need to adjust position of card so it doesn't block screen
     const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () =>
       setHasKeyboard(true),
     );
@@ -40,14 +47,46 @@ const LoginScreen: React.FC = () => {
     };
   }, [setHasKeyboard]);
 
-  const onSubmit = useCallback(
-    (data: Record<string, any>) => {
-      console.log(data);
+  useEffect(() => {
+    if (!loading && !error && loginData) {
+      (async () =>
+        // set access token
+        await SecureStore.setItem(
+          SecureStoreEnum.TOKEN,
+          loginData.login.accessToken,
+        ))();
       navigation.navigate(SCREEN_NAMES.common.app, {
         screen: SCREEN_NAMES.app.home,
       });
+    } else if (error) {
+      (async () =>
+        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch())();
+      toastProvider.showError(error.message);
+    }
+  }, [loading, error, loginData, toastProvider]);
+
+  useEffect(() => {
+    (async () => {
+      const token = await SecureStore.getItem(SecureStoreEnum.TOKEN);
+      if (token) {
+        navigation.navigate(SCREEN_NAMES.common.app, {
+          screen: SCREEN_NAMES.app.home,
+        });
+      }
+    })();
+  }, [navigation]);
+
+  const onSubmit = useCallback(
+    async (data: Record<string, any>) => {
+      try {
+        await login({
+          variables: { username: data.username, password: data.password },
+        });
+      } catch (e) {
+        // Do nothing
+      }
     },
-    [navigation],
+    [navigation, login],
   );
 
   return (
@@ -87,6 +126,8 @@ const LoginScreen: React.FC = () => {
             id="login-btn"
             title="Login"
             onPress={handleSubmit(onSubmit)}
+            loading={loading}
+            disabled={loading}
           />
           <Button
             id="register-btn"
@@ -94,6 +135,7 @@ const LoginScreen: React.FC = () => {
             type="clear"
             color="secondary"
             containerStyle={styles.registerButton}
+            disabled={loading}
           />
         </Card>
       </KeyboardAvoidingView>
