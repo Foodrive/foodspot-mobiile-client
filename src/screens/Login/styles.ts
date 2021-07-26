@@ -32,7 +32,7 @@ export const useStyles = ({ hasKeyboard }: StyleProps) =>
     cardContainer: {
       position: "absolute",
       width: "100%",
-      top: "40%",
+      top: hasKeyboard ? "20%" : "40%",
       alignItems: "center",
       paddingHorizontal: 20,
     },

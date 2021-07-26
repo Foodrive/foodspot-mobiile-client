@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ImageBackground,
   Text,
   View,
   Dimensions,
+  Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
 import { useStyles } from "./styles";
@@ -18,6 +19,21 @@ const LoginScreen: React.FC = () => {
   const [hasKeyboard, setHasKeyboard] = useState(false);
   const styles = useStyles({ hasKeyboard });
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () =>
+      setHasKeyboard(true),
+    );
+    const keyboardDidHide = Keyboard.addListener("keyboardDidHide", () =>
+      setHasKeyboard(false),
+    );
+
+    return () => {
+      keyboardDidShow.remove();
+      keyboardDidHide.remove();
+    };
+  }, [setHasKeyboard]);
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
@@ -31,9 +47,7 @@ const LoginScreen: React.FC = () => {
           </View>
         </View>
       </ImageBackground>
-      <KeyboardAvoidingView
-        style={styles.cardContainer}
-      >
+      <KeyboardAvoidingView style={styles.cardContainer}>
         <Card id="login-card" containerStyle={styles.card}>
           <Input
             id="username"
