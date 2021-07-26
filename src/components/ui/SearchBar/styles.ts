@@ -6,6 +6,11 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     fontFamily: montserrat.regular,
   },
+  containerStyle: {
+    elevation: 8,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
 });
 
 export default styles;

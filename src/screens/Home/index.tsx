@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { View } from "react-native";
-import styles from "./styles";
 import SearchBar from "@app/components/ui/SearchBar";
 
 interface HomeScreenProps {
@@ -9,9 +8,11 @@ interface HomeScreenProps {
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const [search, setSearch] = useState<string>("");
-  const updateSearch = (search: string) => {
+
+  const updateSearch = useCallback((search: string) => {
     setSearch(search);
-  };
+  }, []);
+
   return (
     <View>
       <SearchBar
@@ -19,7 +20,6 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         placeholder="Search by location..."
         onChangeText={updateSearch}
         value={search}
-        platform="android"
       />
     </View>
   );
