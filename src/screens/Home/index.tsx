@@ -1,11 +1,28 @@
-import React from "react";
-import { View, Text } from "react-native";
-import styles from "./styles";
+import React, { useCallback, useState } from "react";
+import { View } from "react-native";
+import SearchBar from "@app/components/ui/SearchBar";
 
-const HomeScreen: React.FC = () => (
-  <View style={styles.container}>
-    <Text>home page</Text>
-  </View>
-);
+interface HomeScreenProps {
+  appName: string;
+}
+
+const HomeScreen: React.FC<HomeScreenProps> = () => {
+  const [search, setSearch] = useState<string>("");
+
+  const updateSearch = useCallback((search: string) => {
+    setSearch(search);
+  }, []);
+
+  return (
+    <View>
+      <SearchBar
+        id="search-bar-home"
+        placeholder="Search by location..."
+        onChangeText={updateSearch}
+        value={search}
+      />
+    </View>
+  );
+};
 
 export default HomeScreen;

@@ -18,19 +18,17 @@ interface ListItemProps extends RNListItemProps {
   onClick?: () => void;
 }
 
-const ListItem: React.FC<ListItemProps> = (props) => {
-  const {
-    id,
-    title,
-    otherInformation,
-    iconName = "md-basket",
-    iconColor = "grey",
-    iconFamily = "ionicon",
-    showNav = true,
-    onClick,
-    ...rest
-  } = props;
-
+const ListItem: React.FC<ListItemProps> = ({
+  id,
+  title,
+  otherInformation,
+  iconName = "md-basket",
+  iconColor = "grey",
+  iconFamily = "ionicon",
+  showNav = true,
+  onClick,
+  ...rest
+}) => {
   return (
     <RNListItem
       onPress={onClick}
