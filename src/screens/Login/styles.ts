@@ -8,6 +8,9 @@ interface StyleProps {
 
 export const useStyles = ({ hasKeyboard }: StyleProps) =>
   StyleSheet.create({
+    container: {
+      flex: 1,
+    },
     background: {
       flex: 1,
       alignItems: "center",
@@ -32,11 +35,14 @@ export const useStyles = ({ hasKeyboard }: StyleProps) =>
     cardContainer: {
       position: "absolute",
       width: "100%",
-      top: hasKeyboard ? "20%" : "40%",
+      top: hasKeyboard ? "15%" : "40%",
       alignItems: "center",
       paddingHorizontal: 20,
     },
     card: {
       flexDirection: "column",
+    },
+    registerButton: {
+      marginTop: 10,
     },
   });

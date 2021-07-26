@@ -3,6 +3,7 @@ import { colors, montserrat } from "@app/utils";
 
 interface StyleProps {
   color: "primary" | "secondary" | "danger" | "warning" | "success";
+  type: "solid" | "clear" | "outline";
 }
 
 const colorMap = {
@@ -13,18 +14,20 @@ const colorMap = {
   success: colors.success,
 };
 
-export const useStyles = ({ color }: StyleProps) => {
+export const useStyles = ({ color, type }: StyleProps) => {
   return StyleSheet.create({
     containerStyle: {
       width: "100%",
     },
     buttonStyle: {
-      backgroundColor: colorMap[color],
       padding: 10,
+      backgroundColor: type === "solid" ? colorMap[color] : undefined,
     },
     titleStyle: {
       fontFamily: montserrat.semiBold,
       textTransform: "capitalize",
+      color: type === "clear" ? colorMap[color] : undefined,
+      textDecorationLine: type === "clear" ? "underline" : "none",
     },
   });
 };

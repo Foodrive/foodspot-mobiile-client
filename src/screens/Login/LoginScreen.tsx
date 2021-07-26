@@ -35,7 +35,7 @@ const LoginScreen: React.FC = () => {
   }, [setHasKeyboard]);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ImageBackground
         source={require("@assets/images/background.png")}
         style={styles.background}
@@ -62,13 +62,20 @@ const LoginScreen: React.FC = () => {
             placeholder="Enter password"
           />
           <Button
-            id="login-button"
+            id="login-btn"
             title="Login"
             onPress={() =>
               navigation.navigate(SCREEN_NAMES.common.app, {
                 screen: SCREEN_NAMES.app.home,
               })
             }
+          />
+          <Button
+            id="register-btn"
+            title="Register"
+            type="clear"
+            color="secondary"
+            containerStyle={styles.registerButton}
           />
         </Card>
       </KeyboardAvoidingView>
