@@ -1,7 +1,7 @@
 export { default as ErrorScreen } from "./Error";
 
 // Home screens
-export { default as HomeScreen } from "./Home/container";
+export { default as HomeScreen } from "./Home";
 
 // Events screens
 export { default as UserEvents } from "./Events";

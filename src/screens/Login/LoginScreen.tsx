@@ -20,7 +20,11 @@ import { LOGIN } from "@app/graphql/mutations";
 import useToastProvider from "@app/hooks/useToastProvider";
 import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
 
-const LoginScreen: React.FC = () => {
+interface LoginScreenProps {
+  setCurrentUser: (username: string) => void;
+}
+
+const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
   const [hasKeyboard, setHasKeyboard] = useState(false);
   const styles = useStyles({ hasKeyboard });
   const [login, { data: loginData, error, loading }] = useMutation(LOGIN);
@@ -49,12 +53,11 @@ const LoginScreen: React.FC = () => {
 
   useEffect(() => {
     if (!loading && !error && loginData) {
+      const { login } = loginData;
       (async () =>
         // set access token
-        await SecureStore.setItem(
-          SecureStoreEnum.TOKEN,
-          loginData.login.accessToken,
-        ))();
+        await SecureStore.setItem(SecureStoreEnum.TOKEN, login.accessToken))();
+      setCurrentUser(login.user.username);
       navigation.navigate(SCREEN_NAMES.common.app, {
         screen: SCREEN_NAMES.app.home,
       });
@@ -127,14 +130,6 @@ const LoginScreen: React.FC = () => {
             title="Login"
             onPress={handleSubmit(onSubmit)}
             loading={loading}
-            disabled={loading}
-          />
-          <Button
-            id="register-btn"
-            title="Register"
-            type="clear"
-            color="secondary"
-            containerStyle={styles.registerButton}
             disabled={loading}
           />
         </Card>
