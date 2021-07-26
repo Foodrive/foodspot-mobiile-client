@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ImageBackground,
   Text,
@@ -10,15 +10,21 @@ import {
 import { useStyles } from "./styles";
 import { Logo } from "@app/components/common/Logo";
 import Card from "@app/components/ui/Card";
-import Input from "@app/components/ui/Input";
 import Button from "@app/components/ui/Button";
 import { useNavigation } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
+import { useForm } from "react-hook-form";
+import { FormInput, getErrorMessage } from "@app/components/forms";
 
 const LoginScreen: React.FC = () => {
   const [hasKeyboard, setHasKeyboard] = useState(false);
   const styles = useStyles({ hasKeyboard });
   const navigation = useNavigation();
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const keyboardDidShow = Keyboard.addListener("keyboardDidShow", () =>
@@ -33,6 +39,16 @@ const LoginScreen: React.FC = () => {
       keyboardDidHide.remove();
     };
   }, [setHasKeyboard]);
+
+  const onSubmit = useCallback(
+    (data: Record<string, any>) => {
+      console.log(data);
+      navigation.navigate(SCREEN_NAMES.common.app, {
+        screen: SCREEN_NAMES.app.home,
+      });
+    },
+    [navigation],
+  );
 
   return (
     <View style={styles.container}>
@@ -49,26 +65,28 @@ const LoginScreen: React.FC = () => {
       </ImageBackground>
       <KeyboardAvoidingView style={styles.cardContainer}>
         <Card id="login-card" containerStyle={styles.card}>
-          <Input
-            id="username"
+          <FormInput
+            name="username"
+            control={control}
             type="user"
             label="Username"
             placeholder="Enter username"
+            rules={{ required: true }}
+            errorMessage={getErrorMessage("Username", errors.username)}
           />
-          <Input
-            id="password"
+          <FormInput
+            name="password"
+            control={control}
             type="password"
             label="Password"
             placeholder="Enter password"
+            rules={{ required: true }}
+            errorMessage={getErrorMessage("Password", errors.password)}
           />
           <Button
             id="login-btn"
             title="Login"
-            onPress={() =>
-              navigation.navigate(SCREEN_NAMES.common.app, {
-                screen: SCREEN_NAMES.app.home,
-              })
-            }
+            onPress={handleSubmit(onSubmit)}
           />
           <Button
             id="register-btn"

@@ -2,12 +2,12 @@ import React, { useMemo } from "react";
 import {
   Input as RNInput,
   InputProps as RNInputProps,
-} from "react-native-elements/dist/input/Input";
+} from "react-native-elements";
 import styles from "./styles";
 
 type InputType = "text" | "number" | "user" | "location" | "email" | "password";
 
-interface InputProps extends Omit<RNInputProps, "leftIcon"> {
+export interface InputProps extends Omit<RNInputProps, "leftIcon"> {
   id: string;
   type: InputType;
 }
@@ -45,7 +45,6 @@ const Input: React.FC<InputProps> = (props) => {
   }, [keyboardType, type]);
 
   return (
-    // @ts-ignore
     <RNInput
       data-testid={id}
       leftIcon={icon}
