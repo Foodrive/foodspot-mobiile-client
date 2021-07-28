@@ -21,6 +21,9 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
         onChangeText={updateSearch}
         value={search}
       />
+      <View>
+
+      </View>
     </View>
   );
 };
