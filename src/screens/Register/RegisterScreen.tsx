@@ -31,12 +31,7 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ setCurrentUser }) => {
   const navigateToHome = useCallback(() => {
     const toAppHome = CommonActions.reset({
       index: 0,
-      routes: [
-        {
-          name: SCREEN_NAMES.common.app,
-          params: { screen: SCREEN_NAMES.app.home },
-        },
-      ],
+      routes: [{ name: SCREEN_NAMES.common.app }],
     });
     navigation.dispatch(toAppHome);
   }, [navigation]);
