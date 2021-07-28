@@ -17,3 +17,4 @@ export { default as Attending } from "./Volunteer";
 
 // Login screens
 export { LoginScreen } from "./Login";
+export { RegisterScreen } from "./Register";

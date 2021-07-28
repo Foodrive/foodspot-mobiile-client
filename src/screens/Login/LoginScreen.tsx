@@ -132,6 +132,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
             loading={loading}
             disabled={loading}
           />
+          <Button
+            id="register-btn"
+            title="Register"
+            onPress={() =>
+              navigation.navigate(SCREEN_NAMES.common.registration)
+            }
+            type="clear"
+            color="secondary"
+            containerStyle={{ marginTop: 10 }}
+            disabled={loading}
+          />
         </Card>
       </KeyboardAvoidingView>
     </View>
