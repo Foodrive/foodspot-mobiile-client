@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 import { Logo } from "@app/components/common/Logo";
 import Card from "@app/components/ui/Card";
 import Button from "@app/components/ui/Button";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { useForm } from "react-hook-form";
 import { FormInput, getErrorMessage } from "@app/components/forms";
@@ -51,6 +51,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
     };
   }, [setHasKeyboard]);
 
+  const navigateToHome = useCallback(() => {
+    const toAppHome = CommonActions.reset({
+      index: 0,
+      routes: [{ name: SCREEN_NAMES.common.app }],
+    });
+    navigation.dispatch(toAppHome);
+  }, [navigation]);
+
   useEffect(() => {
     if (!loading && !error && loginData) {
       const { login } = loginData;
@@ -58,26 +66,22 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
         // set access token
         await SecureStore.setItem(SecureStoreEnum.TOKEN, login.accessToken))();
       setCurrentUser(login.user.username);
-      navigation.navigate(SCREEN_NAMES.common.app, {
-        screen: SCREEN_NAMES.app.home,
-      });
+      navigateToHome();
     } else if (error) {
       (async () =>
         await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch())();
       toastProvider.showError(error.message);
     }
-  }, [loading, error, loginData, toastProvider]);
+  }, [loading, error, loginData, toastProvider, navigateToHome]);
 
   useEffect(() => {
     (async () => {
       const token = await SecureStore.getItem(SecureStoreEnum.TOKEN);
       if (token) {
-        navigation.navigate(SCREEN_NAMES.common.app, {
-          screen: SCREEN_NAMES.app.home,
-        });
+        navigateToHome();
       }
     })();
-  }, [navigation]);
+  }, [navigateToHome]);
 
   const onSubmit = useCallback(
     async (data: Record<string, any>) => {
@@ -130,6 +134,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
             title="Login"
             onPress={handleSubmit(onSubmit)}
             loading={loading}
+            disabled={loading}
+          />
+          <Button
+            id="register-btn"
+            title="Register"
+            onPress={() =>
+              navigation.navigate(SCREEN_NAMES.common.registration)
+            }
+            type="clear"
+            color="secondary"
+            containerStyle={{ marginTop: 10 }}
             disabled={loading}
           />
         </Card>
