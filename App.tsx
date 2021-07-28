@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import AppLoading from "expo-app-loading";
 import AppProvider from "@app/components/common/AppProvider";
-import RootStack from "@app/navigation";
+import Navigation from "@app/navigation";
 import {
   useFonts,
   Montserrat_100Thin,
@@ -25,6 +25,7 @@ import {
   Montserrat_900Black_Italic,
 } from "@expo-google-fonts/montserrat";
 import Toast from "react-native-toast-message";
+import { useAssets } from "expo-asset";
 
 const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
@@ -48,13 +49,14 @@ const App: React.FC = () => {
     Montserrat_900Black,
     Montserrat_900Black_Italic,
   });
+  const [assets] = useAssets([require("@assets/images/background.png")]);
 
   const getCachedResources = useCallback(async () => {
     // Load cached assets here
     // Can use expo-asset for cache control
   }, []);
 
-  if (!isReady || !fontsLoaded) {
+  if (!isReady || !fontsLoaded || !assets) {
     return (
       <AppLoading
         startAsync={getCachedResources}
@@ -66,7 +68,7 @@ const App: React.FC = () => {
 
   return (
     <AppProvider>
-      <RootStack />
+      <Navigation />
       <Toast ref={(ref) => Toast.setRef(ref)} />
       <StatusBar style="auto" hidden />
     </AppProvider>

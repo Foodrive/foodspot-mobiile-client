@@ -1,4 +1,4 @@
-import { createPageNavigator, NavScreen } from "./utils";
+import { createPageNavigator, NavScreen } from "../utils";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { Attending } from "@app/screens";
 

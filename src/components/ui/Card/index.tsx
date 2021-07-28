@@ -8,7 +8,7 @@ import styles from "./styles";
 
 interface CardInputProps extends RNCardProps {
   id: string;
-  title: string;
+  title?: string;
   children?: ReactNode;
   info?: ReactNode;
 }
@@ -18,14 +18,23 @@ const Card: React.FC<CardInputProps> = ({
   title,
   children,
   info,
+  containerStyle,
   ...rest
 }) => (
-  <RNCard containerStyle={styles.cardStyle} data-testid={id} {...rest}>
-    <View style={styles.cardHeader}>
-      <RNCard.Title style={styles.titleText}>{title}</RNCard.Title>
-      {info && info}
-    </View>
-    <RNCard.Divider />
+  <RNCard
+    containerStyle={[styles.cardStyle, containerStyle]}
+    data-testid={id}
+    {...rest}
+  >
+    {title && (
+      <>
+        <View style={styles.cardHeader}>
+          <RNCard.Title style={styles.titleText}>{title}</RNCard.Title>
+          {info && info}
+        </View>
+        <RNCard.Divider />
+      </>
+    )}
     {children}
   </RNCard>
 );

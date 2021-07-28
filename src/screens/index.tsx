@@ -1,7 +1,7 @@
 export { default as ErrorScreen } from "./Error";
 
 // Home screens
-export { default as HomeScreen } from "./Home/container";
+export { default as HomeScreen } from "./Home";
 
 // Events screens
 export { default as UserEvents } from "./Events";
@@ -14,3 +14,6 @@ export { default as RequestMap } from "./Request";
 
 // Volunteer screens
 export { default as Attending } from "./Volunteer";
+
+// Login screens
+export { LoginScreen } from "./Login";

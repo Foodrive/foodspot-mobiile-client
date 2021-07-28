@@ -5,10 +5,10 @@ import { Icon } from "@app/components/ui";
 import { useStyles } from "./styles";
 import dayjs from "dayjs";
 
-interface DateTimeInputProps {
+export interface DateTimeInputProps {
   id: string;
   value?: string; // GMT format
-  onConfirm: (date: string) => void;
+  onChangeText: (text: string) => void;
   errorMessage?: string;
   placeholder?: string;
 }
@@ -16,7 +16,7 @@ interface DateTimeInputProps {
 const DateTimeInput: React.FC<DateTimeInputProps> = ({
   id,
   value,
-  onConfirm,
+  onChangeText,
   errorMessage,
   placeholder,
 }) => {
@@ -43,11 +43,11 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
 
   const handleConfirm = useCallback(
     (date: Date) => {
-      onConfirm(date.toUTCString());
+      onChangeText(date.toUTCString());
       setCurrentDate(date);
       hideDatePicker();
     },
-    [hideDatePicker, onConfirm],
+    [hideDatePicker, onChangeText],
   );
 
   const displayText = useMemo(() => {
