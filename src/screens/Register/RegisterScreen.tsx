@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ImageBackground, ScrollView, Text, View } from "react-native";
 import { useStyles } from "./styles";
 import Card from "@app/components/ui/Card";
@@ -6,10 +6,18 @@ import { FormInput, getErrorMessage } from "@app/components/forms";
 import { useForm } from "react-hook-form";
 import Button from "@app/components/ui/Button";
 import { IconButton } from "@app/components/ui";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
+import { useMutation } from "@apollo/client";
+import { SIGNUP } from "@app/graphql/mutations";
+import useToastProvider from "@app/hooks/useToastProvider";
+import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
 
-const RegisterScreen: React.FC = () => {
+interface RegisterScreenProps {
+  setCurrentUser: (username: string) => void;
+}
+
+const RegisterScreen: React.FC<RegisterScreenProps> = ({ setCurrentUser }) => {
   const {
     control,
     handleSubmit,
@@ -17,14 +25,53 @@ const RegisterScreen: React.FC = () => {
   } = useForm();
   const styles = useStyles();
   const navigation = useNavigation();
+  const [signUp, { data: gqlData, error, loading }] = useMutation(SIGNUP);
+  const toastProvider = useToastProvider();
+
+  const navigateToHome = useCallback(() => {
+    const toAppHome = CommonActions.reset({
+      index: 0,
+      routes: [
+        {
+          name: SCREEN_NAMES.common.app,
+          params: { screen: SCREEN_NAMES.app.home },
+        },
+      ],
+    });
+    navigation.dispatch(toAppHome);
+  }, [navigation]);
+
+  useEffect(() => {
+    if (!loading && !error && gqlData) {
+      const { signup } = gqlData;
+      (async () =>
+        // set access token
+        await SecureStore.setItem(SecureStoreEnum.TOKEN, signup.accessToken))();
+      setCurrentUser(signup.user.username);
+      navigateToHome();
+    } else if (error) {
+      (async () =>
+        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch())();
+      toastProvider.showError(error.message);
+    }
+  }, [loading, error, gqlData, toastProvider, navigateToHome]);
 
   const onSubmit = useCallback(
-    (data) => {
-      navigation.navigate(SCREEN_NAMES.common.app, {
-        screen: SCREEN_NAMES.app.home,
-      });
+    async (data) => {
+      try {
+        await signUp({
+          variables: {
+            username: data.username,
+            password: data.password,
+            firstName: data.firstName,
+            lastName: data.lastName,
+          },
+        });
+      } catch (e) {
+        // Do nothing
+      }
     },
-    [navigation],
+    [signUp],
   );
 
   return (
@@ -88,6 +135,8 @@ const RegisterScreen: React.FC = () => {
               title="Sign up"
               color="primary"
               onPress={handleSubmit(onSubmit)}
+              loading={loading}
+              disabled={loading}
             />
           </ScrollView>
         </Card>
