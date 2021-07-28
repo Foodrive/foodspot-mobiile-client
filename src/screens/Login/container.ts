@@ -4,6 +4,6 @@ import { setCurrentUser } from "@app/redux/slices/user.slice";
 
 const mapStateToProps = () => ({});
 
-const mapDispatch = { setCurrentUser };
+const mapDispatchToProps = { setCurrentUser };
 
-export default connect(mapStateToProps, mapDispatch)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
