@@ -31,6 +31,7 @@ const RegisterScreen: React.FC = () => {
             <Text style={styles.headerText}>Create account</Text>
             <FormInput
               name="username"
+              label="Username"
               control={control}
               type="user"
               autoFocus
@@ -38,6 +39,7 @@ const RegisterScreen: React.FC = () => {
             />
             <FormInput
               name="firstName"
+              label="First name"
               control={control}
               type="user"
               autoFocus
@@ -45,6 +47,7 @@ const RegisterScreen: React.FC = () => {
             />
             <FormInput
               name="lastName"
+              label="Last name"
               control={control}
               type="user"
               autoFocus
@@ -52,6 +55,7 @@ const RegisterScreen: React.FC = () => {
             />
             <FormInput
               name="password"
+              label="Password"
               control={control}
               type="password"
               autoFocus
