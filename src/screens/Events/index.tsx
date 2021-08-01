@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View, Text } from "react-native";
 import styles from "./styles";
 
 const UserEvents: React.FC = () => (
   <View style={styles.container}>
-    <Text style={styles.text}>UserEvents</Text>
+    <Text style={styles.text}>Event Screen</Text>
   </View>
 );
 
