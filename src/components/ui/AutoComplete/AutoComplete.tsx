@@ -8,15 +8,19 @@ export interface MenuItem {
   label: string;
 }
 
-interface AutoCompleteProps
+type InputType = "text" | "location";
+
+export interface AutoCompleteProps
   extends Omit<InputProps, "type" | "onFocus" | "onBlur" | "onChange"> {
   id: string;
+  type: InputType;
   options?: MenuItem[];
   onChangeText: (text: string) => void;
 }
 
 const AutoComplete: React.FC<AutoCompleteProps> = ({
   id,
+  type,
   options = [],
   onChangeText,
   value,
@@ -50,7 +54,7 @@ const AutoComplete: React.FC<AutoCompleteProps> = ({
     <View style={styles.container}>
       <Input
         id={`${id}-input`}
-        type="location"
+        type={type}
         onFocus={() => setIsFocused(true)}
         onChangeText={onChangeText}
         value={value}
