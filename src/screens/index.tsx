@@ -4,7 +4,8 @@ export { default as ErrorScreen } from "./Error";
 export { default as HomeScreen } from "./Home";
 
 // Events screens
-export { default as UserEvents } from "./Events";
+export { Events } from "./Events";
+export { EventDetails } from "./Events/EventDetails";
 
 // Profile screens
 export { default as UserProfile } from "./Profile";

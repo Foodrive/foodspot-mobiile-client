@@ -15,7 +15,7 @@ interface ListItemProps extends RNListItemProps {
   iconColor?: string;
   iconFamily?: string;
   showNav?: boolean; //show chevron right navigation icon
-  onClick?: () => void;
+  onPress?: () => void;
 }
 
 const ListItem: React.FC<ListItemProps> = ({
@@ -26,13 +26,13 @@ const ListItem: React.FC<ListItemProps> = ({
   iconColor = "grey",
   iconFamily = "ionicon",
   showNav = true,
-  onClick,
+  onPress,
   ...rest
 }) => {
   return (
     <RNListItem
-      onPress={onClick}
-      disabled={onClick === undefined}
+      onPress={onPress}
+      disabled={onPress === undefined}
       key={id}
       data-testid={id}
       containerStyle={styles.listStyle}
