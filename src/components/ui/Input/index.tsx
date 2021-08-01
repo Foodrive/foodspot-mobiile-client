@@ -22,9 +22,14 @@ const iconMap = {
   password: { type: "font-awesome-5", name: "lock" },
 };
 
-const Input: React.FC<InputProps> = (props) => {
-  const { id, type, keyboardType, ...rest } = props;
-
+const Input: React.FC<InputProps> = ({
+  id,
+  type,
+  keyboardType,
+  inputContainerStyle,
+  inputStyle,
+  ...rest
+}) => {
   const icon = useMemo(() => {
     if (iconMap[type]) {
       return iconMap[type];
@@ -49,8 +54,8 @@ const Input: React.FC<InputProps> = (props) => {
       data-testid={id}
       leftIcon={icon}
       keyboardType={keyboard}
-      inputContainerStyle={styles.inputContainer}
-      inputStyle={styles.input}
+      inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
+      inputStyle={[styles.input, inputStyle]}
       secureTextEntry={type === "password"}
       {...rest}
     />
