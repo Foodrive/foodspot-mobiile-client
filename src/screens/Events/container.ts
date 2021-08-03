@@ -1,8 +1,11 @@
 import { connect, ConnectedProps } from "react-redux";
 import Events from "./Events";
 import { setCurrentEventId } from "@app/redux/slices/events.slice";
+import { RootState } from "@app/redux/store";
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state: RootState) => ({
+  currentUser: state.user.currentUser,
+});
 
 const mapDispatchToProps = { setCurrentEventId };
 

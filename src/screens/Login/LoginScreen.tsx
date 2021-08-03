@@ -61,14 +61,22 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
   useEffect(() => {
     if (!loading && !error && loginData) {
       const { login } = loginData;
-      (async () =>
+      async () => {
         // set access token
-        await SecureStore.setItem(SecureStoreEnum.TOKEN, login.accessToken))();
-      setCurrentUser(login.user.username);
+        await SecureStore.setItem(SecureStoreEnum.TOKEN, login.accessToken);
+        await SecureStore.setItem(SecureStoreEnum.USER_INFO, {
+          username: login.user.username,
+          id: login.user.id,
+        });
+      };
+
+      setCurrentUser({ username: login.user.username, id: login.user.id });
       navigateToHome();
     } else if (error) {
-      (async () =>
-        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch())();
+      async () => {
+        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch();
+        await SecureStore.deleteItem(SecureStoreEnum.USER_INFO).catch();
+      };
       toastProvider.showError(error.message);
     }
   }, [loading, error, loginData, toastProvider, navigateToHome]);
@@ -76,6 +84,13 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
   useEffect(() => {
     (async () => {
       const token = await SecureStore.getItem(SecureStoreEnum.TOKEN);
+      const userInfoString = await SecureStore.getItem(
+        SecureStoreEnum.USER_INFO,
+      );
+      if (userInfoString) {
+        const userInfo = JSON.parse(userInfoString);
+        setCurrentUser({ username: userInfo.username, id: userInfo.id });
+      }
       if (token) {
         navigateToHome();
       }
