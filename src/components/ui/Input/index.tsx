@@ -10,6 +10,7 @@ type InputType = "text" | "number" | "user" | "location" | "email" | "password";
 export interface InputProps extends Omit<RNInputProps, "leftIcon"> {
   id: string;
   type: InputType;
+  editable?: boolean;
 }
 
 // Add more icons here
@@ -23,8 +24,7 @@ const iconMap = {
 };
 
 const Input: React.FC<InputProps> = (props) => {
-  const { id, type, keyboardType, ...rest } = props;
-
+  const { id, type, editable, keyboardType, ...rest } = props;
   const icon = useMemo(() => {
     if (iconMap[type]) {
       return iconMap[type];
@@ -46,12 +46,14 @@ const Input: React.FC<InputProps> = (props) => {
 
   return (
     <RNInput
-      data-testid={id}
+      data-testid={id}  //are these also called props?
       leftIcon={icon}
       keyboardType={keyboard}
       inputContainerStyle={styles.inputContainer}
-      inputStyle={styles.input}
+      inputStyle={editable ? styles.input : styles.uneditableInput}
       secureTextEntry={type === "password"}
+      disabled={!editable}
+
       {...rest}
     />
   );

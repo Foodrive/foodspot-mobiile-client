@@ -8,6 +8,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
+  uneditableInput: {
+    paddingLeft: 5,
+    fontFamily: montserrat.regular,
+    color: "#CCCCCC",
+  },
   input: {
     paddingLeft: 5,
     fontFamily: montserrat.regular,
