@@ -9,6 +9,7 @@ interface IconButtonProps {
   icon: string;
   color?: "primary" | "secondary" | "default";
   size?: "sm" | "md" | "lg" | "xl" | number;
+  reverse: boolean;
 }
 
 const sizeMap = {
@@ -30,6 +31,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   icon,
   color = "default",
   size = "md",
+  reverse = true
 }): JSX.Element => {
   const iconSize = useMemo(() => {
     if (typeof size === "number") {
@@ -47,7 +49,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       name={icon}
       color={colorMap[color]}
       raised
-      reverse
+      reverse={reverse}
       size={iconSize}
     />
   );
