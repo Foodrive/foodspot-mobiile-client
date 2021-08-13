@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = (props) => {
 
   return (
     <RNInput
-      data-testid={id}  //are these also called props?
+      data-testid={id}
       leftIcon={icon}
       keyboardType={keyboard}
       inputContainerStyle={styles.inputContainer}
