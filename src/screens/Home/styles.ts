@@ -5,10 +5,11 @@ import { grid } from "@app/utils";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     margin: grid.outerRule,
+  },
+  titleText: {
+    fontSize: RFValue(24),
+    fontFamily: montserrat.bold,
   },
   text: {
     fontSize: RFValue(24),

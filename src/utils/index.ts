@@ -27,7 +27,7 @@ export const NavigationTheme = {
 };
 
 export const grid = {
-  outerRule: 25,
+  outerRule: 8,
   genericSpacing: 20,
   marginBottom: 10,
 };
