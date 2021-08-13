@@ -6,6 +6,12 @@ const styles = StyleSheet.create({
     fontSize: RFValue(24),
     textAlign: "center",
   },
+  backButton: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    zIndex: 1,
+  },
 });
 
 export default styles;

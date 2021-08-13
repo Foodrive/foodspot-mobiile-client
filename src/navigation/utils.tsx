@@ -7,7 +7,8 @@ export interface NavScreen {
   component:
     | ConnectedComponent<FC<any>, any>
     | ComponentClass
-    | FunctionComponent;
+    | FunctionComponent
+    | FC<any>;
 }
 
 export const createPageNavigator = (

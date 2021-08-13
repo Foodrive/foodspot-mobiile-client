@@ -19,10 +19,9 @@ import { useMutation } from "@apollo/client";
 import { LOGIN } from "@app/graphql/mutations";
 import useToastProvider from "@app/hooks/useToastProvider";
 import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
+import { LoginScreenPropsFromRedux } from "./container";
 
-interface LoginScreenProps {
-  setCurrentUser: (username: string) => void;
-}
+type LoginScreenProps = LoginScreenPropsFromRedux; // interface LoginScreenProps extends PropsFromRedux when needed
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
   const [hasKeyboard, setHasKeyboard] = useState(false);
