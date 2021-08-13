@@ -9,7 +9,7 @@ interface IconButtonProps {
   icon: string;
   color?: "primary" | "secondary" | "default";
   size?: "sm" | "md" | "lg" | "xl" | number;
-  reverse: boolean;
+  reverse?: boolean;
 }
 
 const sizeMap = {
