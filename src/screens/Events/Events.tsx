@@ -13,6 +13,7 @@ import { InvitationStatus } from "@app/utils/constants";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import dayjs from "dayjs";
 import styles from "./styles";
+import useToastProvider from "@app/hooks/useToastProvider";
 
 type EventsProps = EventsPropsFromRedux;
 interface UserInvitationsByStatus {
@@ -28,6 +29,7 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
     rejected: [],
   });
 
+  const toastProvider = useToastProvider();
   const navigation = useNavigation();
   const { data, error, loading } = useQuery<UserInvitation>(
     GET_INVITATIONS_BY_USER,
@@ -40,7 +42,7 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      let filteredEvents: UserInvitationsByStatus = {
+      const filteredEvents: UserInvitationsByStatus = {
         accepted: [],
         pending: [],
         rejected: [],
@@ -55,6 +57,8 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
         }
       });
       setEvents(filteredEvents);
+    } else if (error) {
+      toastProvider.showError(error.message);
     }
   }, [data, loading, error]);
 
@@ -69,7 +73,7 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
           buttons={["Yours", "Organised", "History"]}
           selectedIndex={0}
           onPress={() => console.log("click")} // TO DO
-        ></TabButtonGroup>
+        />
       </View>
       <View style={styles.eventList}>
         <Text style={styles.text}>Upcoming</Text>
