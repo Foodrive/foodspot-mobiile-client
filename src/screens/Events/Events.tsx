@@ -85,9 +85,9 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
               key={`${foodDrive.id}-list-item`}
               title={foodDrive.event.name}
               otherInformation={`${dayjs(foodDrive.event.startDate).format(
-                "DD/MM/YYYY h:mm A",
-              )} to ${dayjs(foodDrive.event.endDate).format(
-                "DD/MM/YYYY h:mm A",
+                "DD MMM YY h:mm A",
+              )} - ${dayjs(foodDrive.event.endDate).format(
+                "DD MMM YY h:mm A",
               )}`}
               onPress={() => {
                 setCurrentEventId(foodDrive.event.id);
@@ -107,9 +107,9 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
               key={`${foodDrive.id}-list-item`}
               title={foodDrive.event.name}
               otherInformation={`${dayjs(foodDrive.event.startDate).format(
-                "DD/MM/YYYY h:mm A",
-              )} to ${dayjs(foodDrive.event.endDate).format(
-                "DD/MM/YYYY h:mm A",
+                "DD MMM YY h:mm A",
+              )} - ${dayjs(foodDrive.event.endDate).format(
+                "DD MMM YY h:mm A",
               )}`}
               onPress={() => {
                 setCurrentEventId(foodDrive.event.id);
@@ -129,9 +129,9 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
               key={`${foodDrive.id}-list-item`}
               title={foodDrive.event.name}
               otherInformation={`${dayjs(foodDrive.event.startDate).format(
-                "DD/MM/YYYY h:mm A",
-              )} to ${dayjs(foodDrive.event.endDate).format(
-                "DD/MM/YYYY h:mm A",
+                "DD MMM YY h:mm A",
+              )} - ${dayjs(foodDrive.event.endDate).format(
+                "DD MMM YY h:mm A",
               )}`}
               onPress={() => {
                 setCurrentEventId(foodDrive.event.id);
