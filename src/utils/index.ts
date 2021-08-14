@@ -16,6 +16,7 @@ export const colors = {
   ui: {
     horizontalBar: "#D6D8D8",
   },
+  green: "#1DAF1A",
 };
 
 export const NavigationTheme = {

@@ -3,12 +3,18 @@ import { TouchableOpacity } from "react-native";
 import Icon from "@app/components/ui/Icon";
 import { colors } from "@app/utils";
 
+interface ColorMap {
+  primary: string;
+  secondary: string;
+  default: string;
+}
 interface IconButtonProps {
   id?: string;
   onPress?: () => void;
   icon: string;
-  color?: "primary" | "secondary" | "default";
+  color?: keyof ColorMap;
   size?: "sm" | "md" | "lg" | "xl" | number;
+  reverse?: boolean;
 }
 
 const sizeMap = {
@@ -30,6 +36,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   icon,
   color = "default",
   size = "md",
+  reverse = true,
 }): JSX.Element => {
   const iconSize = useMemo(() => {
     if (typeof size === "number") {
@@ -47,7 +54,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       name={icon}
       color={colorMap[color]}
       raised
-      reverse
+      reverse={reverse}
       size={iconSize}
     />
   );
