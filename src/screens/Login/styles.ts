@@ -40,6 +40,7 @@ export const useStyles = ({ hasKeyboard }: StyleProps) =>
       paddingHorizontal: 20,
     },
     card: {
+      width: "100%",
       flexDirection: "column",
     },
     registerButton: {
