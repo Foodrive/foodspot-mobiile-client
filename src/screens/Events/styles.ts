@@ -1,15 +1,32 @@
+import { montserrat } from "@app/utils";
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
+import { grid } from "@app/utils";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    margin: grid.outerRule,
   },
   text: {
-    fontSize: RFValue(24),
-    textAlign: "center",
+    fontSize: RFValue(16),
+    textAlign: "left",
+    fontFamily: montserrat.bold,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  tabs: {
+    marginVertical: -20,
+    flexDirection: "row",
+    marginBottom: 10,
+  },
+  headerText: {
+    fontSize: RFValue(18),
+    fontFamily: montserrat.bold,
+  },
+  eventList: {
+    marginTop: 10,
   },
 });
 

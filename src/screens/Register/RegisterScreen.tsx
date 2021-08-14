@@ -12,10 +12,9 @@ import { useMutation } from "@apollo/client";
 import { SIGNUP } from "@app/graphql/mutations";
 import useToastProvider from "@app/hooks/useToastProvider";
 import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
+import { RegisterPropsFromRedux } from "./container";
 
-interface RegisterScreenProps {
-  setCurrentUser: (username: string) => void;
-}
+type RegisterScreenProps = RegisterPropsFromRedux; // interface RegisterScreen Props extends RegisterPropsFromRedux when needed
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ setCurrentUser }) => {
   const {
@@ -42,11 +41,13 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ setCurrentUser }) => {
       (async () =>
         // set access token
         await SecureStore.setItem(SecureStoreEnum.TOKEN, signup.accessToken))();
-      setCurrentUser(signup.user.username);
+      setCurrentUser({ username: signup.user.username, id: signup.user.id });
       navigateToHome();
     } else if (error) {
-      (async () =>
-        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch())();
+      (async () => {
+        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch();
+        await SecureStore.deleteItem(SecureStoreEnum.USER_INFO).catch();
+      })();
       toastProvider.showError(error.message);
     }
   }, [loading, error, gqlData, toastProvider, navigateToHome]);

@@ -6,9 +6,9 @@ const styles = StyleSheet.create({
   cardStyle: {
     elevation: 10,
     borderRadius: 20,
-    width: "100%",
     backgroundColor: colors.white,
     padding: 25,
+    margin: 0,
     marginTop: grid.genericSpacing,
     marginBottom: grid.genericSpacing,
   },
@@ -17,13 +17,15 @@ const styles = StyleSheet.create({
     fontFamily: montserrat.bold,
     textAlign: "left",
     color: colors.black,
-    margin: 0,
+    marginBottom: 0,
     padding: 0,
   },
   cardHeader: {
+    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    marginBottom: 10,
   },
 });
 

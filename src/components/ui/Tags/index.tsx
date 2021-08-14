@@ -5,7 +5,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { colors } from "@app/utils";
 import styles from "./styles";
 
-interface Tag extends ChipProps {
+export interface Tag extends ChipProps {
   id?: string;
   title: string;
 }
@@ -17,7 +17,12 @@ interface TagsProps {
   color?: "teal" | "lightbrown" | "orange";
 }
 
-const Tags: React.FC<TagsProps> = ({ tags, id, variant = "round", color = "orange" }) => {
+const Tags: React.FC<TagsProps> = ({
+  tags,
+  id,
+  variant = "round",
+  color = "orange",
+}) => {
   return (
     <View data-testid={id} style={styles.container}>
       {tags.map(({ id, title, ...rest }, index) => (
@@ -26,7 +31,11 @@ const Tags: React.FC<TagsProps> = ({ tags, id, variant = "round", color = "orang
           data-testid={id}
           title={title}
           {...rest}
-          buttonStyle={{ borderRadius: variant === "round" ? 30 : 3, marginRight: RFValue(10), backgroundColor: colors[color] }}
+          buttonStyle={{
+            borderRadius: variant === "round" ? 30 : 3,
+            marginRight: RFValue(10),
+            backgroundColor: colors[color],
+          }}
         />
       ))}
     </View>
