@@ -31,9 +31,11 @@ const TabButtonGroup: React.FC<TabButtonGroupProps> = ({
             type={selected ? "solid" : "outline"}
             containerStyle={{
               marginRight: RFValue(10),
-              
             }}
-            buttonStyle={{ backgroundColor: selected ? colors.darkBrown : colors.white, borderColor: colors.darkBrown }}
+            buttonStyle={{
+              backgroundColor: selected ? colors.darkBrown : colors.white,
+              borderColor: colors.darkBrown,
+            }}
             titleStyle={{ color: selected ? colors.white : colors.darkBrown }}
           />
         );

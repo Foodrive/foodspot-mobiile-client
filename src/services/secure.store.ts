@@ -2,6 +2,7 @@ import { setItemAsync, getItemAsync, deleteItemAsync } from "expo-secure-store";
 
 export enum SecureStoreEnum {
   TOKEN = "token",
+  USER_INFO = "userInfo",
 }
 
 const isJsonString = (value: any): boolean => {

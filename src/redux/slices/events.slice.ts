@@ -4,22 +4,23 @@ import { EventCreateData, EventType } from "@app/types/event.types";
 // Payload Types
 type CreateDataChange = Partial<EventCreateData>;
 
-// State
-
-interface EventState {
+export interface EventsState {
   createData?: EventCreateData;
+  currentEventId: string | null;
 }
 
-const initialState: EventState = {
+const initialState: EventsState = {
+  currentEventId: null,
   createData: undefined,
 };
 
-// Slice
-
-const eventSlice = createSlice({
-  name: "event",
+const eventsSlice = createSlice({
+  name: "events",
   initialState,
   reducers: {
+    setCurrentEventId: (state, action: PayloadAction<string | null>) => {
+      state.currentEventId = action.payload;
+    },
     initCreate(state, action: PayloadAction<EventType>) {
       state.createData = {
         type: action.payload,
@@ -38,6 +39,10 @@ const eventSlice = createSlice({
   },
 });
 
-export const { initCreate, updateCreateData } = eventSlice.actions;
+export const {
+  setCurrentEventId,
+  initCreate,
+  updateCreateData,
+} = eventsSlice.actions;
 
-export default eventSlice.reducer;
+export default eventsSlice.reducer;

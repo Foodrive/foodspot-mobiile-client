@@ -1,5 +1,5 @@
 export enum EventType {
-  foodDrive = "FOODDRIVE",
+  foodDrive = "FoodDrive",
 }
 
 export interface EventCreateData {

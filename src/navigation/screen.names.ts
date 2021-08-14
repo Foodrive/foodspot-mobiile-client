@@ -2,6 +2,10 @@ const common = {
   login: "LoginScreen",
   registration: "RegistrationScreen",
   app: "App",
+  events: {
+    createEvent: "CreateEvent",
+    eventDetails: "EventDetails",
+  },
 };
 
 const app = {
@@ -21,9 +25,8 @@ const home = {
 };
 
 const events = {
-  userEvents: "UserEvents",
-  organisedEvents: "OrganisedEvents",
-  eventHistory: "EventHistory",
+  eventsListView: "eventsListView",
+  eventHistoryDetails: "EventHistoryDetails",
   eventProgress: "EventProgress",
   attendeeList: "AttendeeList",
 };
