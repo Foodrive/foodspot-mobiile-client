@@ -6,7 +6,6 @@ import { grid } from "@app/utils";
 export const useStyles = () =>
   StyleSheet.create({
     content: {
-      flex: 1,
       padding: grid.outerRule,
     },
     headerText: {
@@ -17,5 +16,6 @@ export const useStyles = () =>
     header: {
       flexDirection: "row",
       justifyContent: "space-between",
+      alignItems: "center"
     },
   });
