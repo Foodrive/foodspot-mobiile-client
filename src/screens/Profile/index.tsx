@@ -10,6 +10,8 @@ const UserProfile: React.FC = () => {
   const navigation = useNavigation();
   const handleLogout = useCallback(async () => {
     await SecureStore.deleteItem(SecureStoreEnum.TOKEN);
+    await SecureStore.deleteItem(SecureStoreEnum.USER_INFO);
+
     const resetHistory = CommonActions.reset({
       index: 0,
       routes: [{ name: SCREEN_NAMES.common.login }],

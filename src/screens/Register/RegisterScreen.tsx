@@ -41,11 +41,13 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ setCurrentUser }) => {
       (async () =>
         // set access token
         await SecureStore.setItem(SecureStoreEnum.TOKEN, signup.accessToken))();
-      setCurrentUser(signup.user.username);
+      setCurrentUser({ username: signup.user.username, id: signup.user.id });
       navigateToHome();
     } else if (error) {
-      (async () =>
-        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch())();
+      (async () => {
+        await SecureStore.deleteItem(SecureStoreEnum.TOKEN).catch();
+        await SecureStore.deleteItem(SecureStoreEnum.USER_INFO).catch();
+      })();
       toastProvider.showError(error.message);
     }
   }, [loading, error, gqlData, toastProvider, navigateToHome]);
