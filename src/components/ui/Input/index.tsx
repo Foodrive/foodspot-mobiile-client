@@ -58,6 +58,7 @@ const Input: React.FC<InputProps> = ({
       inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
       inputStyle={[styles.input, inputStyle]}
       labelStyle={[styles.label, labelStyle]}
+      errorStyle={styles.errorStyle}
       secureTextEntry={type === "password"}
       {...rest}
     />

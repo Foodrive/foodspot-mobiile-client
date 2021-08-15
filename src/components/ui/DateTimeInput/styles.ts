@@ -39,6 +39,8 @@ export const useStyles = ({ date }: StyleProps) => {
     },
     errorText: {
       color: colors.danger,
+      fontSize: RFValue(12),
+      paddingHorizontal: 5,
     },
   });
 };

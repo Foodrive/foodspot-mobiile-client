@@ -17,5 +17,7 @@ export const useStyles = () =>
     },
     errorText: {
       color: colors.danger,
+      fontSize: RFValue(12),
+      paddingHorizontal: 5,
     },
   });

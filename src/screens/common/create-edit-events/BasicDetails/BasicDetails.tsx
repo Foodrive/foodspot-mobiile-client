@@ -5,10 +5,13 @@ import { useStyles } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import Card from "@app/components/ui/Card";
 import { useForm } from "react-hook-form";
-import { FormTabSelect } from "@app/components/forms";
+import {
+  FormDateTimeInput,
+  FormInput,
+  FormTabSelect,
+  getErrorMessage,
+} from "@app/components/forms";
 import Button from "@app/components/ui/Button";
-import Input from "@app/components/ui/Input";
-import { DateTimeInput } from "@app/components/ui/DateTimeInput";
 
 const BasicDetails: React.FC = () => {
   const styles = useStyles();
@@ -20,10 +23,6 @@ const BasicDetails: React.FC = () => {
   } = useForm();
 
   const eventTypes = [
-    {
-      displayText: "Food Drive",
-      value: "FoodDrive",
-    },
     {
       displayText: "Food Drive",
       value: "FoodDrive",
@@ -49,12 +48,31 @@ const BasicDetails: React.FC = () => {
           label="Event Type"
           options={eventTypes}
           color="primary"
+          rules={{ required: true }}
+          errorMessage={getErrorMessage("Event Type", errors.eventType)}
         />
-        <Input id="input" type="location" label="Location" />
-        <DateTimeInput
-          id="date-input"
-          onChangeText={() => console.log()}
-          label="Date"
+        <FormInput
+          name="location"
+          control={control}
+          type="location"
+          label="Location"
+          placeholder="Enter location details"
+          rules={{ required: true }}
+          errorMessage={getErrorMessage("Location", errors.location)}
+        />
+        <FormDateTimeInput
+          name="startDate"
+          control={control}
+          label="Start Date"
+          rules={{ required: true }}
+          errorMessage={getErrorMessage("Start Date", errors.startDate)}
+        />
+        <FormDateTimeInput
+          name="endDate"
+          control={control}
+          label="End Date"
+          rules={{ required: true }}
+          errorMessage={getErrorMessage("End Date", errors.endDate)}
         />
       </Card>
       <Button id="login-btn" title="Next" onPress={handleSubmit(onSubmit)} />

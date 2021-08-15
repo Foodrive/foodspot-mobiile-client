@@ -17,6 +17,10 @@ const styles = StyleSheet.create({
     color: colors.dark,
     fontSize: RFValue(14),
   },
+  errorStyle: {
+    color: colors.danger,
+    fontSize: RFValue(12),
+  },
 });
 
 export default styles;
