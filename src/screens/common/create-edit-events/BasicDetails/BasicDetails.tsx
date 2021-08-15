@@ -122,7 +122,12 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
           </>
         )}
       </Card>
-      <Button id="login-btn" title="Next" onPress={handleSubmit(onSubmit)} />
+      <Button
+        color="secondary"
+        id="login-btn"
+        title="Next"
+        onPress={handleSubmit(onSubmit)}
+      />
     </View>
   );
 };
