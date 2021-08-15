@@ -55,7 +55,6 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
         startDate: data.startDate,
         endDate: data.endDate,
       });
-      console.log(data);
     },
     [updateCreateData],
   );
