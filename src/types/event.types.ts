@@ -5,7 +5,7 @@ export enum EventType {
 export interface EventCreateData {
   // Basic details
   type: EventType;
-  location?: string;
+  location?: string; // TODO extend this to be location type
   startDate?: string;
   endDate?: string;
   // Event description

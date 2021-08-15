@@ -21,6 +21,9 @@ const eventsSlice = createSlice({
     setCurrentEventId: (state, action: PayloadAction<string | null>) => {
       state.currentEventId = action.payload;
     },
+    resetCreateData(state) {
+      state.createData = undefined;
+    },
     initCreate(state, action: PayloadAction<EventType>) {
       state.createData = {
         type: action.payload,
@@ -43,6 +46,7 @@ export const {
   setCurrentEventId,
   initCreate,
   updateCreateData,
+  resetCreateData,
 } = eventsSlice.actions;
 
 export default eventsSlice.reducer;
