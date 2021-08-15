@@ -26,7 +26,7 @@ export const useStyles = ({ color, type }: StyleProps) => {
     titleStyle: {
       fontFamily: montserrat.semiBold,
       textTransform: "capitalize",
-      color: type === "clear" ? colorMap[color] : undefined,
+      color: type === "clear" ? colorMap[color] : colors.white,
       textDecorationLine: type === "clear" ? "underline" : "none",
     },
   });

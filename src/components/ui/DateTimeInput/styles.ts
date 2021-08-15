@@ -12,6 +12,11 @@ export const useStyles = ({ date }: StyleProps) => {
       width: "100%",
       paddingHorizontal: 10,
     },
+    labelText: {
+      fontWeight: "bold",
+      fontSize: RFValue(14),
+      color: colors.dark,
+    },
     inputContainer: {
       flexDirection: "row",
       borderColor: colors.darkAccent,

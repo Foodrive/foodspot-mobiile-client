@@ -1,8 +1,12 @@
 import { createPageNavigator, NavScreen } from "@app/navigation/utils";
 import SCREEN_NAMES from "./screen.names";
 import { AppNavigation } from "@app/navigation/AppNavigation";
-import { EventDetails, LoginScreen, RegisterScreen } from "@app/screens";
-import BasicDetails from "@app/screens/common/create-edit-events/BasicDetails/BasicDetails";
+import {
+  EventDetails,
+  LoginScreen,
+  RegisterScreen,
+  BasicDetails,
+} from "@app/screens";
 
 // Root screens. Put application-wide screens here
 
