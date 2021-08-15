@@ -3,7 +3,10 @@ const common = {
   registration: "RegistrationScreen",
   app: "App",
   events: {
-    createEvent: "CreateEvent",
+    // Create Events
+    basicDetails: "BasicDetails",
+
+    // Event details
     eventDetails: "EventDetails",
   },
 };

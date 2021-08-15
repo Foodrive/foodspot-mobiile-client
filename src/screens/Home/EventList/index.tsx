@@ -85,7 +85,7 @@ const EventList: React.FC = () => {
         iconColor={color}
         key={`event-list-item-${item.id}`}
         id={`event-list-item-${item.id}`}
-        style={{ marginVertical: 5 }}
+        style={{ marginVertical: 2 }}
         title={item.name}
         otherInformation={
           <View>
