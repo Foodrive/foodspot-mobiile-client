@@ -9,11 +9,12 @@ import { useNavigation, CommonActions } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
 import { Divider } from "react-native-elements";
-
+import { Allergies } from "../../utils/constants";
 
 const UserProfile: React.FC = () => {
   const navigation = useNavigation();
   const [editable, setEditable] = useState(true);
+  const [checkedState, setCheckedState] = useState(new Array(Allergies.length).fill(false));
   const handleLogout = useCallback(async () => {
     await SecureStore.deleteItem(SecureStoreEnum.TOKEN);
     const resetHistory = CommonActions.reset({
@@ -22,6 +23,13 @@ const UserProfile: React.FC = () => {
     });
     navigation.dispatch(resetHistory);
   }, [navigation]);
+
+  const handleCheckboxIconPress = (position: number) => {
+    const updatedCheckedState = checkedState.map((item, index) => 
+      index === position ? !item : item);
+    setCheckedState(updatedCheckedState);
+  };
+
 
   const handleEditIconPress = () => {
     setEditable(!editable);
@@ -38,7 +46,7 @@ const UserProfile: React.FC = () => {
       </View>
       <Text style={styles.title}>User Settings</Text>
       <View style={styles.editButton}>
-        <IconButton icon="create-outline" reverse={false} onPress={handleEditIconPress} /> 
+        <IconButton icon="create-outline" reverse={false} onPress={handleEditIconPress} color={editable ? "primary" : "default"}  /> 
       </View>
       <View style={styles.profileCard}>
         <Text style={styles.profileTitle}>Your Profile</Text>
@@ -51,14 +59,11 @@ const UserProfile: React.FC = () => {
         <Input id="user-profile-email-name" type="email" editable={editable} />
         <Text style={styles.inputTitle}>Allergies</Text>
         <View style={styles.allergyList}>
-          <CheckboxItem id="user-allergy-checkbox-milk" title="Milk" />
-          <CheckboxItem id="user-allergy-checkbox-egg" title="Egg" />
-          <CheckboxItem id="user-allergy-checkbox-nuts" title="Nuts" />
-          <CheckboxItem id="user-allergy-checkbox-lupin" title="Lupin" />
-          <CheckboxItem id="user-allergy-checkbox-fish" title="Fish" />
-          <CheckboxItem id="user-allergy-checkbox-wheat" title="Wheat" />
-          <CheckboxItem id="user-allergy-checkbox-soy" title="Soy" />
-          <CheckboxItem id="user-allergy-checkbox-sesame" title="Sesame" />
+          {Allergies.map(({name}, index) => {
+            return(
+              <CheckboxItem key={index} id={`user-allergy-checkbox-${name}`} title={name} checked={checkedState[index]} onPress={() => handleCheckboxIconPress(index)} />
+            );
+          })}
         </View>
       </View>
       <Button id="logout-button" title="Log out" onPress={handleLogout} /> 
