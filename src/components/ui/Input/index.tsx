@@ -49,8 +49,13 @@ const Input: React.FC<InputProps> = (props) => {
       data-testid={id}
       leftIcon={icon}
       keyboardType={keyboard}
+<<<<<<< HEAD
       inputContainerStyle={styles.inputContainer}
       inputStyle={editable ? styles.input : styles.uneditableInput}
+=======
+      inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
+      inputStyle={[styles.input, inputStyle]}
+>>>>>>> develop
       secureTextEntry={type === "password"}
       disabled={!editable}
 

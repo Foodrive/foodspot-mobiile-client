@@ -3,11 +3,16 @@ import { TouchableOpacity } from "react-native";
 import Icon from "@app/components/ui/Icon";
 import { colors } from "@app/utils";
 
+interface ColorMap {
+  primary: string;
+  secondary: string;
+  default: string;
+}
 interface IconButtonProps {
   id?: string;
   onPress?: () => void;
   icon: string;
-  color?: "primary" | "secondary" | "default";
+  color?: keyof ColorMap;
   size?: "sm" | "md" | "lg" | "xl" | number;
   reverse?: boolean;
 }

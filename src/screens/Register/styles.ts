@@ -15,6 +15,7 @@ export const useStyles = () =>
     card: {
       marginTop: "25%",
       flexDirection: "column",
+      width: "100%",
     },
     headerText: {
       fontSize: RFValue(18),

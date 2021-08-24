@@ -27,3 +27,19 @@ export const GET_FOOD_DRIVE_BY_ID = gql`
     }
   }
 `;
+
+export const GET_INVITATIONS_BY_USER = gql`
+  query($getInvitationsUserId: ID!) {
+    getInvitations(userId: $getInvitationsUserId) {
+      id
+      attendeeId
+      status
+      event {
+        id
+        name
+        startDate
+        endDate
+      }
+    }
+  }
+`;
