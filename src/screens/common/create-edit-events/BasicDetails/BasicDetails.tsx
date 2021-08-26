@@ -14,6 +14,11 @@ import {
 import Button from "@app/components/ui/Button";
 import { BasicDetailsReduxProps } from "./container";
 import { EventType } from "@app/types/event.types";
+import {
+  notBeforeDate,
+  notInThePast,
+  notAfterDate,
+} from "@app/utils/validators";
 
 type BasicDetailsProps = BasicDetailsReduxProps;
 
@@ -106,17 +111,33 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
               name="startDate"
               control={control}
               label="Start Date"
-              rules={{ required: true }}
+              rules={{
+                required: true,
+                validate: {
+                  notInThePast: notInThePast(),
+                  notAfterDate: notAfterDate(createData.endDate),
+                },
+              }}
               value={createData ? createData.startDate : ""}
-              errorMessage={getErrorMessage("Start Date", errors.startDate)}
+              errorMessage={getErrorMessage("Start Date", errors.startDate, [
+                "the end date",
+              ])}
             />
             <FormDateTimeInput
               name="endDate"
               control={control}
               label="End Date"
-              rules={{ required: true }}
+              rules={{
+                required: true,
+                validate: {
+                  notInThePast: notInThePast(),
+                  notBeforeDate: notBeforeDate(createData.startDate),
+                },
+              }}
               value={createData ? createData.endDate : ""}
-              errorMessage={getErrorMessage("End Date", errors.endDate)}
+              errorMessage={getErrorMessage("End Date", errors.endDate, [
+                "the start date",
+              ])}
             />
           </>
         )}
