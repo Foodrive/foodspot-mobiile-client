@@ -6,3 +6,14 @@ export enum InvitationStatus {
   cancelled = "CANCELLED",
   expired = "EXPIRED",
 }
+
+export const allergens = [
+  "Milk",
+  "Sesame",
+  "Eggs",
+  "Nuts",
+  "Wheat",
+  "Fish",
+  "Lupin",
+  "Soy",
+];

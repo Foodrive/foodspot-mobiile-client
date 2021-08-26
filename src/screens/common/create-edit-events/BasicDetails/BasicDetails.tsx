@@ -146,7 +146,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
       </Card>
       <Button
         color="secondary"
-        id="login-btn"
+        id="submit-btn"
         title="Next"
         onPress={handleSubmit(onSubmit)}
       />
