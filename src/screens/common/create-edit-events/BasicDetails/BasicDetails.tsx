@@ -19,6 +19,7 @@ import {
   notInThePast,
   notAfterDate,
 } from "@app/utils/validators";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type BasicDetailsProps = BasicDetailsReduxProps;
 
@@ -60,8 +61,9 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
         startDate: data.startDate,
         endDate: data.endDate,
       });
+      navigation.navigate(SCREEN_NAMES.common.events.ceEventDesc);
     },
-    [updateCreateData],
+    [updateCreateData, navigation],
   );
 
   const onBack = useCallback(() => {

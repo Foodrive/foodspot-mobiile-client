@@ -5,6 +5,7 @@ const common = {
   events: {
     // Create Events
     basicDetails: "BasicDetails",
+    ceEventDesc: "CreateEventDescription",
 
     // Event details
     eventDetails: "EventDetails",
