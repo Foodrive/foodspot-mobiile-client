@@ -10,7 +10,7 @@ export enum InvitationStatus {
 export const allergens = [
   "Milk",
   "Sesame",
-  "Eggs",
+  "Egg",
   "Nuts",
   "Wheat",
   "Fish",

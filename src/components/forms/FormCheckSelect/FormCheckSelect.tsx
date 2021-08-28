@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import CheckBoxItem from "@app/components/ui/CheckBoxItem";
 import { Control, RegisterOptions, useController } from "react-hook-form";
 import { useStyles } from "./styles";
-import { ScrollView, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 interface CheckOption {
   displayText: string;
@@ -37,7 +37,7 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
 
   const styles = useStyles();
 
-  const [curOptions, setCurOptions] = useState<Record<string, boolean>>({});
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
 
   const { field } = useController({
     control,
@@ -51,19 +51,19 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
       acc[item.value] = selectedOptions.includes(item.value);
       return acc;
     }, {});
-    setCurOptions(record);
-  }, [setCurOptions]);
+    setSelectedItems(record);
+  }, [setSelectedItems]);
 
   const onSelect = useCallback(
     (value: string) => {
-      const newStateValues = { ...curOptions, [value]: !curOptions[value] };
+      const newStateValues = { ...selectedItems, [value]: !selectedItems[value] };
       const newValues = Object.keys(newStateValues).filter(
         (value) => newStateValues[value],
       );
-      setCurOptions(newStateValues);
+      setSelectedItems(newStateValues);
       field.onChange(newValues);
     },
-    [field.onChange, setCurOptions, curOptions],
+    [field.onChange, setSelectedItems, selectedItems],
   );
 
   return (
@@ -75,7 +75,7 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
             key={item.value}
             id={item.value}
             title={item.displayText}
-            checked={curOptions[item.value] ?? false}
+            checked={selectedItems[item.value] ?? false}
             onPress={() => onSelect(item.value)}
           />
         ))}
