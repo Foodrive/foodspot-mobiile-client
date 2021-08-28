@@ -84,11 +84,8 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ setCurrentUser }) => {
   useEffect(() => {
     (async () => {
       const token = await SecureStore.getItem(SecureStoreEnum.TOKEN);
-      const userInfoString = await SecureStore.getItem(
-        SecureStoreEnum.USER_INFO,
-      );
-      if (userInfoString) {
-        const userInfo = JSON.parse(userInfoString);
+      const userInfo = await SecureStore.getItem(SecureStoreEnum.USER_INFO);
+      if (userInfo) {
         setCurrentUser({ username: userInfo.username, id: userInfo.id });
       }
       if (token) {

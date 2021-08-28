@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 
 export interface DateTimeInputProps {
   id: string;
+  label?: string;
   value?: string; // GMT format
   onChangeText: (text: string) => void;
   errorMessage?: string;
@@ -16,6 +17,7 @@ export interface DateTimeInputProps {
 const DateTimeInput: React.FC<DateTimeInputProps> = ({
   id,
   value,
+  label,
   onChangeText,
   errorMessage,
   placeholder,
@@ -54,12 +56,13 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
     if (currentDate) {
       return dayjs(currentDate).format("DD MMMM [at] hh:mm a");
     } else {
-      return placeholder || "Enter date";
+      return placeholder || "Select date";
     }
   }, [placeholder, currentDate]);
 
   return (
     <View style={styles.container}>
+      {label && <Text style={styles.labelText}>{label}</Text>}
       <TouchableOpacity onPress={showDatePicker}>
         <View style={styles.inputContainer} data-testid={`${id}-date-input`}>
           <View>

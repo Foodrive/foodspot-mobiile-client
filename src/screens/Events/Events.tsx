@@ -66,7 +66,14 @@ const Events: React.FC<EventsProps> = ({ currentUser, setCurrentEventId }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Your events</Text>
-        <IconButton id="create-button" icon="add" color="default" />
+        <IconButton
+          id="create-button"
+          icon="add"
+          color="default"
+          onPress={() =>
+            navigation.navigate(SCREEN_NAMES.common.events.basicDetails)
+          }
+        />
       </View>
       <View style={styles.tabs}>
         <TabButtonGroup

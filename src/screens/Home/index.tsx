@@ -4,6 +4,8 @@ import SearchBar from "@app/components/ui/SearchBar";
 import EventList from "./EventList";
 import { IconButton } from "@app/components/ui";
 import { useStyles } from "./styles";
+import { useNavigation } from "@react-navigation/native";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 interface HomeScreenProps {
   appName: string;
@@ -12,6 +14,7 @@ interface HomeScreenProps {
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const [search, setSearch] = useState<string>("");
   const styles = useStyles();
+  const navigation = useNavigation();
 
   const updateSearch = useCallback((search: string) => {
     setSearch(search);
@@ -30,7 +33,14 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
           <View>
             <Text style={styles.headerText}>Food near you...</Text>
           </View>
-          <IconButton id="create-button" icon="add" color="default" />
+          <IconButton
+            id="create-button"
+            icon="add"
+            color="default"
+            onPress={() =>
+              navigation.navigate(SCREEN_NAMES.common.events.basicDetails)
+            }
+          />
         </View>
         <EventList />
       </View>
