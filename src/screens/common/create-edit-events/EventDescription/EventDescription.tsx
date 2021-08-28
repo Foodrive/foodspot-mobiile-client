@@ -17,6 +17,7 @@ import { allergens } from "@app/utils/constants";
 type EventDescriptionProps = EventDescriptionReduxProps;
 
 const EventDescription: React.FC<EventDescriptionProps> = ({
+  createData,
   updateCreateData,
 }) => {
   const styles = useStyles();
@@ -70,6 +71,7 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
             placeholder="Enter event name"
             rules={{ required: true }}
             errorMessage={getErrorMessage("Event Name", errors.eventName)}
+            value={createData?.name ?? ""}
           />
           <FormInput
             name="eventDesc"
@@ -78,6 +80,7 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
             type="text"
             placeholder="Enter event description"
             rules={{ required: true }}
+            value={createData?.description ?? ""}
             errorMessage={getErrorMessage(
               "Event Description",
               errors.eventDesc,
@@ -89,6 +92,7 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
             control={control}
             options={allergenOptions}
             rules={{ required: true }}
+            selectedOptions={createData?.allergens ?? []}
             errorMessage={getErrorMessage("Allergens", errors.allergens)}
           />
         </ScrollView>
