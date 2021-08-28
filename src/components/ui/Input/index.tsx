@@ -28,6 +28,7 @@ const Input: React.FC<InputProps> = ({
   keyboardType,
   inputContainerStyle,
   inputStyle,
+  labelStyle,
   ...rest
 }) => {
   const icon = useMemo(() => {
@@ -56,6 +57,8 @@ const Input: React.FC<InputProps> = ({
       keyboardType={keyboard}
       inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
       inputStyle={[styles.input, inputStyle]}
+      labelStyle={[styles.label, labelStyle]}
+      errorStyle={styles.errorStyle}
       secureTextEntry={type === "password"}
       {...rest}
     />
