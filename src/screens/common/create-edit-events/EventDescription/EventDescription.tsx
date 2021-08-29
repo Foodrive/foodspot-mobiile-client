@@ -13,6 +13,7 @@ import {
 import { EventDescriptionReduxProps } from "./container";
 import Button from "@app/components/ui/Button";
 import { allergens } from "@app/utils/constants";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type EventDescriptionProps = EventDescriptionReduxProps;
 
@@ -44,8 +45,9 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
         description: data.eventDesc,
         allergens: data.allergens,
       });
+      navigation.navigate(SCREEN_NAMES.common.events.planningDetails);
     },
-    [updateCreateData],
+    [updateCreateData, navigation],
   );
 
   return (

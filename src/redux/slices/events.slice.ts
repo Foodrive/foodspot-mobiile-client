@@ -12,6 +12,7 @@ interface EventCreateData {
   description?: string;
   allergens?: string[]; // This is converted to food item
   // Planning details
+  autoAccept?: boolean;
   maxCapacity?: number;
   // TODO extend to support number of volunteers
   // Contact details
