@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { TouchableOpacity } from "react-native";
 import Icon from "@app/components/ui/Icon";
 import { colors } from "@app/utils";
+import styles from "./styles";  //to fix
 
 interface ColorMap {
   primary: string;
@@ -25,7 +26,7 @@ const sizeMap = {
 };
 
 const colorMap = {
-  primary: colors.teal,
+  primary: colors.blue,
   secondary: colors.secondary,
   default: colors.dark,
 };
