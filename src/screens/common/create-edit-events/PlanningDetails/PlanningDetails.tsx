@@ -11,6 +11,7 @@ import Button from "@app/components/ui/Button";
 import { getErrorMessage } from "@app/components/forms";
 import { regexValidator } from "@app/utils/validators";
 import { PlanningDetailsReduxProps } from "./container";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type PlanningDetailsProps = PlanningDetailsReduxProps;
 
@@ -45,8 +46,9 @@ const PlanningDetails: React.FC<PlanningDetailsProps> = ({
         autoAccept: data.acceptanceType === acceptanceType.Automated,
         maxCapacity: parseInt(data.maxCapacity),
       });
+      navigation.navigate(SCREEN_NAMES.common.events.ceContactDetails);
     },
-    [updateCreateData],
+    [updateCreateData, navigation],
   );
 
   return (
