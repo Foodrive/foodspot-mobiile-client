@@ -5,11 +5,22 @@ import { RFValue } from "react-native-responsive-fontsize";
 import styles from "./styles";
 import { colors } from "@app/utils";
 
-interface TabButtonGroupProps {
+interface ColorMap {
+  primary: string;
+  default: string;
+}
+
+const colorMap: ColorMap = {
+  primary: colors.teal,
+  default: colors.darkBrown,
+};
+
+export interface TabButtonGroupProps {
   id?: string;
   onPress: (index: number) => void;
   selectedIndex: number;
   buttons: string[];
+  color?: keyof ColorMap;
 }
 
 const TabButtonGroup: React.FC<TabButtonGroupProps> = ({
@@ -17,6 +28,7 @@ const TabButtonGroup: React.FC<TabButtonGroupProps> = ({
   onPress,
   selectedIndex,
   buttons,
+  color = "default",
 }) => {
   return (
     <View data-testid={id} style={styles.container}>
@@ -33,8 +45,8 @@ const TabButtonGroup: React.FC<TabButtonGroupProps> = ({
               marginRight: RFValue(10),
             }}
             buttonStyle={{
-              backgroundColor: selected ? colors.darkBrown : colors.white,
-              borderColor: colors.darkBrown,
+              backgroundColor: selected ? colorMap[color] : colors.white,
+              borderColor: colorMap[color],
             }}
             titleStyle={{ color: selected ? colors.white : colors.darkBrown }}
           />

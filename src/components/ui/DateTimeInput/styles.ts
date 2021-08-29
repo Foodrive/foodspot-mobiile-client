@@ -12,6 +12,11 @@ export const useStyles = ({ date }: StyleProps) => {
       width: "100%",
       paddingHorizontal: 10,
     },
+    labelText: {
+      fontWeight: "bold",
+      fontSize: RFValue(14),
+      color: colors.dark,
+    },
     inputContainer: {
       flexDirection: "row",
       borderColor: colors.darkAccent,
@@ -34,6 +39,8 @@ export const useStyles = ({ date }: StyleProps) => {
     },
     errorText: {
       color: colors.danger,
+      fontSize: RFValue(12),
+      paddingHorizontal: 5,
     },
   });
 };

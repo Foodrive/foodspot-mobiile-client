@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ViewStyle } from "react-native";
 import Icon from "@app/components/ui/Icon";
 import { colors } from "@app/utils";
 import styles from "./styles";  //to fix
@@ -16,6 +16,7 @@ interface IconButtonProps {
   color?: keyof ColorMap;
   size?: "sm" | "md" | "lg" | "xl" | number;
   reverse?: boolean;
+  containerStyle?: ViewStyle;
 }
 
 const sizeMap = {
@@ -37,7 +38,8 @@ const IconButton: React.FC<IconButtonProps> = ({
   icon,
   color = "default",
   size = "md",
-  reverse = true
+  reverse = true,
+  containerStyle,
 }): JSX.Element => {
   const iconSize = useMemo(() => {
     if (typeof size === "number") {
@@ -57,6 +59,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       raised
       reverse={reverse}
       size={iconSize}
+      containerStyle={containerStyle}
     />
   );
 };

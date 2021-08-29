@@ -30,7 +30,7 @@ class SecureStore {
     }
   }
 
-  async getItem(key: string): Promise<string | null> {
+  async getItem(key: string): Promise<any | null> {
     if (SecureStore.cache[key]) {
       return SecureStore.cache[key];
     }

@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors, montserrat } from "@app/utils";
+import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -16,6 +17,14 @@ const styles = StyleSheet.create({
   input: {
     paddingLeft: 5,
     fontFamily: montserrat.regular,
+  },
+  label: {
+    color: colors.dark,
+    fontSize: RFValue(14),
+  },
+  errorStyle: {
+    color: colors.danger,
+    fontSize: RFValue(12),
   },
 });
 
