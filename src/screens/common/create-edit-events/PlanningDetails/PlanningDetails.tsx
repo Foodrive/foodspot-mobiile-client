@@ -9,8 +9,15 @@ import { FormInput, FormTabSelect } from "@app/components/forms";
 import { acceptanceType } from "@app/utils/constants";
 import Button from "@app/components/ui/Button";
 import { getErrorMessage } from "@app/components/forms";
+import { regexValidator } from "@app/utils/validators";
+import { PlanningDetailsReduxProps } from "./container";
 
-const PlanningDetails: React.FC = () => {
+type PlanningDetailsProps = PlanningDetailsReduxProps;
+
+const PlanningDetails: React.FC<PlanningDetailsProps> = ({
+  createData,
+  updateCreateData,
+}) => {
   const styles = useStyles();
   const navigation = useNavigation();
   const {
@@ -34,14 +41,12 @@ const PlanningDetails: React.FC = () => {
 
   const onSubmit = useCallback(
     async (data: Record<string, any>) => {
-      console.log(data);
-      // updateCreateData({
-      //   name: data.eventName,
-      //   description: data.eventDesc,
-      //   allergens: data.allergens,
-      // });
+      updateCreateData({
+        autoAccept: data.acceptanceType === acceptanceType.Automated,
+        maxCapacity: parseInt(data.maxCapacity),
+      });
     },
-    [navigation],
+    [updateCreateData],
   );
 
   return (
@@ -64,6 +69,7 @@ const PlanningDetails: React.FC = () => {
             "Acceptance Behaviour",
             errors.acceptanceType,
           )}
+          selectedIndex={createData?.autoAccept ? 0 : 1}
         />
         <FormInput
           name="maxCapacity"
@@ -72,10 +78,13 @@ const PlanningDetails: React.FC = () => {
           label="Max capacity"
           rules={{
             required: true,
-            pattern: { value: /^\d+$/, message: "must be a whole number" },
+            pattern: regexValidator.wholeNumber,
           }}
           errorMessage={getErrorMessage("Max capacity", errors.maxCapacity)}
           placeholder="Max number of people"
+          value={
+            createData?.maxCapacity ? `${createData.maxCapacity}` : undefined
+          }
         />
       </Card>
       <Button

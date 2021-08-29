@@ -1,1 +1,1 @@
-export { default as PlanningDetails } from "./PlanningDetails";
+export { default as PlanningDetails } from "./container";
