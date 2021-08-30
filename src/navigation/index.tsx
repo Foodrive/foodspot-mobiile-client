@@ -7,6 +7,7 @@ import {
   RegisterScreen,
   BasicDetails,
   EventDescription,
+  RegisterEvent,
 } from "@app/screens";
 
 // Root screens. Put application-wide screens here
@@ -35,6 +36,10 @@ const screens: NavScreen[] = [
   {
     name: SCREEN_NAMES.common.events.ceEventDesc,
     component: EventDescription,
+  },
+  {
+    name: SCREEN_NAMES.common.events.registerEvent,
+    component: RegisterEvent,
   },
 ];
 

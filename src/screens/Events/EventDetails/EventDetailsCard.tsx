@@ -19,6 +19,7 @@ interface EventDetailsCardProps {
   allergens: string[];
 }
 
+// TODO Update with invitation info
 const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
   eventType = "Food Drive",
   name,

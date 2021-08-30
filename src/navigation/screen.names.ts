@@ -9,6 +9,7 @@ const common = {
 
     // Event details
     eventDetails: "EventDetails",
+    registerEvent: "RegisterEvent",
   },
 };
 

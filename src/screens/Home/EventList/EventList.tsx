@@ -1,5 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { USER_FOOD_DRIVES } from "@app/graphql/queries";
+import React, { useCallback, useEffect } from "react";
+import {
+  FoodDrive,
+  GetFoodDrives,
+  GET_FOOD_DRIVES,
+} from "@app/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { FlatList, Text, View } from "react-native";
 import ListItem from "@app/components/ui/ListItem";
@@ -7,6 +11,9 @@ import dayjs from "dayjs";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { useStyles } from "./styles";
 import { colors } from "@app/utils";
+import { EventListPropsFromRedux } from "./container";
+import { useNavigation } from "@react-navigation/native";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 interface DayInfo {
   dayText: string;
@@ -14,8 +21,14 @@ interface DayInfo {
   isToday: boolean;
 }
 
-const EventList: React.FC = () => {
-  const { loading, error, data } = useQuery(USER_FOOD_DRIVES);
+type EventListProps = EventListPropsFromRedux;
+
+const EventList: React.FC<EventListProps> = ({
+  setCurrentEventId,
+  setCurrentInvitationId,
+}) => {
+  const navigation = useNavigation();
+  const { loading, error, data } = useQuery<GetFoodDrives>(GET_FOOD_DRIVES);
   const toastProvider = useToastProvider();
   const styles = useStyles();
 
@@ -65,10 +78,6 @@ const EventList: React.FC = () => {
     }
   }, [error, toastProvider]);
 
-  const handleEventSelection = useCallback(() => {
-    //   do somethin
-  }, []);
-
   if (loading) {
     return <Text>Loading...</Text>;
   }
@@ -77,7 +86,7 @@ const EventList: React.FC = () => {
     return <></>;
   }
 
-  const renderItem = ({ item }: any) => {
+  const renderItem = ({ item }: { item: FoodDrive }) => {
     const dateInfo = getDateInfo(item.startDate, item.endDate);
     const color = dateInfo.isToday ? colors.success : colors.lightbrown;
     return (
@@ -93,14 +102,18 @@ const EventList: React.FC = () => {
             <Text style={styles.timeText}>{dateInfo.timeText}</Text>
           </View>
         }
-        onPress={handleEventSelection}
+        onPress={() => {
+          setCurrentEventId(item.id);
+          setCurrentInvitationId(null);
+          navigation.navigate(SCREEN_NAMES.common.events.eventDetails);
+        }}
       />
     );
   };
 
   return (
     <FlatList
-      data={data.getFoodDrives}
+      data={data?.getFoodDrives ?? []}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
     />

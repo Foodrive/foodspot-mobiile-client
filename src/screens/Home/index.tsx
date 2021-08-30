@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { View, Text } from "react-native";
 import SearchBar from "@app/components/ui/SearchBar";
-import EventList from "./EventList";
+import { EventList } from "./EventList";
 import { IconButton } from "@app/components/ui";
 import { useStyles } from "./styles";
 import { useNavigation } from "@react-navigation/native";

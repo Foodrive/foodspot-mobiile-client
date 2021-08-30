@@ -8,10 +8,14 @@ import { IconButton } from "@app/components/ui";
 import styles from "./styles";
 import EventDetailsCard from "./EventDetailsCard";
 import Button from "@app/components/ui/Button";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type EventDetailsProps = EventDetailsPropsFromRedux; // interface EventDetailsProps extends EventDetailsPropsFromRedux when needed
 
-const EventDetails: React.FC<EventDetailsProps> = ({ eventId }) => {
+const EventDetails: React.FC<EventDetailsProps> = ({
+  eventId,
+  invitationId,
+}) => {
   const navigation = useNavigation();
   const { loading, data, error } = useQuery(GET_FOOD_DRIVE_BY_ID, {
     variables: {
@@ -60,12 +64,25 @@ const EventDetails: React.FC<EventDetailsProps> = ({ eventId }) => {
                 [],
               )}
             />
-            <Button
-              id="next-button"
-              title="Next"
-              onPress={() => console.log("next")} // TODO
-              titleStyle={styles.buttonTitle}
-            />
+            {invitationId === null ? (
+              <Button
+                id="next-button"
+                title="Register for event"
+                onPress={() => {
+                  navigation.navigate(SCREEN_NAMES.common.events.registerEvent);
+                }}
+                titleStyle={styles.buttonTitle}
+              />
+            ) : (
+              <Button
+                id="next-button"
+                title="Unregister"
+                onPress={() => {
+                  // TODO
+                }}
+                titleStyle={styles.buttonTitle}
+              />
+            )}
           </>
         )}
       </View>
