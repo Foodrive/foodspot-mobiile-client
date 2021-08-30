@@ -16,6 +16,7 @@ export const useStyles = ({ date }: StyleProps) => {
       fontWeight: "bold",
       fontSize: RFValue(14),
       color: colors.dark,
+      marginBottom: 5,
     },
     inputContainer: {
       flexDirection: "row",

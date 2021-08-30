@@ -6,6 +6,7 @@ import {
 } from "@app/redux/slices/events.slice";
 
 const mapStateToProps = (state: RootState) => ({
+  pageTitle: state.events.ceEventFlowTitle,
   createData: state.events.createData,
 });
 

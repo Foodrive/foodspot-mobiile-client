@@ -6,11 +6,4 @@ export const useStyles = () =>
     container: {
       padding: grid.outerRule,
     },
-    cardContainer: {
-      maxHeight: "75%",
-    },
-    cardWrapper: {
-      height: "100%",
-      paddingBottom: 10,
-    },
   });

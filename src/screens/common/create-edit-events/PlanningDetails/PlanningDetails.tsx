@@ -13,9 +13,15 @@ import { regexValidator } from "@app/utils/validators";
 import { PlanningDetailsReduxProps } from "./container";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 
+const acceptanceOptions = Object.keys(acceptanceType).map((item) => ({
+  displayText: item,
+  value: item,
+}));
+
 type PlanningDetailsProps = PlanningDetailsReduxProps;
 
 const PlanningDetails: React.FC<PlanningDetailsProps> = ({
+  pageTitle,
   createData,
   updateCreateData,
 }) => {
@@ -26,15 +32,6 @@ const PlanningDetails: React.FC<PlanningDetailsProps> = ({
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const acceptanceOptions = useMemo(
-    () =>
-      Object.keys(acceptanceType).map((item) => ({
-        displayText: item,
-        value: item,
-      })),
-    [],
-  );
 
   const onBack = useCallback(() => {
     navigation.goBack();
@@ -55,7 +52,7 @@ const PlanningDetails: React.FC<PlanningDetailsProps> = ({
     <View style={styles.container}>
       <PageHeader
         id="planning-details"
-        title="Event Details"
+        title={pageTitle || "Edit Event"}
         hasBack
         onBackPress={onBack}
       />
@@ -64,7 +61,7 @@ const PlanningDetails: React.FC<PlanningDetailsProps> = ({
           color="primary"
           name="acceptanceType"
           control={control}
-          label="Acceptance Behaviour"
+          label="Invitation Acceptance Behaviour"
           options={acceptanceOptions}
           rules={{ required: true }}
           errorMessage={getErrorMessage(
