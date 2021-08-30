@@ -14,6 +14,7 @@ import { ContactDetailsReduxProps } from "./container";
 type ContactDetailsProps = ContactDetailsReduxProps;
 
 const ContactDetails: React.FC<ContactDetailsProps> = ({
+  pageTitle,
   createData,
   updateCreateData,
 }) => {
@@ -44,7 +45,7 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
     <View style={styles.container}>
       <PageHeader
         id="contact-details"
-        title="Event Details"
+        title={pageTitle || "Edit Event"}
         hasBack
         onBackPress={onBack}
       />
