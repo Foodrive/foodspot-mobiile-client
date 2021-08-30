@@ -16,4 +16,5 @@ export const allergens = [
   "Fish",
   "Lupin",
   "Soy",
+  "None of the above",
 ];
