@@ -18,6 +18,7 @@ import SCREEN_NAMES from "@app/navigation/screen.names";
 type EventDescriptionProps = EventDescriptionReduxProps;
 
 const EventDescription: React.FC<EventDescriptionProps> = ({
+  pageTitle,
   createData,
   updateCreateData,
 }) => {
@@ -52,19 +53,14 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
 
   return (
     <View style={styles.container}>
-      <PageHeader
-        id="event-desc"
-        hasBack
-        title="Event Details"
-        onBackPress={onBack}
-      />
-      <Card
-        id="event-desc-form"
-        title="Event Description"
-        containerStyle={styles.cardContainer}
-        wrapperStyle={styles.cardWrapper}
-      >
-        <ScrollView>
+      <ScrollView>
+        <PageHeader
+          id="event-desc"
+          hasBack
+          title={pageTitle || "Edit Event"}
+          onBackPress={onBack}
+        />
+        <Card id="event-desc-form" title="Event Description">
           <FormInput
             name="eventName"
             label="Name"
@@ -97,14 +93,14 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
             selectedOptions={createData?.allergens ?? []}
             errorMessage={getErrorMessage("Allergens", errors.allergens)}
           />
-        </ScrollView>
-      </Card>
-      <Button
-        color="secondary"
-        id="submit-btn"
-        title="Next"
-        onPress={handleSubmit(onSubmit)}
-      />
+        </Card>
+        <Button
+          color="secondary"
+          id="submit-btn"
+          title="Next"
+          onPress={handleSubmit(onSubmit)}
+        />
+      </ScrollView>
     </View>
   );
 };

@@ -11,6 +11,7 @@ export const useStyles = () =>
       fontWeight: "bold",
       fontSize: RFValue(14),
       color: colors.dark,
+      marginBottom: 5,
     },
     errorContainer: {
       paddingVertical: 10,

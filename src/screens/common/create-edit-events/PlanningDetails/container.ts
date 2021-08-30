@@ -7,6 +7,7 @@ import {
 
 const mapStateToProps = (state: RootState) => ({
   createData: state.events.createData,
+  pageTitle: state.events.ceEventFlowTitle,
 });
 
 const mapDispatchToProps = { updateCreateData };
