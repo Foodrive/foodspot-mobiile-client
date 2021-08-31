@@ -17,3 +17,8 @@ export const allergens = [
   "Lupin",
   "Soy",
 ];
+
+export const acceptanceType = {
+  Automated: "Automated",
+  Manual: "Manual",
+};
