@@ -24,6 +24,10 @@ export const getErrorMessage = (
       return `${fieldName} can't be before ${fields ? fields[0] : ""}`;
     case "notAfterDate":
       return `${fieldName} can't be after ${fields ? fields[0] : ""}`;
+    case "valueAsNumber":
+      return `${fieldName} is not a number.`;
+    case "pattern":
+      return `${fieldName} ${error.message}`;
     default:
       return `${fieldName} has an error`;
   }

@@ -23,11 +23,20 @@ import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type BasicDetailsProps = BasicDetailsReduxProps;
 
+const eventTypes = [
+  {
+    displayText: "Food Drive",
+    value: EventType.foodDrive,
+  },
+];
+
 const BasicDetails: React.FC<BasicDetailsProps> = ({
+  pageTitle,
   createData,
   initCreate,
   updateCreateData,
   resetCreateData,
+  setCeEventFlowTitle,
 }) => {
   const styles = useStyles();
   const navigation = useNavigation();
@@ -37,21 +46,13 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
     formState: { errors },
   } = useForm();
 
-  const eventTypes = useMemo(
-    () => [
-      {
-        displayText: "Food Drive",
-        value: EventType.foodDrive,
-      },
-    ],
-    [],
-  );
-
   useEffect(() => {
     if (!createData) {
       initCreate(EventType.foodDrive);
+    } else if (pageTitle === undefined) {
+      setCeEventFlowTitle("Edit Event");
     }
-  }, [createData, initCreate]);
+  }, [createData, initCreate, pageTitle]);
 
   const onSubmit = useCallback(
     async (data: Record<string, any>) => {
@@ -81,7 +82,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
       <PageHeader
         id="basic-details"
         hasBack
-        title="Event Details"
+        title={pageTitle || "Edit Event"}
         onBackPress={onBack}
       />
       <Card id="basic-details-form" title="Basic Details">
