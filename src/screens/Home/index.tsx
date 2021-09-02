@@ -27,7 +27,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     <View>
       <SearchBar
         id="search-bar-home"
-        placeholder="Search by location..."
+        placeholder="Search by name..."
         onChangeText={updateSearch}
         value={search}
       />
