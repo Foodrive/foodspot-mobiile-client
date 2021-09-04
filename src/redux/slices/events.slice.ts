@@ -18,6 +18,7 @@ interface EventCreateData {
   // Contact details
   contactNumber?: string;
   email?: string;
+  facebookPage?: string;
   // TODO extend to support facebook page
 }
 
