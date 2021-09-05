@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { EventDetailsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@apollo/client";
@@ -10,6 +10,7 @@ import EventDetailsCard from "./EventDetailsCard";
 import Button from "@app/components/ui/Button";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { GET_INVITATION_BY_ID } from "@app/graphql/queries";
+import { PageHeader } from "@app/components/common/PageHeader";
 
 type EventDetailsProps = EventDetailsPropsFromRedux; // interface EventDetailsProps extends EventDetailsPropsFromRedux when needed
 
@@ -36,16 +37,14 @@ const EventDetails: React.FC<EventDetailsProps> = ({
   // TODO
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <IconButton
-          id="back-icon-button"
-          icon="chevron-back-outline"
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-        <Text style={styles.heading}>Event Details</Text>
-        <View style={styles.floatingIconButton}>
+      <PageHeader
+        id="event-details"
+        hasBack
+        title={"Event Details"}
+        onBackPress={() => {
+          navigation.goBack();
+        }}
+        actions={
           <IconButton
             id="share-icon-button"
             icon="share-social-outline"
@@ -54,8 +53,9 @@ const EventDetails: React.FC<EventDetailsProps> = ({
             }}
             reverse={false}
           />
-        </View>
-      </View>
+        }
+        containerStyle={styles.headingContainer}
+      />
       <View style={styles.contentContainer}>
         {!loading && data.getFoodDriveById && !invitationLoading && (
           <>

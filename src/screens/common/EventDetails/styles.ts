@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { colors, montserrat } from "@app/utils";
+import { colors, grid, montserrat } from "@app/utils";
 
 const styles = StyleSheet.create({
   heading: {
@@ -9,10 +9,13 @@ const styles = StyleSheet.create({
     fontFamily: montserrat.bold,
     marginLeft: 16,
   },
+  headingContainer: {
+    padding: grid.outerRule,
+  },
   contentContainer: {
     paddingLeft: 16,
     paddingRight: 16,
-    paddingBottom: 16
+    paddingBottom: 16,
   },
   container: {
     display: "flex",
@@ -20,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   subheadingContainer: {
-    marginBottom: 8,
+    marginBottom: 16,
   },
   subheadingWithButtonContainer: {
     marginRight: 70,
@@ -28,6 +31,8 @@ const styles = StyleSheet.create({
   subheading: {
     fontSize: RFValue(18),
     fontFamily: montserrat.bold,
+  },
+  subHeadingIcon: {
     marginRight: 8,
   },
   text: {
@@ -59,12 +64,12 @@ const styles = StyleSheet.create({
     padding: 16,
     display: "flex",
     alignItems: "center",
-    borderBottomWidth: 0.5
+    borderBottomWidth: 0.5,
   },
   codeText: {
-    fontSize:RFValue(18),
-    fontFamily: montserrat.bold
-  }
+    fontSize: RFValue(18),
+    fontFamily: montserrat.bold,
+  },
 });
 
 export default styles;

@@ -39,9 +39,8 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
   const eventStartDate = dayjs(startDate);
   const eventEndDate = dayjs(endDate);
 
-  console.log("invitation", invitation);
   return (
-    <View >
+    <View>
       <Card
         id="event-details-card"
         title={name}
@@ -53,8 +52,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
           {invitation !== undefined && (
             <View style={styles.subheadingContainer}>
               <View style={styles.container}>
-                <Text style={styles.subheading}>Meal code #</Text>
-                <Icon id="allergens-icon" name="warning-outline" />
+                <Icon
+                  id="allergens-icon"
+                  name="fast-food-outline"
+                  containerStyle={styles.subHeadingIcon}
+                />
+                <Text style={styles.subheading}>Meal Code #</Text>
               </View>
               <Text style={styles.subtext}>
                 {invitation.status === InvitationStatus.accepted
@@ -65,15 +68,21 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
               </Text>
               <View style={styles.codeContainer}>
                 <Text style={styles.codeText}>
-                  {invitation.status === InvitationStatus.accepted ? invitation.code : "------"}
+                  {invitation.status === InvitationStatus.accepted
+                    ? invitation.code
+                    : "------"}
                 </Text>
               </View>
             </View>
           )}
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
+              <Icon
+                id="when-icon"
+                name="calendar-outline"
+                containerStyle={styles.subHeadingIcon}
+              />
               <Text style={styles.subheading}>When</Text>
-              <Icon id="when-icon" name="calendar-outline" />
             </View>
             {isStartingToday && isEndingToday ? (
               <>
@@ -96,8 +105,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
           </View>
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
+              <Icon
+                id="description-icon"
+                name="chatbox-outline"
+                containerStyle={styles.subHeadingIcon}
+              />
               <Text style={styles.subheading}>Description</Text>
-              <Icon id="description-icon" name="chatbox-outline" />
             </View>
             <Text style={styles.text}>{description}</Text>
           </View>
@@ -109,8 +122,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
               }}
             >
               <View style={styles.container}>
+                <Icon
+                  id="location-icon"
+                  name="location-outline"
+                  containerStyle={styles.subHeadingIcon}
+                />
                 <Text style={styles.subheading}>Where</Text>
-                <Icon id="location-icon" name="location-outline" />
               </View>
               <Text style={styles.text}>{address}</Text>
             </View>
@@ -131,8 +148,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
               }}
             >
               <View style={styles.container}>
+                <Icon
+                  id="contact-icon"
+                  name="person-circle-outline"
+                  containerStyle={styles.subHeadingIcon}
+                />
                 <Text style={styles.subheading}>Contact Number</Text>
-                <Icon id="contact-icon" name="person-circle-outline" />
               </View>
               <Text style={styles.text}>{contactNumber}</Text>
             </View>
@@ -147,8 +168,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
           </View>
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
+              <Icon
+                id="allergens-icon"
+                name="warning-outline"
+                containerStyle={styles.subHeadingIcon}
+              />
               <Text style={styles.subheading}>Food contains</Text>
-              <Icon id="allergens-icon" name="warning-outline" />
             </View>
             <View style={styles.tags}>
               {allergens.length > 0 ? (

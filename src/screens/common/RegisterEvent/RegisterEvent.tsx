@@ -12,6 +12,9 @@ import {
 } from "@app/graphql/mutations/invitations.mutation";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { useNavigation } from "@react-navigation/native";
+import { PageHeader } from "@app/components/common/PageHeader";
+import { IconButton } from "@app/components/ui";
+import styles from "./styles";
 
 type RegisterEvent = RegisterEventPropsFromRedux;
 
@@ -48,10 +51,28 @@ const RegisterEvent: React.FC<RegisterEvent> = ({
   }, []);
 
   return (
-    // TODO Add header
-    <View>
-      <Card id="register-event-form" title="Register for Event">
-        <ScrollView>
+    <ScrollView>
+      <PageHeader
+        id="event-details"
+        hasBack
+        title={"Event Details"}
+        onBackPress={() => {
+          navigation.goBack();
+        }}
+        actions={
+          <IconButton
+            id="share-icon-button"
+            icon="share-social-outline"
+            onPress={() => {
+              console.log("share"); // TODO
+            }}
+            reverse={false}
+          />
+        }
+        containerStyle={styles.headingContainer}
+      />
+      <View style={styles.contentContainer}>
+        <Card id="register-event-form" title="Register for Event">
           <FormInput
             name="name"
             label="Name"
@@ -74,17 +95,17 @@ const RegisterEvent: React.FC<RegisterEvent> = ({
             rules={{ required: true }}
             errorMessage={getErrorMessage("Dependents", errors.dependents)}
           />
-          <Button
-            id="register-event-button"
-            title="Register for event"
-            color="primary"
-            onPress={handleSubmit(onSubmit)}
-            loading={loading}
-            disabled={loading}
-          />
-        </ScrollView>
-      </Card>
-    </View>
+        </Card>
+        <Button
+          id="register-event-button"
+          title="Register for event"
+          color="primary"
+          onPress={handleSubmit(onSubmit)}
+          loading={loading}
+          disabled={loading}
+        />
+      </View>
+    </ScrollView>
   );
 };
 
