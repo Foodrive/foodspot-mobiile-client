@@ -8,11 +8,19 @@ export interface CreateInvitation {
 }
 
 export const CREATE_INVITATION = gql`
-  mutation Mutation($createInvitationEventId: ID!, $createInvitationUserId: ID!, $createInvitationNumAttendees: Int!) {
-  createInvitation(eventId: $createInvitationEventId, userId: $createInvitationUserId, numAttendees: $createInvitationNumAttendees) {
-    id
-    code
-    status
+  mutation Mutation(
+    $createInvitationEventId: ID!
+    $createInvitationUserId: ID!
+    $createInvitationNumAttendees: Int!
+  ) {
+    createInvitation(
+      eventId: $createInvitationEventId
+      userId: $createInvitationUserId
+      numAttendees: $createInvitationNumAttendees
+    ) {
+      id
+      code
+      status
+    }
   }
-}
 `;

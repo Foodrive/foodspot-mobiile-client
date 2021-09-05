@@ -6,6 +6,8 @@ import Card from "@app/components/ui/Card";
 import { Tag } from "@app/components/ui/Tags";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
+import { InvitationStatus } from "@app/utils/constants";
+import { Invitation } from "@app/graphql/queries";
 dayjs.extend(isToday);
 
 interface EventDetailsCardProps {
@@ -17,6 +19,7 @@ interface EventDetailsCardProps {
   address: string;
   contactNumber: string;
   allergens: string[];
+  invitation?: Invitation;
 }
 
 // TODO Update with invitation info
@@ -29,14 +32,16 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
   address,
   contactNumber,
   allergens,
+  invitation,
 }) => {
   const isStartingToday = dayjs(startDate).isToday();
   const isEndingToday = dayjs(endDate).isToday();
   const eventStartDate = dayjs(startDate);
   const eventEndDate = dayjs(endDate);
 
+  console.log("invitation", invitation);
   return (
-    <View>
+    <View >
       <Card
         id="event-details-card"
         title={name}
@@ -45,6 +50,26 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
         }
       >
         <View>
+          {invitation !== undefined && (
+            <View style={styles.subheadingContainer}>
+              <View style={styles.container}>
+                <Text style={styles.subheading}>Meal code #</Text>
+                <Icon id="allergens-icon" name="warning-outline" />
+              </View>
+              <Text style={styles.subtext}>
+                {invitation.status === InvitationStatus.accepted
+                  ? "You have successfully claimed your meal! Show this code on pickup to verify your meal."
+                  : invitation.status === InvitationStatus.pending
+                    ? "Your registration is still pending approval from the event host. The meal code will appear below once ready."
+                    : "Your registration has been denied by the event host. Please contact them for further information."}
+              </Text>
+              <View style={styles.codeContainer}>
+                <Text style={styles.codeText}>
+                  {invitation.status === InvitationStatus.accepted ? invitation.code : "------"}
+                </Text>
+              </View>
+            </View>
+          )}
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
               <Text style={styles.subheading}>When</Text>

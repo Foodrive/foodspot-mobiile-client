@@ -7,10 +7,12 @@ const styles = StyleSheet.create({
     fontSize: RFValue(24),
     textAlign: "center",
     fontFamily: montserrat.bold,
-    marginLeft: 15,
+    marginLeft: 16,
   },
-  mainContainer: {
-    padding: 18,
+  contentContainer: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 16
   },
   container: {
     display: "flex",
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   subheadingContainer: {
-    marginBottom: 12,
+    marginBottom: 8,
   },
   subheadingWithButtonContainer: {
     marginRight: 70,
@@ -53,6 +55,16 @@ const styles = StyleSheet.create({
     fontSize: RFValue(18),
     color: "white",
   },
+  codeContainer: {
+    padding: 16,
+    display: "flex",
+    alignItems: "center",
+    borderBottomWidth: 0.5
+  },
+  codeText: {
+    fontSize:RFValue(18),
+    fontFamily: montserrat.bold
+  }
 });
 
 export default styles;

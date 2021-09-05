@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { EventDetailsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@apollo/client";
@@ -9,6 +9,7 @@ import styles from "./styles";
 import EventDetailsCard from "./EventDetailsCard";
 import Button from "@app/components/ui/Button";
 import SCREEN_NAMES from "@app/navigation/screen.names";
+import { GET_INVITATION_BY_ID } from "@app/graphql/queries";
 
 type EventDetailsProps = EventDetailsPropsFromRedux; // interface EventDetailsProps extends EventDetailsPropsFromRedux when needed
 
@@ -23,9 +24,18 @@ const EventDetails: React.FC<EventDetailsProps> = ({
     },
   });
 
+  const { loading: invitationLoading, data: invitationData } = useQuery(
+    GET_INVITATION_BY_ID,
+    {
+      variables: {
+        getInvitationByIdInvId: invitationId,
+      },
+    },
+  );
+
   // TODO
   return (
-    <View style={styles.mainContainer}>
+    <ScrollView>
       <View style={styles.container}>
         <IconButton
           id="back-icon-button"
@@ -46,8 +56,8 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           />
         </View>
       </View>
-      <View>
-        {!loading && data.getFoodDriveById && (
+      <View style={styles.contentContainer}>
+        {!loading && data.getFoodDriveById && !invitationLoading && (
           <>
             <EventDetailsCard
               name={data.getFoodDriveById.name}
@@ -63,6 +73,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
                 },
                 [],
               )}
+              invitation={invitationData?.getInvitationById}
             />
             {invitationId === null ? (
               <Button
@@ -86,7 +97,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           </>
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
