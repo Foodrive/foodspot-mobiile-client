@@ -16,15 +16,18 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   const styles = useStyles();
   const navigation = useNavigation();
 
-  const updateSearch = useCallback((search: string) => {
-    setSearch(search);
-  }, []);
+  const updateSearch = useCallback(
+    (search: string) => {
+      setSearch(search);
+    },
+    [setSearch],
+  );
 
   return (
     <View>
       <SearchBar
         id="search-bar-home"
-        placeholder="Search by location..."
+        placeholder="Search by name..."
         onChangeText={updateSearch}
         value={search}
       />
@@ -42,7 +45,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             }
           />
         </View>
-        <EventList />
+        <EventList search={search} />
       </View>
     </View>
   );

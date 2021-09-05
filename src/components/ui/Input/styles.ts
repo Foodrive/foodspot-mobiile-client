@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   label: {
     color: colors.dark,
     fontSize: RFValue(14),
+    marginBottom: 5,
   },
   errorStyle: {
     color: colors.danger,

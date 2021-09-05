@@ -14,7 +14,10 @@ interface DayInfo {
   isToday: boolean;
 }
 
-const EventList: React.FC = () => {
+interface EventListProps {
+  search: string;
+}
+const EventList: React.FC<EventListProps> = ({ search }) => {
   const { loading, error, data } = useQuery(USER_FOOD_DRIVES);
   const toastProvider = useToastProvider();
   const styles = useStyles();
@@ -100,7 +103,9 @@ const EventList: React.FC = () => {
 
   return (
     <FlatList
-      data={data.getFoodDrives}
+      data={data.getFoodDrives.filter((item: any) =>
+        item.name.includes(search),
+      )}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
     />
