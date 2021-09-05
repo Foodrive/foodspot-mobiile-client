@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
 import Input from "@app/components/ui/Input";
 import CheckboxItem from "@app/components/ui/CheckBoxItem";
@@ -10,10 +10,28 @@ import SCREEN_NAMES from "@app/navigation/screen.names";
 import SecureStore, { SecureStoreEnum } from "@app/services/secure.store";
 import { Divider } from "react-native-elements";
 import { Allergies } from "../../utils/constants";
+import { ProfilePropsFromRedux } from "./container";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "@app/graphql/queries/user.queries";
+import useToastProvider from "@app/hooks/useToastProvider";
 
-const UserProfile: React.FC = () => {
+type ProfileProps = ProfilePropsFromRedux;
+
+const UserProfile: React.FC<ProfileProps> = ({
+  currentUser
+}) => {
+
+  console.log("current user:", currentUser)
+
+  const { error, loading, data} = useQuery(GET_USER, {
+    variables: {
+      getUserUsername: currentUser?.username
+    }
+  });
+  const [user, setUser] = useState();
+  const toastProvider = useToastProvider();
   const navigation = useNavigation();
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [checkedState, setCheckedState] = useState(new Array(Allergies.length).fill(false));
   const handleLogout = useCallback(async () => {
     await SecureStore.deleteItem(SecureStoreEnum.TOKEN);
@@ -28,12 +46,24 @@ const UserProfile: React.FC = () => {
     const updatedCheckedState = checkedState.map((item, index) => 
       index === position ? !item : item);
     setCheckedState(updatedCheckedState);
+    console.log("type", typeof updatedCheckedState);
+    console.log(updatedCheckedState);
   };
-
 
   const handleEditIconPress = () => {
     setEditable(!editable);
   };
+
+  useEffect(() => {
+    console.log("use effect triggered");
+    console.log(data);  //TO DO why is this undefined?
+    if (data && !loading && !error) {
+      setUser(data);
+    } else if (error){
+      console.log("error found!")
+      toastProvider.showError(error.message);
+    }
+  }, [data]);
 
   return (
     <ScrollView style={styles.container}>
@@ -52,11 +82,11 @@ const UserProfile: React.FC = () => {
         <Text style={styles.profileTitle}>Your Profile</Text>
         <Divider orientation="horizontal" width={1} color={"#d9d9d9"} style={styles.divider} />   
         <Text style={styles.inputTitle}>Name</Text>
-        <Input id="user-profile-input-name" type="user" editable={editable} />
+        <Input id="user-profile-input-name" type="user" editable={editable}>{user?.getUser.firstName + " " + user?.getUser.lastName}</Input>
         <Text style={styles.inputTitle}>Contact Number</Text>
-        <Input id="user-profile-number-name" type="number" editable={editable} />
+        <Input id="user-profile-number-name" type="number" editable={editable}>{user?.getUser.phoneNumber}</Input>
         <Text style={styles.inputTitle}>Email</Text>
-        <Input id="user-profile-email-name" type="email" editable={editable} />
+        <Input id="user-profile-email-name" type="email" editable={editable}>{user?.getUser.email}</Input>
         <Text style={styles.inputTitle}>Allergies</Text>
         <View style={styles.allergyList}>
           {Allergies.map(({name}, index) => {
@@ -65,8 +95,8 @@ const UserProfile: React.FC = () => {
             );
           })}
         </View>
+        <Button id="logout-button" title="Log out" onPress={handleLogout} /> 
       </View>
-      <Button id="logout-button" title="Log out" onPress={handleLogout} /> 
     </ScrollView>
   );
 };
