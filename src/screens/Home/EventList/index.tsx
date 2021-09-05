@@ -3,16 +3,10 @@ import { USER_FOOD_DRIVES } from "@app/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { FlatList, Text, View } from "react-native";
 import ListItem from "@app/components/ui/ListItem";
-import dayjs from "dayjs";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { useStyles } from "./styles";
 import { colors } from "@app/utils";
-
-interface DayInfo {
-  dayText: string;
-  timeText: string;
-  isToday: boolean;
-}
+import { getDateInfo } from "@app/utils";
 
 interface EventListProps {
   search: string;
@@ -21,46 +15,6 @@ const EventList: React.FC<EventListProps> = ({ search }) => {
   const { loading, error, data } = useQuery(USER_FOOD_DRIVES);
   const toastProvider = useToastProvider();
   const styles = useStyles();
-
-  const getDateInfo = useCallback(
-    (startDate: string, endDate: string): DayInfo => {
-      const now = dayjs();
-      const start = dayjs(startDate);
-      const end = dayjs(endDate);
-
-      const startTime = start.format("hh:mm a");
-      const endTime = end.format("hh:mm a");
-
-      const result: DayInfo = {
-        dayText: "",
-        timeText: "",
-        isToday: false,
-      };
-
-      if (start.isSame(end, "day")) {
-        if (start.isSame(now, "day")) {
-          result.isToday = true;
-          result.dayText = "Today";
-        } else if (start.isSame(now, "week")) {
-          result.dayText = start.format("ddd");
-        } else {
-          result.dayText = start.format("DD MMMM");
-        }
-        result.timeText = `${startTime} - ${endTime}`;
-      } else {
-        let startDay = start.format("DD MMMM");
-        const endDay = end.format("DD MMMM");
-        if (start.isSame(now, "day")) {
-          startDay = "Today";
-          result.isToday = true;
-        }
-        result.dayText = `${startDay} ${startTime} -`;
-        result.timeText = `${endDay} ${endTime}`;
-      }
-      return result;
-    },
-    [],
-  );
 
   useEffect(() => {
     if (error) {
