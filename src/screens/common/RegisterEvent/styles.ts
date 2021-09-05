@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { grid } from "@app/utils";
+import { colors, grid } from "@app/utils";
 
 const styles = StyleSheet.create({
   headingContainer: {
@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     paddingBottom: 16,
+  },
+  disclaimer: {
+    color: colors.danger,
   },
 });
 

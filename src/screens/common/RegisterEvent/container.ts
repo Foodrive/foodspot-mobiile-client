@@ -5,7 +5,6 @@ import { RootState } from "@app/redux/store";
 const mapStateToProps = (state: RootState) => ({
   eventId: state.events.currentEventId,
   userId: state.user.currentUser?.id ?? "",
-  username: state.user.currentUser?.username ?? "",
 });
 
 const mapDispatchToProps = {};
