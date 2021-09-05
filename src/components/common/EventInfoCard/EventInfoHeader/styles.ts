@@ -9,7 +9,7 @@ export const useStyles = () =>
       justifyContent: "space-between",
       paddingBottom: 10,
       borderBottomWidth: 1,
-      borderBottomColor: colors.lightbrown,
+      borderBottomColor: colors.darkAccent,
       alignItems: "flex-end",
     },
     headerText: {
