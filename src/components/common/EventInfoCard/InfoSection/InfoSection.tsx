@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { useStyles } from "./styles";
 import { Icon } from "@app/components/ui";
 import { RFValue } from "react-native-responsive-fontsize";
+import { colors } from "@app/utils";
 
 const iconMap = {
   user: { type: "ionicon", name: "person-outline" },
@@ -46,6 +47,7 @@ const InfoSection: React.FC<InfoSectionProps> = ({ label, value, type }) => {
             name={icon.name}
             type={icon.type}
             size={RFValue(16)}
+            color={colors.dark}
           />
         )}
       </View>

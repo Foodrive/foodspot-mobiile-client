@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { montserrat } from "@app/utils";
+import { colors, montserrat } from "@app/utils";
 
 export const useStyles = () =>
   StyleSheet.create({
@@ -11,5 +11,6 @@ export const useStyles = () =>
     labelText: {
       marginRight: 10,
       fontFamily: montserrat.bold,
+      color: colors.dark,
     },
   });
