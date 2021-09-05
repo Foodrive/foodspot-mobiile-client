@@ -21,11 +21,14 @@ interface DayInfo {
   isToday: boolean;
 }
 
-type EventListProps = EventListPropsFromRedux;
+interface EventListProps extends EventListPropsFromRedux {
+  search: string;
+}
 
 const EventList: React.FC<EventListProps> = ({
   setCurrentEventId,
   setCurrentInvitationId,
+  search,
 }) => {
   const navigation = useNavigation();
   const { loading, error, data } = useQuery<GetFoodDrives>(GET_FOOD_DRIVES);
@@ -113,7 +116,11 @@ const EventList: React.FC<EventListProps> = ({
 
   return (
     <FlatList
-      data={data?.getFoodDrives ?? []}
+      data={
+        data?.getFoodDrives.filter((foodDrive) =>
+          foodDrive.name.toLowerCase().includes(search.toLowerCase()),
+        ) ?? []
+      }
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
     />
