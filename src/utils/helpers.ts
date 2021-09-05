@@ -6,7 +6,17 @@ export interface DayInfo {
   isToday: boolean;
 }
 
-export const getDateInfo = (startDate: string, endDate: string) => {
+/**
+ * Retrieves the text form of the event's date information in a nicer format.
+ * The result follows the following conditions:
+ * - If the start date of the event is happening today, the day text will be "Today".
+ * - If the end date and start date are on the same day, the day text will be a single day
+ * - If the start date or end date is on the same week as today, the day text will be the day (e.g. Mon, Tue, etc..)
+ * - If the start date and end date is on different days of the week, it will display their dates separately
+ * @param startDate
+ * @param endDate
+ */
+export const getDateInfo = (startDate: string, endDate: string): DayInfo => {
   const now = dayjs();
   const start = dayjs(startDate);
   const end = dayjs(endDate);
