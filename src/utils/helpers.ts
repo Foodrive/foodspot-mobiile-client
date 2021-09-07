@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { Food, Location } from "@app/utils/types";
 
 export interface DayInfo {
   dayText: string;
@@ -52,3 +53,19 @@ export const getDateInfo = (startDate: string, endDate: string): DayInfo => {
   }
   return result;
 };
+
+export const createFoodItem = (
+  allergens: string[],
+  servings: number,
+  name?: string,
+  description?: string,
+): Food => ({
+  name: name ?? "Event Food",
+  description,
+  servings,
+  allergens,
+});
+
+export const createLocationFromAddress = (address: string): Location => ({
+  address,
+});
