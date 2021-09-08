@@ -27,7 +27,7 @@ const sizeMap = {
 };
 
 const colorMap = {
-  primary: colors.blue,
+  primary: colors.teal,
   secondary: colors.secondary,
   default: colors.dark,
 };
