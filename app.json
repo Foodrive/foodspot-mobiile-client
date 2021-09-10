@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "expo-typescript",
-    "slug": "expo-typescript",
+    "name": "Foodspot",
+    "slug": "foodspot",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
