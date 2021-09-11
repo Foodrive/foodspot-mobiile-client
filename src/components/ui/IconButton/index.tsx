@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { TouchableOpacity, ViewStyle } from "react-native";
 import Icon from "@app/components/ui/Icon";
 import { colors } from "@app/utils";
-import styles from "./styles";  //to fix
 
 interface ColorMap {
   primary: string;
