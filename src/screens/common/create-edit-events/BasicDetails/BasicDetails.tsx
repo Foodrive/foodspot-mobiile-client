@@ -44,6 +44,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
 
   useEffect(() => {
@@ -118,7 +119,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
                 required: true,
                 validate: {
                   notInThePast: notInThePast(),
-                  notAfterDate: notAfterDate(createData.endDate),
+                  notAfterDate: notAfterDate(getValues, "endDate"),
                 },
               }}
               value={createData ? createData.startDate : ""}
@@ -134,7 +135,7 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
                 required: true,
                 validate: {
                   notInThePast: notInThePast(),
-                  notBeforeDate: notBeforeDate(createData.startDate),
+                  notBeforeDate: notBeforeDate(getValues, "startDate"),
                 },
               }}
               value={createData ? createData.endDate : ""}

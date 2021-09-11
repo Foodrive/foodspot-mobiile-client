@@ -45,9 +45,9 @@ const DateTimeInput: React.FC<DateTimeInputProps> = ({
 
   const handleConfirm = useCallback(
     (date: Date) => {
+      hideDatePicker();
       onChangeText(date.toUTCString());
       setCurrentDate(date);
-      hideDatePicker();
     },
     [hideDatePicker, onChangeText],
   );

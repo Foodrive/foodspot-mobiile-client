@@ -10,6 +10,7 @@ import Button from "@app/components/ui/Button";
 import { regexValidator } from "@app/utils/validators";
 import { getErrorMessage } from "@app/components/forms";
 import { ContactDetailsReduxProps } from "./container";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type ContactDetailsProps = ContactDetailsReduxProps;
 
@@ -37,8 +38,9 @@ const ContactDetails: React.FC<ContactDetailsProps> = ({
         email: data.email,
         facebookPage: data.facebookPage,
       });
+      navigation.navigate(SCREEN_NAMES.common.events.ceSummary);
     },
-    [updateCreateData],
+    [updateCreateData, navigation],
   );
 
   return (
