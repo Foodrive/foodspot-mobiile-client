@@ -48,7 +48,7 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
 
   useEffect(() => {
     const record = options.reduce<Record<string, boolean>>((acc, item) => {
-      acc[item.value] = selectedOptions.includes(item.value);
+      acc[item.value] = field.value.includes(item.value);
       return acc;
     }, {});
     setSelectedItems(record);

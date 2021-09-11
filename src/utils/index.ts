@@ -31,6 +31,7 @@ export const grid = {
   outerRule: 8,
   genericSpacing: 20,
   marginBottom: 10,
+  tabBarHeight: 100,
 };
 
 export const montserrat = {

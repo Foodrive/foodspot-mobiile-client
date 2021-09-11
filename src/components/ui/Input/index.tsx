@@ -10,7 +10,6 @@ type InputType = "text" | "number" | "user" | "location" | "email" | "password";
 export interface InputProps extends Omit<RNInputProps, "leftIcon"> {
   id: string;
   type: InputType;
-  editable?: boolean;
 }
 
 // Add more icons here
@@ -27,7 +26,7 @@ const Input: React.FC<InputProps> = ({
   id,
   type,
   keyboardType,
-  editable,
+  disabled,
   inputContainerStyle,
   inputStyle,
   labelStyle,
@@ -58,12 +57,11 @@ const Input: React.FC<InputProps> = ({
       leftIcon={icon}
       keyboardType={keyboard}
       inputContainerStyle={styles.inputContainer}
-      inputStyle={editable ? styles.input : styles.uneditableInput}
+      inputStyle={disabled ? styles.uneditableInput : styles.input}
       labelStyle={[styles.label, labelStyle]}
       errorStyle={styles.errorStyle}
       secureTextEntry={type === "password"}
-      disabled={!editable}
-
+      disabled={disabled}
       {...rest}
     />
   );

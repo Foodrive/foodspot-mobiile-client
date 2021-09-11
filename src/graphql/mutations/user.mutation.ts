@@ -1,14 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const UPDATE_USER = gql` 
+export const UPDATE_USER = gql`
   mutation UpdateUserMutation(
+    $firstName: String
+    $lastName: String
     $password: String
     $phoneNumber: String
     $email: String
-    $allergies: [String]
-    $firstName: String
-    $lastName: String
-    ) {
+    $allergies: [String!]
+  ) {
     updateUser(
       firstName: $firstName
       lastName: $lastName
@@ -16,12 +16,13 @@ export const UPDATE_USER = gql`
       phoneNumber: $phoneNumber
       email: $email
       allergies: $allergies
-      ) {
-        phoneNumber
-        email
-        allergies
-        firstName
-        lastName
-        }
-      }
-    `;
+    ) {
+      username
+      firstName
+      lastName
+      phoneNumber
+      email
+      allergies
+    }
+  }
+`;
