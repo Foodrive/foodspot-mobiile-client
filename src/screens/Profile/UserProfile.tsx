@@ -143,6 +143,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
       <PageHeader
         id="user-settings-header"
         title="User Settings"
+        hasBack={false}
         actions={
           <>
             <IconButton
