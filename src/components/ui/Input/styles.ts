@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   uneditableInput: {
     paddingLeft: 5,
     fontFamily: montserrat.regular,
-    color: "#CCCCCC",
+    color: colors.disabledBackground,
   },
   input: {
     paddingLeft: 5,
