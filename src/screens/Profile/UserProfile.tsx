@@ -167,6 +167,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
               autoFocus
               placeholder="Enter first name"
               rules={{ required: true }}
+              disabled={!editable}
               errorMessage={getErrorMessage("First Name", errors.FirstName)}
             />
             <FormInput
@@ -177,6 +178,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
               autoFocus
               placeholder="Enter last name"
               rules={{ required: true }}
+              disabled={!editable}
               errorMessage={getErrorMessage("Last Name", errors.lastName)}
             />
             <FormInput
@@ -187,6 +189,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
               autoFocus
               placeholder="Enter contact number"
               rules={{ required: true }}
+              disabled={!editable}
               errorMessage={getErrorMessage(
                 "Contact Number",
                 errors.phoneNumber,
@@ -199,6 +202,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
               type="password"
               autoFocus
               placeholder="Enter Password"
+              disabled={!editable}
               errorMessage={getErrorMessage("Password", errors.password)}
             />
             <FormInput
@@ -208,6 +212,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
               type="email"
               autoFocus
               placeholder="Enter Email"
+              disabled={!editable}
               rules={{ required: true, pattern: regexValidator.email }}
               errorMessage={getErrorMessage("Email", errors.email)}
             />
@@ -217,6 +222,7 @@ const UserProfile: React.FC<ProfileProps> = ({ currentUser }) => {
               control={control}
               options={allergenOptions}
               rules={{ required: true }}
+              disabled={!editable}
               errorMessage={getErrorMessage("Allergies", errors.allergies)}
             />
           </>

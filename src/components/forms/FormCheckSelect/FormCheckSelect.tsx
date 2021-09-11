@@ -20,6 +20,7 @@ interface FormCheckSelectProps {
   selectedOptions?: string[];
   options: CheckOption[];
   errorMessage?: string;
+  disabled?: boolean;
 }
 
 const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
@@ -30,6 +31,7 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
   selectedOptions = [],
   options,
   errorMessage,
+  disabled,
 }) => {
   if (options.length === 0) {
     return <></>; // return empty if no options
@@ -37,7 +39,9 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
 
   const styles = useStyles();
 
-  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>({});
+  const [selectedItems, setSelectedItems] = useState<Record<string, boolean>>(
+    {},
+  );
 
   const { field } = useController({
     control,
@@ -56,7 +60,10 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
 
   const onSelect = useCallback(
     (value: string) => {
-      const newStateValues = { ...selectedItems, [value]: !selectedItems[value] };
+      const newStateValues = {
+        ...selectedItems,
+        [value]: !selectedItems[value],
+      };
       const newValues = Object.keys(newStateValues).filter(
         (value) => newStateValues[value],
       );
@@ -77,6 +84,7 @@ const FormCheckSelect: React.FC<FormCheckSelectProps> = ({
             title={item.displayText}
             checked={selectedItems[item.value] ?? false}
             onPress={() => onSelect(item.value)}
+            disabled={disabled}
           />
         ))}
       </View>
