@@ -3,6 +3,15 @@ export interface UserInfo {
   id: string;
 }
 
+export interface User {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+  allergies: string[];
+  password: string;
+}
+
 export interface Food {
   name: string;
   description?: string;
