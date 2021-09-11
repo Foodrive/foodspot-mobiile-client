@@ -7,17 +7,8 @@ interface CheckBoxItemProps extends Omit<CheckBoxProps, "textStyle"> {
   title: string;
 }
 
-const CheckBoxItem: React.FC<CheckBoxItemProps> = ({
-  id,
-  checked,
-  ...rest
-}) => (
-  <CheckBox
-    data-testid={id}
-    textStyle={styles.textStyle}
-    {...rest}
-    checked={checked}
-  />
+const CheckBoxItem: React.FC<CheckBoxItemProps> = ({ id, ...rest }) => (
+  <CheckBox data-testid={id} textStyle={styles.textStyle} {...rest} />
 );
 
 export default CheckBoxItem;
