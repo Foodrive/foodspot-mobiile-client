@@ -5,7 +5,6 @@ const styles = StyleSheet.create({
   textStyle: {
     fontWeight: "300",
     fontFamily: montserrat.regular,
-    width: 60
   },
 });
 
