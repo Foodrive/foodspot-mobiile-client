@@ -30,7 +30,6 @@ const FormInput: React.FC<FormInputProps> = ({
       id={name}
       value={field.value}
       onChangeText={field.onChange}
-      editable={true}
       {...rest}
     />
   );
