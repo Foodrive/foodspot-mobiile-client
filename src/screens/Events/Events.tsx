@@ -8,40 +8,36 @@ import {
 } from "@app/graphql/queries";
 import { EventsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
-import { IconButton, ListItem, TabButtonGroup } from "@app/components/ui";
+import { IconButton, ListItem, SectionedList, TabButtonGroup } from "@app/components/ui";
 import { colors } from "@app/utils";
 import { InvitationStatus } from "@app/utils/constants";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import dayjs from "dayjs";
 import styles from "./styles";
 import useToastProvider from "@app/hooks/useToastProvider";
+import { SectionedListData } from "@app/components/ui/SectionedList";
 
 type EventsProps = EventsPropsFromRedux;
-
-type UserInvitationsByStatus = Record<InvitationStatus, UserInvitation[]>;
-type UserInvitationStatusDescription = Partial<
-  Record<InvitationStatus, string>
->;
-
-const InvitationStatusDescriptions: UserInvitationStatusDescription = {
-  ACCEPTED: "Upcoming",
-  PENDING: "Pending confirmation",
-  REJECTED: "Rejected events",
-};
 
 const Events: React.FC<EventsProps> = ({
   currentUser,
   setCurrentEventId,
   setCurrentInvitationId,
 }) => {
-  const [invitations, setInvitations] = useState<UserInvitationsByStatus>({
-    ACCEPTED: [],
-    PENDING: [],
-    CANCELLED: [],
-    EXPIRED: [],
-    REJECTED: [],
-    CLAIMED: [],
-  });
+  const [invitations, setInvitations] = useState<SectionedListData<UserInvitation>[]>([
+    {
+      title: "Upcoming events",
+      data: []
+    },
+    {
+      title: "Pending confirmation",
+      data: []
+    },
+    {
+      title: "Rejected events",
+      data: []
+    },
+  ]);
 
   const toastProvider = useToastProvider();
   const navigation = useNavigation();
@@ -56,27 +52,14 @@ const Events: React.FC<EventsProps> = ({
 
   useEffect(() => {
     if (!loading && !error && data) {
-      const categorizedEvents: UserInvitationsByStatus = {
-        ACCEPTED: [],
-        PENDING: [],
-        REJECTED: [],
-        CANCELLED: [],
-        EXPIRED: [],
-        CLAIMED: [],
-      };
+      const categorizedEvents: SectionedListData<UserInvitation>[] = [ ...invitations];
       data.getInvitations.forEach((event) => {
         if (event.status === InvitationStatus.accepted) {
-          categorizedEvents.ACCEPTED.push(event);
+          categorizedEvents[0].data.push(event);
         } else if (event.status === InvitationStatus.pending) {
-          categorizedEvents.PENDING.push(event);
+          categorizedEvents[1].data.push(event);
         } else if (event.status === InvitationStatus.rejected) {
-          categorizedEvents.REJECTED.push(event);
-        } else if (event.status === InvitationStatus.cancelled) {
-          categorizedEvents.CANCELLED.push(event);
-        } else if (event.status === InvitationStatus.expired) {
-          categorizedEvents.EXPIRED.push(event);
-        } else if (event.status === InvitationStatus.claimed) {
-          categorizedEvents.CLAIMED.push(event);
+          categorizedEvents[2].data.push(event);
         }
       });
       setInvitations(categorizedEvents);
@@ -106,39 +89,27 @@ const Events: React.FC<EventsProps> = ({
         />
       </View>
       <View style={styles.eventList}>
-        {!loading &&
-          invitations &&
-          Object.entries(InvitationStatusDescriptions).map(
-            ([invitationStatus, description]) => (
-              <View key={`${invitationStatus}-tab`}>
-                <Text style={styles.text}>{description}</Text>
-                {!loading &&
-                  invitations &&
-                  invitations[invitationStatus as InvitationStatus].map(
-                    (invitation) => (
-                      <ListItem
-                        id={`${invitation.id}-list-item`}
-                        key={`${invitation.id}-list-item`}
-                        title={invitation.event.name}
-                        otherInformation={`${dayjs(
-                          invitation.event.startDate,
-                        ).format("DD MMM YY h:mm A")} - ${dayjs(
-                          invitation.event.endDate,
-                        ).format("DD MMM YY h:mm A")}`}
-                        onPress={() => {
-                          setCurrentEventId(invitation.event.id);
-                          setCurrentInvitationId(invitation.id);
-                          navigation.navigate(
-                            SCREEN_NAMES.common.events.eventDetails,
-                          );
-                        }}
-                        iconColor={colors.success}
-                      />
-                    ),
-                  )}
-              </View>
-            ),
-          )}
+        <SectionedList
+          id="sectioned-list"
+          data={invitations}
+          renderItem={(invitation) => <ListItem
+            id={`${invitation.id}-list-item`}
+            title={invitation.event.name}
+            otherInformation={`${dayjs(
+              invitation.event.startDate,
+            ).format("DD MMM YY h:mm A")} - ${dayjs(
+              invitation.event.endDate,
+            ).format("DD MMM YY h:mm A")}`}
+            onPress={() => {
+              setCurrentEventId(invitation.event.id);
+              setCurrentInvitationId(invitation.id);
+              navigation.navigate(
+                SCREEN_NAMES.common.events.eventDetails,
+              );
+            }}
+            iconColor={colors.success}
+          />}
+        />
       </View>
     </View>
   );

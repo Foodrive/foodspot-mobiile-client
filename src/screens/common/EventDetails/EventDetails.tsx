@@ -40,7 +40,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
       <PageHeader
         id="event-details"
         hasBack
-        title={"Event Details"}
+        title="Event Details"
         onBackPress={() => {
           navigation.goBack();
         }}
@@ -57,7 +57,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
         containerStyle={styles.headingContainer}
       />
       <View style={styles.contentContainer}>
-        {!loading && data.getFoodDriveById && !invitationLoading && (
+        {!loading && data?.getFoodDriveById && !invitationLoading && (
           <>
             <EventDetailsCard
               name={data.getFoodDriveById.name}
