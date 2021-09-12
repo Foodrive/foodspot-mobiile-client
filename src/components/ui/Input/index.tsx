@@ -26,6 +26,7 @@ const Input: React.FC<InputProps> = ({
   id,
   type,
   keyboardType,
+  disabled,
   inputContainerStyle,
   inputStyle,
   labelStyle,
@@ -55,11 +56,16 @@ const Input: React.FC<InputProps> = ({
       data-testid={id}
       leftIcon={icon}
       keyboardType={keyboard}
-      inputContainerStyle={[styles.inputContainer, inputContainerStyle]}
-      inputStyle={[styles.input, inputStyle]}
+      inputContainerStyle={
+        disabled
+          ? [styles.inputContainer, styles.disabled]
+          : styles.inputContainer
+      }
+      inputStyle={styles.input}
       labelStyle={[styles.label, labelStyle]}
       errorStyle={styles.errorStyle}
       secureTextEntry={type === "password"}
+      disabled={disabled}
       {...rest}
     />
   );

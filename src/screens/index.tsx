@@ -9,7 +9,7 @@ export { EventDetails } from "./common/EventDetails";
 export { RegisterEvent } from "./common/RegisterEvent";
 
 // Profile screens
-export { default as UserProfile } from "./Profile";
+export { UserProfile } from "./Profile";
 
 // Request screens
 export { default as RequestMap } from "./Request";

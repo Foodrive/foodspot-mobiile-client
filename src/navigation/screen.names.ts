@@ -8,6 +8,7 @@ const common = {
     ceEventDesc: "CreateEventDescription",
     planningDetails: "PlanningDetails",
     ceContactDetails: "CreateContactDetails",
+    ceSummary: "CreateEditSummary",
 
     // Event details
     eventDetails: "EventDetails",

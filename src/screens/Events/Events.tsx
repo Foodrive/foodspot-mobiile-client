@@ -100,7 +100,7 @@ const Events: React.FC<EventsProps> = ({
       </View>
       <View style={styles.tabs}>
         <TabButtonGroup
-          buttons={["Yours", "Organised", "History"]}
+          buttons={["Yours", "Organised"]}
           selectedIndex={0}
           onPress={() => console.log("click")} // TO DO
         />

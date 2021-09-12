@@ -2,6 +2,7 @@ import { DefaultTheme } from "@react-navigation/native";
 
 export const colors = {
   background: "#F8F8F8",
+  disabledBackground: "#eeeded",
   white: "#fff",
   black: "#000000",
   dark: "#222020",
@@ -31,6 +32,7 @@ export const grid = {
   outerRule: 8,
   genericSpacing: 20,
   marginBottom: 10,
+  tabBarHeight: 100,
 };
 
 export const montserrat = {
@@ -53,3 +55,5 @@ export const montserrat = {
   black: "Montserrat_900Black",
   blackItalic: "Montserrat_900Black_Italic",
 };
+
+export * from "./helpers";

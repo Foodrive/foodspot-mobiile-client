@@ -1,8 +1,12 @@
 import dayjs from "dayjs";
 import { Validate, ValidationValueMessage } from "react-hook-form";
 
-export const notAfterDate = (other: string | undefined): Validate<string> => {
+export const notAfterDate = (
+  getValues: (name: string) => any,
+  otherField: string,
+): Validate<string> => {
   return (value) => {
+    const other = getValues(otherField);
     if (!other) {
       return true;
     }
@@ -12,8 +16,12 @@ export const notAfterDate = (other: string | undefined): Validate<string> => {
   };
 };
 
-export const notBeforeDate = (other: string | undefined): Validate<string> => {
+export const notBeforeDate = (
+  getValues: (name: string) => any,
+  otherField: string,
+): Validate<string> => {
   return (value) => {
+    const other = getValues(otherField);
     if (!other) {
       return true;
     }

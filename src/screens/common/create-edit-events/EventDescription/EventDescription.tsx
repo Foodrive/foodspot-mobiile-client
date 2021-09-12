@@ -89,7 +89,6 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
             name="allergens"
             control={control}
             options={allergenOptions}
-            rules={{ required: true }}
             selectedOptions={createData?.allergens ?? []}
             errorMessage={getErrorMessage("Allergens", errors.allergens)}
           />

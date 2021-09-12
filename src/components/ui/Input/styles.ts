@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
   },
+  disabled: {
+    backgroundColor: colors.disabledBackground,
+  },
   input: {
     paddingLeft: 5,
     fontFamily: montserrat.regular,

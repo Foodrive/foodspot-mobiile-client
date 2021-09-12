@@ -9,6 +9,7 @@ import {
   EventDescription,
   PlanningDetails,
   ContactDetails,
+  CreationSummary,
   RegisterEvent,
 } from "@app/screens";
 
@@ -46,6 +47,10 @@ const screens: NavScreen[] = [
   {
     name: SCREEN_NAMES.common.events.ceContactDetails,
     component: ContactDetails,
+  },
+  {
+    name: SCREEN_NAMES.common.events.ceSummary,
+    component: CreationSummary,
   },
   {
     name: SCREEN_NAMES.common.events.registerEvent,

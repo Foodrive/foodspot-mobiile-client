@@ -6,6 +6,7 @@ import {
 import Icon from "../Icon";
 import { colors } from "@app/utils";
 import styles from "./styles";
+import { TouchableOpacity } from "react-native";
 
 interface ListItemProps extends RNListItemProps {
   id: string;
@@ -31,6 +32,7 @@ const ListItem: React.FC<ListItemProps> = ({
 }) => {
   return (
     <RNListItem
+      Component={onPress ? TouchableOpacity : undefined}
       onPress={onPress}
       disabled={onPress === undefined}
       key={id}
