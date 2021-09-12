@@ -6,6 +6,8 @@ import Card from "@app/components/ui/Card";
 import { Tag } from "@app/components/ui/Tags";
 import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
+import { InvitationStatus } from "@app/utils/constants";
+import { Invitation } from "@app/graphql/queries";
 dayjs.extend(isToday);
 
 interface EventDetailsCardProps {
@@ -17,8 +19,10 @@ interface EventDetailsCardProps {
   address: string;
   contactNumber: string;
   allergens: string[];
+  invitation?: Invitation;
 }
 
+// TODO Update with invitation info
 const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
   eventType = "Food Drive",
   name,
@@ -28,6 +32,7 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
   address,
   contactNumber,
   allergens,
+  invitation,
 }) => {
   const isStartingToday = dayjs(startDate).isToday();
   const isEndingToday = dayjs(endDate).isToday();
@@ -44,10 +49,40 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
         }
       >
         <View>
+          {invitation !== undefined && (
+            <View style={styles.subheadingContainer}>
+              <View style={styles.container}>
+                <Icon
+                  id="allergens-icon"
+                  name="fast-food-outline"
+                  containerStyle={styles.subHeadingIcon}
+                />
+                <Text style={styles.subheading}>Meal Code #</Text>
+              </View>
+              <Text style={styles.subtext}>
+                {invitation.status === InvitationStatus.accepted
+                  ? "You have successfully claimed your meal! Show this code on pickup to verify your meal."
+                  : invitation.status === InvitationStatus.pending
+                    ? "Your registration is still pending approval from the event host. The meal code will appear below once ready."
+                    : "Your registration has been denied by the event host. Please contact them for further information."}
+              </Text>
+              <View style={styles.codeContainer}>
+                <Text style={styles.codeText}>
+                  {invitation.status === InvitationStatus.accepted
+                    ? invitation.code
+                    : "------"}
+                </Text>
+              </View>
+            </View>
+          )}
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
+              <Icon
+                id="when-icon"
+                name="calendar-outline"
+                containerStyle={styles.subHeadingIcon}
+              />
               <Text style={styles.subheading}>When</Text>
-              <Icon id="when-icon" name="calendar-outline" />
             </View>
             {isStartingToday && isEndingToday ? (
               <>
@@ -70,8 +105,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
           </View>
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
+              <Icon
+                id="description-icon"
+                name="chatbox-outline"
+                containerStyle={styles.subHeadingIcon}
+              />
               <Text style={styles.subheading}>Description</Text>
-              <Icon id="description-icon" name="chatbox-outline" />
             </View>
             <Text style={styles.text}>{description}</Text>
           </View>
@@ -83,8 +122,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
               }}
             >
               <View style={styles.container}>
+                <Icon
+                  id="location-icon"
+                  name="location-outline"
+                  containerStyle={styles.subHeadingIcon}
+                />
                 <Text style={styles.subheading}>Where</Text>
-                <Icon id="location-icon" name="location-outline" />
               </View>
               <Text style={styles.text}>{address}</Text>
             </View>
@@ -105,8 +148,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
               }}
             >
               <View style={styles.container}>
+                <Icon
+                  id="contact-icon"
+                  name="person-circle-outline"
+                  containerStyle={styles.subHeadingIcon}
+                />
                 <Text style={styles.subheading}>Contact Number</Text>
-                <Icon id="contact-icon" name="person-circle-outline" />
               </View>
               <Text style={styles.text}>{contactNumber}</Text>
             </View>
@@ -121,8 +168,12 @@ const EventDetailsCard: React.FC<EventDetailsCardProps> = ({
           </View>
           <View style={styles.subheadingContainer}>
             <View style={styles.container}>
+              <Icon
+                id="allergens-icon"
+                name="warning-outline"
+                containerStyle={styles.subHeadingIcon}
+              />
               <Text style={styles.subheading}>Food contains</Text>
-              <Icon id="allergens-icon" name="warning-outline" />
             </View>
             <View style={styles.tags}>
               {allergens.length > 0 ? (

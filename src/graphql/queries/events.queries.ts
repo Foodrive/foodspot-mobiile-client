@@ -1,11 +1,38 @@
 import { gql } from "@apollo/client";
 
+export interface FoodDrive {
+  id: string;
+  isOpen: boolean;
+  name: string;
+  startDate: string;
+  endDate: string;
+  location: {
+    address: string;
+    coords: {
+      longitude: string;
+      latitude: string;
+    };
+  };
+}
+export interface GetFoodDrives {
+  getFoodDrives: FoodDrive[];
+}
+
 export const GET_FOOD_DRIVES = gql`
   query Query {
     getFoodDrives {
       id
+      isOpen
       name
-      description
+      startDate
+      endDate
+      location {
+        address
+        coords {
+          longitude
+          latitude
+        }
+      }
     }
   }
 `;
@@ -23,22 +50,6 @@ export const GET_FOOD_DRIVE_BY_ID = gql`
       contactNumber
       food {
         allergens
-      }
-    }
-  }
-`;
-
-export const GET_INVITATIONS_BY_USER = gql`
-  query($getInvitationsUserId: ID!) {
-    getInvitations(userId: $getInvitationsUserId) {
-      id
-      attendeeId
-      status
-      event {
-        id
-        name
-        startDate
-        endDate
       }
     }
   }

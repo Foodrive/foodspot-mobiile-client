@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, ScrollView } from "react-native";
 import { EventDetailsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@apollo/client";
@@ -8,10 +8,16 @@ import { IconButton } from "@app/components/ui";
 import styles from "./styles";
 import EventDetailsCard from "./EventDetailsCard";
 import Button from "@app/components/ui/Button";
+import SCREEN_NAMES from "@app/navigation/screen.names";
+import { GET_INVITATION_BY_ID } from "@app/graphql/queries";
+import { PageHeader } from "@app/components/common/PageHeader";
 
 type EventDetailsProps = EventDetailsPropsFromRedux; // interface EventDetailsProps extends EventDetailsPropsFromRedux when needed
 
-const EventDetails: React.FC<EventDetailsProps> = ({ eventId }) => {
+const EventDetails: React.FC<EventDetailsProps> = ({
+  eventId,
+  invitationId,
+}) => {
   const navigation = useNavigation();
   const { loading, data, error } = useQuery(GET_FOOD_DRIVE_BY_ID, {
     variables: {
@@ -19,19 +25,26 @@ const EventDetails: React.FC<EventDetailsProps> = ({ eventId }) => {
     },
   });
 
+  const { loading: invitationLoading, data: invitationData } = useQuery(
+    GET_INVITATION_BY_ID,
+    {
+      variables: {
+        getInvitationByIdInvId: invitationId,
+      },
+    },
+  );
+
   // TODO
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.container}>
-        <IconButton
-          id="back-icon-button"
-          icon="chevron-back-outline"
-          onPress={() => {
-            navigation.goBack();
-          }}
-        />
-        <Text style={styles.heading}>Event Details</Text>
-        <View style={styles.floatingIconButton}>
+    <ScrollView>
+      <PageHeader
+        id="event-details"
+        hasBack
+        title="Event Details"
+        onBackPress={() => {
+          navigation.goBack();
+        }}
+        actions={
           <IconButton
             id="share-icon-button"
             icon="share-social-outline"
@@ -40,10 +53,11 @@ const EventDetails: React.FC<EventDetailsProps> = ({ eventId }) => {
             }}
             reverse={false}
           />
-        </View>
-      </View>
-      <View>
-        {!loading && data.getFoodDriveById && (
+        }
+        containerStyle={styles.headingContainer}
+      />
+      <View style={styles.contentContainer}>
+        {!loading && data?.getFoodDriveById && !invitationLoading && (
           <>
             <EventDetailsCard
               name={data.getFoodDriveById.name}
@@ -59,17 +73,31 @@ const EventDetails: React.FC<EventDetailsProps> = ({ eventId }) => {
                 },
                 [],
               )}
+              invitation={invitationData?.getInvitationById}
             />
-            <Button
-              id="next-button"
-              title="Next"
-              onPress={() => console.log("next")} // TODO
-              titleStyle={styles.buttonTitle}
-            />
+            {invitationId === null ? (
+              <Button
+                id="next-button"
+                title="Register for event"
+                onPress={() => {
+                  navigation.navigate(SCREEN_NAMES.common.events.registerEvent);
+                }}
+                titleStyle={styles.buttonTitle}
+              />
+            ) : (
+              <Button
+                id="next-button"
+                title="Unregister"
+                onPress={() => {
+                  // TODO
+                }}
+                titleStyle={styles.buttonTitle}
+              />
+            )}
           </>
         )}
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

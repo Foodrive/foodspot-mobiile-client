@@ -1,19 +1,16 @@
 import { connect, ConnectedProps } from "react-redux";
-import Events from "./Events";
+import EventList from "./EventList";
 import {
   setCurrentEventId,
   setCurrentInvitationId,
 } from "@app/redux/slices/events.slice";
-import { RootState } from "@app/redux/store";
 
-const mapStateToProps = (state: RootState) => ({
-  currentUser: state.user.currentUser,
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = { setCurrentEventId, setCurrentInvitationId };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 
-export type EventsPropsFromRedux = ConnectedProps<typeof connector>;
+export type EventListPropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(Events);
+export default connector(EventList);

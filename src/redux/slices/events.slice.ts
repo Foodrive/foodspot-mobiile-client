@@ -7,11 +7,13 @@ type CreateDataChange = Partial<EventCreateData>;
 export interface EventsState {
   createData?: EventCreateData;
   currentEventId: string | null;
+  currentInvitationId: string | null;
   ceEventFlowTitle?: string; // create or edit event title
 }
 
 const initialState: EventsState = {
   currentEventId: null,
+  currentInvitationId: null,
   createData: undefined,
   ceEventFlowTitle: undefined,
 };
@@ -22,6 +24,9 @@ const eventsSlice = createSlice({
   reducers: {
     setCurrentEventId: (state, action: PayloadAction<string | null>) => {
       state.currentEventId = action.payload;
+    },
+    setCurrentInvitationId: (state, action: PayloadAction<string | null>) => {
+      state.currentInvitationId = action.payload;
     },
     resetCreateData(state) {
       state.ceEventFlowTitle = undefined;
@@ -51,6 +56,7 @@ const eventsSlice = createSlice({
 
 export const {
   setCurrentEventId,
+  setCurrentInvitationId,
   initCreate,
   updateCreateData,
   resetCreateData,

@@ -10,6 +10,7 @@ import {
   PlanningDetails,
   ContactDetails,
   CreationSummary,
+  RegisterEvent,
 } from "@app/screens";
 
 // Root screens. Put application-wide screens here
@@ -50,6 +51,10 @@ const screens: NavScreen[] = [
   {
     name: SCREEN_NAMES.common.events.ceSummary,
     component: CreationSummary,
+  },
+  {
+    name: SCREEN_NAMES.common.events.registerEvent,
+    component: RegisterEvent,
   },
 ];
 
