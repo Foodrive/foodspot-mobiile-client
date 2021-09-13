@@ -91,7 +91,7 @@ const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
             id={`${invitation.id}-list-item`}
             title={invitation.name}
             otherInformation={
-              <View style={styles.ProgressBarContainer}>
+              <View>
                 <ProgressBar
                   id={`${invitation.id}-claims-left-bar`}
                   type="info"

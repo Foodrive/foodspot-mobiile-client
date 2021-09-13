@@ -32,7 +32,6 @@ const styles = StyleSheet.create({
   pendingText: {
     color: colors.orange,
   },
-  ProgressBarContainer: {},
 });
 
 export default styles;
