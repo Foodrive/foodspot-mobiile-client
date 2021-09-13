@@ -1,4 +1,4 @@
-import { montserrat } from "@app/utils";
+import { colors, montserrat } from "@app/utils";
 import { StyleSheet } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { grid } from "@app/utils";
@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   eventList: {
     marginTop: 10,
   },
+  pendingText: {
+    color: colors.orange,
+  },
+  ProgressBarContainer: {},
 });
 
 export default styles;

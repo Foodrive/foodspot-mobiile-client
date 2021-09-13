@@ -26,6 +26,7 @@ export interface UserInvitation {
   name: string;
   attendeeId: string;
   status: InvitationStatus;
+  numAttendees: number;
   event: {
     id: string;
     name: string;
