@@ -9,9 +9,8 @@ interface StyleProps {
 export const useStyles = ({ labelColor }: StyleProps) =>
   StyleSheet.create({
     container: {
-      paddingHorizontal: 10,
       width: "100%",
-      marginVertical: 15,
+      marginVertical: 5,
     },
     labelText: {
       marginBottom: grid.marginBottom,

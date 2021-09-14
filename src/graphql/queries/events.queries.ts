@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { UserInvitation } from ".";
 
 export interface FoodDrive {
   id: string;
@@ -14,10 +15,21 @@ export interface FoodDrive {
     };
   };
 }
+export interface OrganiserFoodDrives {
+  id: string;
+  name: string;
+  startDate: string;
+  maxCapacity: number;
+  invitations: UserInvitation[];
+}
+
 export interface GetFoodDrives {
   getFoodDrives: FoodDrive[];
 }
 
+export interface GetOrganiserFoodDrives {
+  getFoodDrives: OrganiserFoodDrives[];
+}
 export const GET_FOOD_DRIVES = gql`
   query Query {
     getFoodDrives {
@@ -50,6 +62,22 @@ export const GET_FOOD_DRIVE_BY_ID = gql`
       contactNumber
       food {
         allergens
+      }
+    }
+  }
+`;
+
+export const GET_FOOD_DRIVE_BY_USER_ID = gql`
+  query getFoodDrivesByUserId($getFoodDrivesUserId: ID) {
+    getFoodDrives(userId: $getFoodDrivesUserId) {
+      id
+      name
+      startDate
+      maxCapacity
+      invitations {
+        id
+        numAttendees
+        status
       }
     }
   }
