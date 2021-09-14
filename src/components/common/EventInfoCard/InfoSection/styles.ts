@@ -7,10 +7,14 @@ export const useStyles = () =>
       flexDirection: "row",
       marginBottom: 5,
       textTransform: "capitalize",
+      alignItems: "flex-end",
     },
     labelText: {
-      marginRight: 10,
+      marginTop: 10,
       fontFamily: montserrat.bold,
       color: colors.dark,
+    },
+    valueContainer: {
+      marginLeft: 25,
     },
   });

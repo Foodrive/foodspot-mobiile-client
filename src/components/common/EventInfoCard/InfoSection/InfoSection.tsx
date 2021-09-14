@@ -9,9 +9,11 @@ const iconMap = {
   user: { type: "ionicon", name: "person-outline" },
   location: { type: "ionicon", name: "location-outline" },
   number: { type: "font-awesome-5", name: "hashtag" },
+  contact: { type: "ionicon", name: "person-circle-outline" },
   email: { type: "ionicon", name: "mail-outline" },
   text: { type: "ionicon", name: "chatbox-outline" },
   date: { type: "ionicon", name: "calendar" },
+  warning: { type: "ionicon", name: "warning-outline" },
 };
 
 export type InfoSectionType =
@@ -20,7 +22,9 @@ export type InfoSectionType =
   | "number"
   | "email"
   | "text"
-  | "date";
+  | "date"
+  | "warning"
+  | "contact";
 
 export interface InfoSectionProps {
   label: string;
@@ -40,7 +44,6 @@ const InfoSection: React.FC<InfoSectionProps> = ({ label, value, type }) => {
   return (
     <View>
       <View style={styles.labelContainer}>
-        <Text style={styles.labelText}>{label}</Text>
         {icon && (
           <Icon
             id={`${label}-icon`}
@@ -50,8 +53,15 @@ const InfoSection: React.FC<InfoSectionProps> = ({ label, value, type }) => {
             color={colors.dark}
           />
         )}
+        <Text
+          style={
+            icon ? [styles.labelText, { marginLeft: 10 }] : styles.labelText
+          }
+        >
+          {label}
+        </Text>
       </View>
-      <View>{value}</View>
+      <View style={styles.valueContainer}>{value}</View>
     </View>
   );
 };

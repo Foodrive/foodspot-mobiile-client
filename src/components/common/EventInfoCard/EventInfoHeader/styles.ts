@@ -15,7 +15,7 @@ export const useStyles = () =>
     headerText: {
       color: colors.dark,
       fontFamily: montserrat.bold,
-      fontSize: RFValue(16),
+      fontSize: RFValue(20),
     },
     acceptTypeContainer: {
       marginVertical: 10,
