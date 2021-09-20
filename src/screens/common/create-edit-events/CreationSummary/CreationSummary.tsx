@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useStyles } from "./styles";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { CommonActions, useNavigation } from "@react-navigation/native";
@@ -102,23 +102,25 @@ const CreationSummary: React.FC<CreationSummaryProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <PageHeader
-        id="creation-summary"
-        title={pageTitle as string}
-        hasBack
-        onBackPress={onBack}
-      />
-      <EventInfoCard id="event-info-summary" event={createData} />
-      <Button
-        color="primary"
-        id="submit-btn"
-        title={pageTitle?.includes("Create") ? "Create" : "Edit"}
-        onPress={onSubmit}
-        disabled={loadingCreate}
-        loading={loadingCreate}
-      />
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <PageHeader
+          id="creation-summary"
+          title={pageTitle as string}
+          hasBack
+          onBackPress={onBack}
+        />
+        <EventInfoCard id="event-info-summary" event={createData} />
+        <Button
+          color="primary"
+          id="submit-btn"
+          title={pageTitle?.includes("Create") ? "Create" : "Edit"}
+          onPress={onSubmit}
+          disabled={loadingCreate}
+          loading={loadingCreate}
+        />
+      </View>
+    </ScrollView>
   );
 };
 

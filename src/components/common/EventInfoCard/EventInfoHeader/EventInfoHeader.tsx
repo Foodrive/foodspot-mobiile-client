@@ -7,19 +7,19 @@ import { useStyles } from "./styles";
 interface EventInfoHeaderProps {
   title: string;
   type: EventType;
-  autoAccept?: boolean;
+  secondaryTag?: string;
 }
 
 const EventInfoHeader: React.FC<EventInfoHeaderProps> = ({
   title,
   type,
-  autoAccept,
+  secondaryTag,
 }) => {
   const styles = useStyles();
   const eventType = useMemo(() => [{ title: type }], [type]);
-  const acceptType = useMemo(
-    () => [{ title: autoAccept ? "Automated" : "Manual" }],
-    [autoAccept],
+  const secondaryTagText = useMemo(
+    () => (secondaryTag ? [{ title: secondaryTag }] : undefined),
+    [secondaryTag],
   );
   return (
     <View>
@@ -27,9 +27,9 @@ const EventInfoHeader: React.FC<EventInfoHeaderProps> = ({
         <Text style={styles.headerText}>{title}</Text>
         <Tags tags={eventType} color="teal" variant="square" />
       </View>
-      {autoAccept !== undefined && (
+      {secondaryTagText !== undefined && (
         <View style={styles.acceptTypeContainer}>
-          <Tags tags={acceptType} color="lightbrown" variant="square" />
+          <Tags tags={secondaryTagText} color="lightbrown" variant="square" />
         </View>
       )}
     </View>

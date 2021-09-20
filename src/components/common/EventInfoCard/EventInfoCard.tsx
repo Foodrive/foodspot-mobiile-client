@@ -7,11 +7,11 @@ import { colors, getDateInfo } from "@app/utils";
 import { useStyles } from "./styles";
 import { Tags } from "@app/components/ui";
 import { EventInfoHeader } from "@app/components/common/EventInfoCard/EventInfoHeader";
-import { colorNames } from "react-native-svg/lib/typescript/lib/extract/extractColor";
 
 interface EventInfoCardProps {
   id: string;
   event: EventCreateData;
+  secondaryTagText?: string; // tag below the header
 }
 
 // Maps the event information key to the type
@@ -23,12 +23,12 @@ const sectionTypeMap: Record<
   location: "location",
   description: "text",
   email: "email",
-  allergens: undefined,
+  allergens: "warning",
   autoAccept: undefined,
-  contactNumber: undefined,
+  contactNumber: "contact",
   endDate: undefined,
-  facebookPage: undefined,
-  maxCapacity: undefined,
+  facebookPage: "contact",
+  maxCapacity: "number",
   name: undefined,
   type: undefined,
   startDate: undefined,
@@ -49,7 +49,11 @@ const sectionLabelMap: Record<keyof EventCreateData, string> = {
   type: "",
 };
 
-const EventInfoCard: React.FC<EventInfoCardProps> = ({ id, event }) => {
+const EventInfoCard: React.FC<EventInfoCardProps> = ({
+  id,
+  event,
+  secondaryTagText,
+}) => {
   const styles = useStyles();
   const getTextSection = useCallback(
     (
@@ -82,6 +86,17 @@ const EventInfoCard: React.FC<EventInfoCardProps> = ({ id, event }) => {
     [styles],
   );
 
+  const secondaryTag = useMemo(() => {
+    // Note: custom secondary tag always
+    // takes precedence over automation type tag
+    if (secondaryTagText) {
+      return secondaryTagText;
+    } else if (event.autoAccept !== undefined) {
+      return event.autoAccept ? "Automated" : "Manual";
+    }
+    return undefined;
+  }, [event.autoAccept, secondaryTagText]);
+
   const getTabsSection = useCallback(
     (label, values: string[]): InfoSectionProps => {
       const tags = values.map((item) => ({ title: item }));
@@ -93,6 +108,7 @@ const EventInfoCard: React.FC<EventInfoCardProps> = ({ id, event }) => {
           ) : (
             <Text style={styles.valueText}>N/A</Text>
           ),
+        type: "warning",
       };
     },
     [],
@@ -135,7 +151,7 @@ const EventInfoCard: React.FC<EventInfoCardProps> = ({ id, event }) => {
       <EventInfoHeader
         title={event.name ?? ""}
         type={event.type ?? EventType.foodDrive}
-        autoAccept={event.autoAccept}
+        secondaryTag={secondaryTag}
       />
       {infoSections.map((section) => (
         <InfoSection
