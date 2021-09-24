@@ -5,8 +5,7 @@ export { default as HomeScreen } from "./Home";
 
 // Events screens
 export { Events } from "./Events";
-export { EventDetails } from "./common/EventDetails";
-export { RegisterEvent } from "./common/RegisterEvent";
+export { EventProgress } from "./EventProgress";
 
 // Profile screens
 export { UserProfile } from "./Profile";

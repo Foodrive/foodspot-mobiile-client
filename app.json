@@ -28,7 +28,8 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "serverUrl": "https://foodspot-server.mybluemix.net/graphql"
+      "serverUrl": "https://foodspot-server.mybluemix.net/graphql",
+      "pollInterval": 500
     }
   }
 }

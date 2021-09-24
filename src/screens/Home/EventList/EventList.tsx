@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   FoodDrive,
   GetFoodDrives,
@@ -14,6 +14,7 @@ import { EventListPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { getDateInfo } from "@app/utils";
+import config from "@app/config";
 
 interface EventListProps extends EventListPropsFromRedux {
   search: string;
@@ -25,7 +26,9 @@ const EventList: React.FC<EventListProps> = ({
   search,
 }) => {
   const navigation = useNavigation();
-  const { loading, error, data } = useQuery<GetFoodDrives>(GET_FOOD_DRIVES);
+  const { loading, error, data } = useQuery<GetFoodDrives>(GET_FOOD_DRIVES, {
+    pollInterval: config.defaultPollInterval,
+  });
   const toastProvider = useToastProvider();
   const styles = useStyles();
 
