@@ -69,3 +69,4 @@ export const createFoodItem = (
 export const createLocationFromAddress = (address: string): Location => ({
   address,
 });
+

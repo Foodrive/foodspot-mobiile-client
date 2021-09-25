@@ -1,3 +1,5 @@
+import { EventType } from "@app/types/event.types";
+
 export interface UserInfo {
   username: string;
   id: string;
@@ -27,4 +29,19 @@ export interface Location {
 export interface Coordinates {
   latitude: number;
   longitude: number;
+}
+
+export interface FoodDrive {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  type: EventType;
+  location: Partial<Location>;
+  email: string;
+  contactNumber: string;
+  food: Partial<Food>[];
+  facebookPage: string;
+  maxCapacity: number;
+  autoAccept: boolean;
 }
