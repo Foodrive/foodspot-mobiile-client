@@ -25,13 +25,6 @@ type OngoingEvent = {
   maxCapacity: number;
 };
 
-const initialSectionData = [
-  {
-    title: "Ongoing events",
-    data: [],
-  },
-];
-
 const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
   currentUser,
   setCurrentEventId,
