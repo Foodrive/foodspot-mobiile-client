@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { Food, Location } from "@app/utils/types";
+import { AttendeeCount, Food, Location } from "@app/utils/types";
 import { UserInvitation } from "@app/graphql/queries";
 import { InvitationStatus } from "@app/utils/constants";
 
@@ -75,7 +75,7 @@ export const createLocationFromAddress = (address: string): Location => ({
 export const getAttendeeCount = (
   invitations: UserInvitation[],
   maxCapacity: number,
-): { claimsLeft: number; pending: number } => {
+): AttendeeCount => {
   let numPending = 0;
   let numAttendees = 0;
 

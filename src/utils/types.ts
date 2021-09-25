@@ -45,3 +45,8 @@ export interface FoodDrive {
   maxCapacity: number;
   autoAccept: boolean;
 }
+
+export interface AttendeeCount {
+  claimsLeft: number;
+  pending: number;
+}

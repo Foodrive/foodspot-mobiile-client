@@ -11,6 +11,8 @@ import { convertFoodDriveToCreateData } from "@app/utils/mappers";
 import { EventInfoCard } from "@app/components/common/EventInfoCard";
 import { useStyles } from "./styles";
 import { CapacityBar } from "./CapacityBar";
+import { AttendeeCount } from "@app/utils/types";
+import { getAttendeeCount } from "@app/utils";
 
 type EventProgressProps = EventProgressPropsFromRedux;
 
@@ -19,6 +21,9 @@ const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
   const toastProvider = useToastProvider();
   const styles = useStyles();
   const [event, setEvent] = useState<EventCreateData | undefined>(undefined);
+  const [attendeeCount, setAttendeeCount] = useState<AttendeeCount | undefined>(
+    undefined,
+  );
   const { loading, error, data } = useQuery(GET_FOOD_DRIVE_BY_ID_FULL_DETAILS, {
     variables: {
       eventId,
@@ -27,8 +32,14 @@ const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
 
   useEffect(() => {
     if (!loading && !error && data) {
-      const eventDetails = convertFoodDriveToCreateData(data.getFoodDriveById);
+      const { getFoodDriveById: event } = data;
+      const eventDetails = convertFoodDriveToCreateData(event);
+      const attendeeCount = getAttendeeCount(
+        event.invitations,
+        event.maxCapacity,
+      );
       setEvent(eventDetails);
+      setAttendeeCount(attendeeCount);
     } else if (error) {
       toastProvider.showError(error.message);
     }
@@ -43,7 +54,12 @@ const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
         onBackPress={() => navigation.goBack()}
       />
       <View style={styles.bodyContainer}>
-        <CapacityBar value={100} max={200} />
+        {event && attendeeCount && (
+          <CapacityBar
+            value={attendeeCount.claimsLeft}
+            max={event.maxCapacity ?? 0}
+          />
+        )}
         <EventInfoCard id="event-details-card" event={event} />
       </View>
     </ScrollView>
