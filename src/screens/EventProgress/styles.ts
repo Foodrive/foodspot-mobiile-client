@@ -6,5 +6,6 @@ export const useStyles = () =>
     bodyContainer: {
       marginBottom: grid.tabBarHeight,
       flexDirection: "column",
+      paddingHorizontal: grid.genericSpacing,
     },
   });

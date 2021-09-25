@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
 import { Food, Location } from "@app/utils/types";
+import { UserInvitation } from "@app/graphql/queries";
+import { InvitationStatus } from "@app/utils/constants";
 
 export interface DayInfo {
   dayText: string;
@@ -70,3 +72,22 @@ export const createLocationFromAddress = (address: string): Location => ({
   address,
 });
 
+export const getAttendeeCount = (
+  invitations: UserInvitation[],
+  maxCapacity: number,
+): { claimsLeft: number; pending: number } => {
+  let numPending = 0;
+  let numAttendees = 0;
+
+  for (const invitation of invitations) {
+    if (invitation.status === InvitationStatus.pending) {
+      numPending++;
+    }
+    numAttendees += invitation.numAttendees;
+  }
+
+  return {
+    claimsLeft: maxCapacity - numAttendees,
+    pending: numPending,
+  };
+};

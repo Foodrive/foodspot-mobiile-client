@@ -10,6 +10,7 @@ import useToastProvider from "@app/hooks/useToastProvider";
 import { convertFoodDriveToCreateData } from "@app/utils/mappers";
 import { EventInfoCard } from "@app/components/common/EventInfoCard";
 import { useStyles } from "./styles";
+import { CapacityBar } from "./CapacityBar";
 
 type EventProgressProps = EventProgressPropsFromRedux;
 
@@ -42,6 +43,7 @@ const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
         onBackPress={() => navigation.goBack()}
       />
       <View style={styles.bodyContainer}>
+        <CapacityBar value={100} max={200} />
         <EventInfoCard id="event-details-card" event={event} />
       </View>
     </ScrollView>
