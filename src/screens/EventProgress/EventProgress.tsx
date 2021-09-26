@@ -14,6 +14,7 @@ import { AttendeeCount } from "@app/utils/types";
 import { getAttendeeCount } from "@app/utils";
 import Button from "@app/components/ui/Button";
 import SCREEN_NAMES from "@app/navigation/screen.names";
+import config from "@app/config";
 
 type EventProgressProps = EventProgressPropsFromRedux;
 
@@ -31,6 +32,7 @@ const EventProgress: React.FC<EventProgressProps> = ({
     undefined,
   );
   const { loading, error, data } = useQuery(GET_FOOD_DRIVE_BY_ID_FULL_DETAILS, {
+    pollInterval: config.defaultPollInterval,
     variables: {
       eventId,
     },

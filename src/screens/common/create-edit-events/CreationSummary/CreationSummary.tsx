@@ -7,7 +7,10 @@ import { CreationSummaryReduxProps } from "./container";
 import { EventInfoCard } from "@app/components/common/EventInfoCard";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import { useMutation } from "@apollo/client";
-import { CREATE_FOOD_DRIVE } from "@app/graphql/mutations/events.mutation";
+import {
+  CREATE_FOOD_DRIVE,
+  UPDATE_FOOD_DRIVE,
+} from "@app/graphql/mutations/events.mutation";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { createLocationFromAddress, createFoodItem } from "@app/utils";
 import Button from "@app/components/ui/Button";
@@ -15,6 +18,7 @@ import Button from "@app/components/ui/Button";
 type CreationSummaryProps = CreationSummaryReduxProps;
 
 const CreationSummary: React.FC<CreationSummaryProps> = ({
+  eventId,
   createData,
   pageTitle,
   currentUser,
@@ -26,6 +30,11 @@ const CreationSummary: React.FC<CreationSummaryProps> = ({
     createFoodDrive,
     { data: createResult, error: errorCreate, loading: loadingCreate },
   ] = useMutation(CREATE_FOOD_DRIVE);
+  const [
+    updateFoodDrive,
+    { data: updateResult, error: updateError, loading: updateLoading },
+  ] = useMutation(UPDATE_FOOD_DRIVE);
+
   const toastProvider = useToastProvider();
 
   const onBack = useCallback(() => {
@@ -70,12 +79,26 @@ const CreationSummary: React.FC<CreationSummaryProps> = ({
           variables: payload,
         });
       } else {
-        // TODO send edit request
+        if (eventId) {
+          await updateFoodDrive({
+            variables: {
+              id: eventId,
+              ...payload,
+            },
+          });
+        }
       }
     } catch (e) {
       // Do nothing because the useEffect will catch the error
     }
-  }, [pageTitle, currentUser, toastProvider, createData]);
+  }, [
+    pageTitle,
+    currentUser,
+    toastProvider,
+    createData,
+    updateFoodDrive,
+    eventId,
+  ]);
 
   useEffect(() => {
     // This is to handle the odd case where if createData is
@@ -97,6 +120,18 @@ const CreationSummary: React.FC<CreationSummaryProps> = ({
     }
   }, [loadingCreate, errorCreate, createResult, toastProvider, navigateToHome]);
 
+  useEffect(() => {
+    if (!updateLoading && !updateError && updateResult) {
+      const { updateFoodDrive } = updateResult;
+      toastProvider.showSuccess(
+        `Successfully updated: ${updateFoodDrive.name}`,
+      );
+      navigation.navigate(SCREEN_NAMES.events.eventProgress);
+    } else if (updateError) {
+      toastProvider.showError(updateError.message);
+    }
+  }, [updateLoading, updateError, updateResult, toastProvider, navigation]);
+
   if (!createData) {
     return <></>;
   }
@@ -116,8 +151,8 @@ const CreationSummary: React.FC<CreationSummaryProps> = ({
           id="submit-btn"
           title={pageTitle?.includes("Create") ? "Create" : "Edit"}
           onPress={onSubmit}
-          disabled={loadingCreate}
-          loading={loadingCreate}
+          disabled={loadingCreate || updateLoading}
+          loading={loadingCreate || updateLoading}
         />
       </View>
     </ScrollView>

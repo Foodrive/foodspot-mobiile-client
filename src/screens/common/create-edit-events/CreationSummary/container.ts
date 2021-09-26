@@ -7,6 +7,7 @@ const mapStateToProps = (state: RootState) => ({
   createData: state.events.createData,
   pageTitle: state.events.ceEventFlowTitle,
   currentUser: state.user.currentUser,
+  eventId: state.events.currentEventId,
 });
 
 const mapDispatchToProps = {
