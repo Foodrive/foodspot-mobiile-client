@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { useNavigation } from "@react-navigation/native";
 import { EventProgressPropsFromRedux } from "@app/screens/EventProgress/container";
 import { useQuery } from "@apollo/client";
 import { GET_FOOD_DRIVE_BY_ID_FULL_DETAILS } from "@app/graphql/queries";
-import { EventCreateData } from "@app/types/event.types";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { convertFoodDriveToCreateData } from "@app/utils/mappers";
 import { EventInfoCard } from "@app/components/common/EventInfoCard";
@@ -13,14 +12,21 @@ import { useStyles } from "./styles";
 import { CapacityBar } from "./CapacityBar";
 import { AttendeeCount } from "@app/utils/types";
 import { getAttendeeCount } from "@app/utils";
+import Button from "@app/components/ui/Button";
+import SCREEN_NAMES from "@app/navigation/screen.names";
 
 type EventProgressProps = EventProgressPropsFromRedux;
 
-const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
+const EventProgress: React.FC<EventProgressProps> = ({
+  eventId,
+  event,
+  setEvent,
+  resetCreateData,
+  setCeEventFlowTitle,
+}) => {
   const navigation = useNavigation();
   const toastProvider = useToastProvider();
   const styles = useStyles();
-  const [event, setEvent] = useState<EventCreateData | undefined>(undefined);
   const [attendeeCount, setAttendeeCount] = useState<AttendeeCount | undefined>(
     undefined,
   );
@@ -45,13 +51,23 @@ const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
     }
   }, [loading, data, error]);
 
+  const onBack = useCallback(() => {
+    navigation.goBack();
+    resetCreateData();
+  }, [navigation, resetCreateData]);
+
+  const onEditPressed = useCallback(() => {
+    setCeEventFlowTitle("Edit Event");
+    navigation.navigate(SCREEN_NAMES.common.events.basicDetails);
+  }, [event, navigation, setCeEventFlowTitle]);
+
   return (
     <ScrollView>
       <PageHeader
         id="event-progress"
         title="Event Details"
         hasBack
-        onBackPress={() => navigation.goBack()}
+        onBackPress={onBack}
       />
       <View style={styles.bodyContainer}>
         {event && attendeeCount && (
@@ -61,6 +77,13 @@ const EventProgress: React.FC<EventProgressProps> = ({ eventId }) => {
           />
         )}
         <EventInfoCard id="event-details-card" event={event} />
+        <Button
+          color="primary"
+          id="edit-btn"
+          title="Edit event"
+          disabled={event === undefined}
+          onPress={onEditPressed}
+        />
       </View>
     </ScrollView>
   );
