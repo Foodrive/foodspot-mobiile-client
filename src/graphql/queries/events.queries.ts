@@ -67,6 +67,29 @@ export const GET_FOOD_DRIVE_BY_ID = gql`
   }
 `;
 
+export const GET_FOOD_DRIVE_BY_ID_FULL_DETAILS = gql`
+  query Query($eventId: ID!) {
+    getFoodDriveById(eventId: $eventId) {
+      name
+      description
+      startDate
+      endDate
+      type
+      location {
+        address
+      }
+      contactNumber
+      email
+      food {
+        allergens
+      }
+      facebookPage
+      maxCapacity
+      autoAccept
+    }
+  }
+`;
+
 export const GET_FOOD_DRIVE_BY_USER_ID = gql`
   query getFoodDrivesByUserId($getFoodDrivesUserId: ID) {
     getFoodDrives(userId: $getFoodDrivesUserId) {

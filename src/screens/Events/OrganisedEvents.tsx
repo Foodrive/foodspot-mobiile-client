@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import styles from "./styles";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { SectionedListData } from "@app/components/ui/SectionedList";
+import config from "@app/config";
 
 type OngoingEvent = {
   id: string;
@@ -23,10 +24,17 @@ type OngoingEvent = {
   pending: number;
   maxCapacity: number;
 };
+
+const initialSectionData = [
+  {
+    title: "Ongoing events",
+    data: [],
+  },
+];
+
 const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
   currentUser,
   setCurrentEventId,
-  setCurrentInvitationId,
 }) => {
   const [invitations, setInvitations] = useState<
     SectionedListData<OngoingEvent>[]
@@ -42,6 +50,7 @@ const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
   const { data, error, loading } = useQuery<GetOrganiserFoodDrives>(
     GET_FOOD_DRIVE_BY_USER_ID,
     {
+      pollInterval: config.defaultPollInterval,
       variables: {
         getFoodDrivesUserId: currentUser?.id,
       },
@@ -50,7 +59,12 @@ const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
 
   useEffect(() => {
     if (!loading && !error && data) {
-      const ongoingEvents: SectionedListData<OngoingEvent>[] = [...invitations];
+      const ongoingEvents: SectionedListData<OngoingEvent>[] = [
+        {
+          title: "Ongoing events",
+          data: [],
+        },
+      ];
 
       data.getFoodDrives.forEach((event) => {
         const startDate = dayjs(event.startDate);
@@ -106,8 +120,7 @@ const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
             }
             onPress={() => {
               setCurrentEventId(invitation.id);
-              setCurrentInvitationId(invitation.id);
-              navigation.navigate(SCREEN_NAMES.common.events.eventDetails);
+              navigation.navigate(SCREEN_NAMES.events.eventProgress);
             }}
             iconColor={colors.success}
           />

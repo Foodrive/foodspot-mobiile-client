@@ -10,7 +10,7 @@ import { EventInfoHeader } from "@app/components/common/EventInfoCard/EventInfoH
 
 interface EventInfoCardProps {
   id: string;
-  event: EventCreateData;
+  event?: EventCreateData;
   secondaryTagText?: string; // tag below the header
 }
 
@@ -91,11 +91,11 @@ const EventInfoCard: React.FC<EventInfoCardProps> = ({
     // takes precedence over automation type tag
     if (secondaryTagText) {
       return secondaryTagText;
-    } else if (event.autoAccept !== undefined) {
+    } else if (event?.autoAccept !== undefined) {
       return event.autoAccept ? "Automated" : "Manual";
     }
     return undefined;
-  }, [event.autoAccept, secondaryTagText]);
+  }, [event?.autoAccept, secondaryTagText]);
 
   const getTabsSection = useCallback(
     (label, values: string[]): InfoSectionProps => {
@@ -115,6 +115,9 @@ const EventInfoCard: React.FC<EventInfoCardProps> = ({
   );
 
   const infoSections = useMemo(() => {
+    if (!event) {
+      return [];
+    }
     // Standardises the sections
     const excluded = ["name", "autoAccept", "type", "startDate", "endDate"];
     const sections = [];
@@ -148,19 +151,25 @@ const EventInfoCard: React.FC<EventInfoCardProps> = ({
 
   return (
     <Card id={id}>
-      <EventInfoHeader
-        title={event.name ?? ""}
-        type={event.type ?? EventType.foodDrive}
-        secondaryTag={secondaryTag}
-      />
-      {infoSections.map((section) => (
-        <InfoSection
-          key={section.label}
-          label={section.label}
-          value={section.value}
-          type={section.type}
-        />
-      ))}
+      {event ? (
+        <>
+          <EventInfoHeader
+            title={event.name ?? ""}
+            type={event.type ?? EventType.foodDrive}
+            secondaryTag={secondaryTag}
+          />
+          {infoSections.map((section) => (
+            <InfoSection
+              key={section.label}
+              label={section.label}
+              value={section.value}
+              type={section.type}
+            />
+          ))}
+        </>
+      ) : (
+        <Text>Loading...</Text>
+      )}
     </Card>
   );
 };

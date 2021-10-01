@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import styles from "./styles";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { SectionedListData } from "@app/components/ui/SectionedList";
+import config from "@app/config";
 
 const YourEvents: React.FC<EventsPropsFromRedux> = ({
   currentUser,
@@ -44,6 +45,7 @@ const YourEvents: React.FC<EventsPropsFromRedux> = ({
   const { data, error, loading } = useQuery<GetUserInvitation>(
     GET_INVITATIONS_BY_USER,
     {
+      pollInterval: config.defaultPollInterval,
       variables: {
         getInvitationsUserId: currentUser?.id,
       },

@@ -12,7 +12,7 @@ const iconMap = {
   contact: { type: "ionicon", name: "person-circle-outline" },
   email: { type: "ionicon", name: "mail-outline" },
   text: { type: "ionicon", name: "chatbox-outline" },
-  date: { type: "ionicon", name: "calendar" },
+  date: { type: "ionicon", name: "calendar-outline" },
   warning: { type: "ionicon", name: "warning-outline" },
 };
 
