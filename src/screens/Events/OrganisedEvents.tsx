@@ -8,10 +8,8 @@ import {
 import { EventsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import { ListItem, ProgressBar, SectionedList } from "@app/components/ui";
-import { colors } from "@app/utils";
-import { InvitationStatus } from "@app/utils/constants";
+import { colors, getAttendeeCount } from "@app/utils";
 import SCREEN_NAMES from "@app/navigation/screen.names";
-import dayjs from "dayjs";
 import styles from "./styles";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { SectionedListData } from "@app/components/ui/SectionedList";
@@ -24,13 +22,6 @@ type OngoingEvent = {
   pending: number;
   maxCapacity: number;
 };
-
-const initialSectionData = [
-  {
-    title: "Ongoing events",
-    data: [],
-  },
-];
 
 const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
   currentUser,
@@ -67,27 +58,17 @@ const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
       ];
 
       data.getFoodDrives.forEach((event) => {
-        const startDate = dayjs(event.startDate);
-        if (dayjs().isBefore(startDate)) {
-          const pending = event.invitations.filter(
-            (invitation) => invitation.status === InvitationStatus.pending,
-          );
-          const attendees = event.invitations.reduce(
-            (totalAttendees, invitation) => {
-              return (totalAttendees += invitation.numAttendees);
-            },
-            0,
-          );
-
-          const claimsLeft = event.maxCapacity - attendees;
-          ongoingEvents[0].data.push({
-            id: event.id,
-            name: event.name,
-            pending: pending.length,
-            claimsLeft: claimsLeft,
-            maxCapacity: event.maxCapacity,
-          });
-        }
+        const attendeeCount = getAttendeeCount(
+          event.invitations,
+          event.maxCapacity,
+        );
+        ongoingEvents[0].data.push({
+          id: event.id,
+          name: event.name,
+          pending: attendeeCount.pending,
+          claimsLeft: attendeeCount.claimsLeft,
+          maxCapacity: event.maxCapacity,
+        });
       });
       setInvitations(ongoingEvents);
     } else if (error) {
