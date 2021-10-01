@@ -32,6 +32,9 @@ const eventsSlice = createSlice({
       state.ceEventFlowTitle = undefined;
       state.createData = undefined;
     },
+    setCreateData(state, action: PayloadAction<EventCreateData>) {
+      state.createData = action.payload;
+    },
     initCreate(state, action: PayloadAction<EventType>) {
       state.ceEventFlowTitle = "Create Event";
       state.createData = {
@@ -57,6 +60,7 @@ const eventsSlice = createSlice({
 export const {
   setCurrentEventId,
   setCurrentInvitationId,
+  setCreateData,
   initCreate,
   updateCreateData,
   resetCreateData,

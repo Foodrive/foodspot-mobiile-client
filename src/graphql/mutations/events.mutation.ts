@@ -1,5 +1,40 @@
 import { gql } from "@apollo/client";
 
+export const UPDATE_FOOD_DRIVE = gql`
+  mutation Mutation(
+    $id: ID!
+    $name: String
+    $description: String
+    $startDate: String
+    $endDate: String
+    $location: LocationInput
+    $contactNumber: String
+    $email: String
+    $maxCapacity: Int
+    $autoAccept: Boolean
+    $food: [FoodInput!]
+    $facebookPage: String
+  ) {
+    updateFoodDrive(
+      id: $id
+      name: $name
+      description: $description
+      startDate: $startDate
+      endDate: $endDate
+      location: $location
+      contactNumber: $contactNumber
+      email: $email
+      maxCapacity: $maxCapacity
+      autoAccept: $autoAccept
+      food: $food
+      facebookPage: $facebookPage
+    ) {
+      id
+      name
+    }
+  }
+`;
+
 export const CREATE_FOOD_DRIVE = gql`
   mutation CreateFoodDriveMutation(
     $name: String!

@@ -69,9 +69,11 @@ const BasicDetails: React.FC<BasicDetailsProps> = ({
   );
 
   const onBack = useCallback(() => {
+    if (!pageTitle?.includes("Edit")) {
+      resetCreateData();
+    }
     navigation.goBack();
-    resetCreateData();
-  }, [navigation, resetCreateData]);
+  }, [navigation, resetCreateData, pageTitle]);
 
   // Initial values
   const selectedIndex = createData
