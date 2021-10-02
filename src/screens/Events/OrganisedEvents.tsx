@@ -8,7 +8,7 @@ import {
 import { EventsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import { ListItem, ProgressBar, SectionedList } from "@app/components/ui";
-import { colors, getAttendeeCount } from "@app/utils";
+import { colors, getAttendeeCount, deepClone } from "@app/utils";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import styles from "./styles";
 import useToastProvider from "@app/hooks/useToastProvider";
@@ -23,18 +23,20 @@ type OngoingEvent = {
   maxCapacity: number;
 };
 
+const sections: SectionedListData<OngoingEvent>[] = [
+  {
+    title: "Ongoing events",
+    data: [],
+  },
+];
+
 const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
   currentUser,
   setCurrentEventId,
 }) => {
   const [invitations, setInvitations] = useState<
     SectionedListData<OngoingEvent>[]
-  >([
-    {
-      title: "Ongoing events",
-      data: [],
-    },
-  ]);
+  >(deepClone(sections));
 
   const toastProvider = useToastProvider();
   const navigation = useNavigation();
@@ -50,12 +52,7 @@ const OrganisedEvents: React.FC<EventsPropsFromRedux> = ({
 
   useEffect(() => {
     if (!loading && !error && data) {
-      const ongoingEvents: SectionedListData<OngoingEvent>[] = [
-        {
-          title: "Ongoing events",
-          data: [],
-        },
-      ];
+      const ongoingEvents = deepClone(sections);
 
       data.getFoodDrives.forEach((event) => {
         const attendeeCount = getAttendeeCount(

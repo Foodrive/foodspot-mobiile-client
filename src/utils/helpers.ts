@@ -91,3 +91,9 @@ export const getAttendeeCount = (
     pending: numPending,
   };
 };
+
+/**
+ * Deep clones with data loss. Do not use if you have date functions,
+ * Infinity or undefined in the object.
+ */
+export const deepClone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
