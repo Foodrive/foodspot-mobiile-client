@@ -15,6 +15,7 @@ import { getAttendeeCount } from "@app/utils";
 import Button from "@app/components/ui/Button";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import config from "@app/config";
+import dayjs from "dayjs";
 
 type EventProgressProps = EventProgressPropsFromRedux;
 
@@ -31,6 +32,7 @@ const EventProgress: React.FC<EventProgressProps> = ({
   const [attendeeCount, setAttendeeCount] = useState<AttendeeCount | undefined>(
     undefined,
   );
+  const [isUpcoming, setIsUpcoming] = useState(false);
   const { loading, error, data } = useQuery(GET_FOOD_DRIVE_BY_ID_FULL_DETAILS, {
     pollInterval: config.defaultPollInterval,
     variables: {
@@ -46,6 +48,7 @@ const EventProgress: React.FC<EventProgressProps> = ({
         event.invitations,
         event.maxCapacity,
       );
+      setIsUpcoming(dayjs().isBefore(eventDetails.startDate));
       setEvent(eventDetails);
       setAttendeeCount(attendeeCount);
     } else if (error) {
@@ -78,20 +81,24 @@ const EventProgress: React.FC<EventProgressProps> = ({
             max={event.maxCapacity ?? 0}
           />
         )}
-        <Button
-          color="primary"
-          id="edit-btn"
-          title="Edit event"
-          disabled={event === undefined}
-          onPress={onEditPressed}
-        />
+        {!loading && (
+          <Button
+            color="primary"
+            id="edit-btn"
+            title="Edit event"
+            disabled={event === undefined}
+            onPress={onEditPressed}
+          />
+        )}
         <EventInfoCard id="event-details-card" event={event} />
-        <Button
-          id="cancel-close-btn"
-          color="danger"
-          title="Cancel Event"
-          disabled={event === undefined}
-        />
+        {!loading && (
+          <Button
+            id="cancel-close-btn"
+            color="danger"
+            title={`${isUpcoming ? "Cancel" : "Close"} Event`}
+            disabled={event === undefined}
+          />
+        )}
       </View>
     </ScrollView>
   );
