@@ -63,12 +63,22 @@ const EventProgress: React.FC<EventProgressProps> = ({
 
   useEffect(() => {
     if (!deleteLoading && !deleteError && deleteData) {
-      toastProvider.showSuccess(`Successfully deleted event: ${event?.name}`);
+      const action = isUpcoming ? "cancelled" : "closed";
+      toastProvider.showSuccess(
+        `Successfully ${action} the event: ${event?.name}`,
+      );
       navigation.goBack();
     } else if (!deleteLoading && deleteError) {
       toastProvider.showError(deleteError.message);
     }
-  }, [deleteLoading, deleteError, deleteData, toastProvider, event]);
+  }, [
+    deleteLoading,
+    deleteError,
+    deleteData,
+    toastProvider,
+    event,
+    isUpcoming,
+  ]);
 
   const onBack = useCallback(() => {
     resetCreateData();
