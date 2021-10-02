@@ -69,3 +69,9 @@ export const CREATE_FOOD_DRIVE = gql`
     }
   }
 `;
+
+export const DELETE_FOOD_DRIVE = gql`
+  mutation Mutation($eventId: ID!) {
+    deleteFoodDrive(id: $eventId)
+  }
+`;

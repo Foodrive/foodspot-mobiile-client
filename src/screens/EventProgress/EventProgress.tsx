@@ -3,7 +3,7 @@ import { ScrollView, View } from "react-native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { useNavigation } from "@react-navigation/native";
 import { EventProgressPropsFromRedux } from "@app/screens/EventProgress/container";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GET_FOOD_DRIVE_BY_ID_FULL_DETAILS } from "@app/graphql/queries";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { convertFoodDriveToCreateData } from "@app/utils/mappers";
@@ -16,6 +16,7 @@ import Button from "@app/components/ui/Button";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import config from "@app/config";
 import dayjs from "dayjs";
+import { DELETE_FOOD_DRIVE } from "@app/graphql/mutations/events.mutation";
 
 type EventProgressProps = EventProgressPropsFromRedux;
 
@@ -39,6 +40,10 @@ const EventProgress: React.FC<EventProgressProps> = ({
       eventId,
     },
   });
+  const [
+    deleteFoodDrive,
+    { loading: deleteLoading, error: deleteError, data: deleteData },
+  ] = useMutation(DELETE_FOOD_DRIVE);
 
   useEffect(() => {
     if (!loading && !error && data) {
@@ -56,15 +61,32 @@ const EventProgress: React.FC<EventProgressProps> = ({
     }
   }, [loading, data, error]);
 
+  useEffect(() => {
+    if (!deleteLoading && !deleteError && deleteData) {
+      toastProvider.showSuccess(`Successfully deleted event: ${event?.name}`);
+      navigation.goBack();
+    } else if (!deleteLoading && deleteError) {
+      toastProvider.showError(deleteError.message);
+    }
+  }, [deleteLoading, deleteError, deleteData, toastProvider, event]);
+
   const onBack = useCallback(() => {
-    navigation.goBack();
     resetCreateData();
+    navigation.goBack();
   }, [navigation, resetCreateData]);
 
   const onEditPressed = useCallback(() => {
     setCeEventFlowTitle("Edit Event");
     navigation.navigate(SCREEN_NAMES.common.events.basicDetails);
   }, [event, navigation, setCeEventFlowTitle]);
+
+  const onDelete = useCallback(async () => {
+    await deleteFoodDrive({
+      variables: {
+        eventId,
+      },
+    }).catch();
+  }, [deleteFoodDrive, eventId]);
 
   return (
     <ScrollView>
@@ -86,7 +108,7 @@ const EventProgress: React.FC<EventProgressProps> = ({
             color="primary"
             id="edit-btn"
             title="Edit event"
-            disabled={event === undefined}
+            disabled={event === undefined || deleteLoading}
             onPress={onEditPressed}
           />
         )}
@@ -96,7 +118,9 @@ const EventProgress: React.FC<EventProgressProps> = ({
             id="cancel-close-btn"
             color="danger"
             title={`${isUpcoming ? "Cancel" : "Close"} Event`}
-            disabled={event === undefined}
+            disabled={event === undefined || deleteLoading}
+            loading={deleteLoading}
+            onPress={onDelete}
           />
         )}
       </View>
