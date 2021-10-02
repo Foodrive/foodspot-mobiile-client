@@ -9,7 +9,7 @@ import {
 import { EventsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
 import { ListItem, SectionedList } from "@app/components/ui";
-import { colors } from "@app/utils";
+import { colors, deepClone } from "@app/utils";
 import { InvitationStatus } from "@app/utils/constants";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import dayjs from "dayjs";
@@ -18,6 +18,21 @@ import useToastProvider from "@app/hooks/useToastProvider";
 import { SectionedListData } from "@app/components/ui/SectionedList";
 import config from "@app/config";
 
+const sections: SectionedListData<UserInvitation>[] = [
+  {
+    title: "Upcoming events",
+    data: [],
+  },
+  {
+    title: "Pending confirmation",
+    data: [],
+  },
+  {
+    title: "Rejected events",
+    data: [],
+  },
+];
+
 const YourEvents: React.FC<EventsPropsFromRedux> = ({
   currentUser,
   setCurrentEventId,
@@ -25,20 +40,7 @@ const YourEvents: React.FC<EventsPropsFromRedux> = ({
 }) => {
   const [invitations, setInvitations] = useState<
     SectionedListData<UserInvitation>[]
-  >([
-    {
-      title: "Upcoming events",
-      data: [],
-    },
-    {
-      title: "Pending confirmation",
-      data: [],
-    },
-    {
-      title: "Rejected events",
-      data: [],
-    },
-  ]);
+  >(deepClone(sections));
 
   const toastProvider = useToastProvider();
   const navigation = useNavigation();
@@ -54,9 +56,7 @@ const YourEvents: React.FC<EventsPropsFromRedux> = ({
 
   useEffect(() => {
     if (!loading && !error && data) {
-      const categorizedEvents: SectionedListData<UserInvitation>[] = [
-        ...invitations,
-      ];
+      const categorizedEvents = deepClone(sections);
       data.getInvitations.forEach((event) => {
         if (event.status === InvitationStatus.accepted) {
           categorizedEvents[0].data.push(event);
