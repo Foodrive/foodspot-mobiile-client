@@ -78,13 +78,19 @@ const EventProgress: React.FC<EventProgressProps> = ({
             max={event.maxCapacity ?? 0}
           />
         )}
-        <EventInfoCard id="event-details-card" event={event} />
         <Button
           color="primary"
           id="edit-btn"
           title="Edit event"
           disabled={event === undefined}
           onPress={onEditPressed}
+        />
+        <EventInfoCard id="event-details-card" event={event} />
+        <Button
+          id="cancel-close-btn"
+          color="danger"
+          title="Cancel Event"
+          disabled={event === undefined}
         />
       </View>
     </ScrollView>
