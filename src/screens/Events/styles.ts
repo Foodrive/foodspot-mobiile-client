@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
   pendingText: {
     color: colors.orange,
   },
+  dateText: {
+    fontFamily: montserrat.bold,
+  },
+  timeText: {
+    fontFamily: montserrat.regular,
+    color: colors.darkAccent,
+  },
 });
 
 export default styles;
