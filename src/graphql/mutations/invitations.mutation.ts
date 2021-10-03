@@ -24,3 +24,12 @@ export const CREATE_INVITATION = gql`
     }
   }
 `;
+
+export const CANCEL_INVITATION = gql`
+mutation CancelInvitationMutation($cancelInvitationInvId: ID) {
+  cancelInvitation(invId: $cancelInvitationInvId) {
+    id
+    status
+  }
+}
+`;

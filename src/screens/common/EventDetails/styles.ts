@@ -70,6 +70,21 @@ const styles = StyleSheet.create({
     fontSize: RFValue(18),
     fontFamily: montserrat.bold,
   },
+  unregisterOverlay: {
+    margin: 30,
+    padding: 20
+  },
+  unregisterOverlayContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  unregisterOverlayText: {
+    fontSize: RFValue(18),
+    fontFamily: montserrat.regular,
+    marginBottom: 10
+  },
 });
 
 export default styles;
