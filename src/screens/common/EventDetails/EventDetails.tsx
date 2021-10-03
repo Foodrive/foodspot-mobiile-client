@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, ScrollView, Text } from "react-native";
 import { EventDetailsPropsFromRedux } from "./container";
 import { useNavigation } from "@react-navigation/native";
@@ -23,11 +23,13 @@ const EventDetails: React.FC<EventDetailsProps> = ({
   setCurrentInvitationId
 }) => {
   const navigation = useNavigation();
-  const { loading, data, error } = useQuery(GET_FOOD_DRIVE_BY_ID, {
-    variables: {
-      getFoodDriveByIdEventId: eventId,
-    },
-  });
+  const { loading: foodDriveLoading, data: foodDriveData, error: foodDriveError } = useQuery(
+    GET_FOOD_DRIVE_BY_ID, 
+    {
+      variables: {
+        getFoodDriveByIdEventId: eventId,
+      },
+    });
   const { loading: invitationLoading, data: invitationData } = useQuery(
     GET_INVITATION_BY_ID,
     {
@@ -38,10 +40,16 @@ const EventDetails: React.FC<EventDetailsProps> = ({
   );
   const [
     cancelInvitation,
-    { loading: cancelInvitationLoading, error: cancelInvitationError, data: cancelInvitationData },
+    { loading: cancelInvitationLoading },
   ] = useMutation(CANCEL_INVITATION);
   const [overlayOpen, setOverlayOpen] = useState(false);
   const toastProvider = useToastProvider();
+
+  useEffect(() => {
+    if (foodDriveError) {
+      toastProvider.showError("Failed to load event details");
+    }
+  }, [foodDriveError]);
 
   const onUnregister = useCallback(async () => {
     try {
@@ -52,9 +60,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
       });
       setCurrentInvitationId(null);
     } catch(e) {
-      if (cancelInvitationError) {
-        toastProvider.showError(cancelInvitationError.message);
-      }
+      toastProvider.showError("Failed to unregister");
     }
     setOverlayOpen(false);
   },[]);
@@ -81,16 +87,16 @@ const EventDetails: React.FC<EventDetailsProps> = ({
         containerStyle={styles.headingContainer}
       />
       <View style={styles.contentContainer}>
-        {!loading && !cancelInvitationLoading && data?.getFoodDriveById && !invitationLoading && (
+        {!foodDriveLoading && !cancelInvitationLoading && foodDriveData?.getFoodDriveById && !invitationLoading && (
           <>
             <EventDetailsCard
-              name={data.getFoodDriveById.name}
-              startDate={data.getFoodDriveById.startDate}
-              endDate={data.getFoodDriveById.endDate}
-              description={data.getFoodDriveById.description}
-              address={data.getFoodDriveById.location.address}
-              contactNumber={data.getFoodDriveById.contactNumber}
-              allergens={data.getFoodDriveById.food.reduce(
+              name={foodDriveData.getFoodDriveById.name}
+              startDate={foodDriveData.getFoodDriveById.startDate}
+              endDate={foodDriveData.getFoodDriveById.endDate}
+              description={foodDriveData.getFoodDriveById.description}
+              address={foodDriveData.getFoodDriveById.location.address}
+              contactNumber={foodDriveData.getFoodDriveById.contactNumber}
+              allergens={foodDriveData.getFoodDriveById.food.reduce(
                 (accm: string[], food: { allergens: string[] }) => {
                   accm = accm.concat(food.allergens);
                   return accm;

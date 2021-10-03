@@ -46,9 +46,7 @@ const RegisterEvent: React.FC<RegisterEvent> = ({ eventId, userId, setCurrentInv
       }
       navigation.navigate(SCREEN_NAMES.common.events.eventDetails);
     } catch (e) {
-      if (error) {
-        toastProvider.showError(error.message);
-      }
+      toastProvider.showError("Failed to register to event");
     }
   }, []);
 
