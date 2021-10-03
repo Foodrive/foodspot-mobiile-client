@@ -5,7 +5,7 @@ import { RFValue } from "react-native-responsive-fontsize";
 export const useStyles = () =>
   StyleSheet.create({
     container: {
-      marginTop: 10,
+      marginVertical: 10,
       flexDirection: "column",
     },
     labelText: {
