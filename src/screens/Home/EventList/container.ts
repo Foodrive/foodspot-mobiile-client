@@ -5,7 +5,11 @@ import {
   setCurrentInvitationId,
 } from "@app/redux/slices/events.slice";
 
-const mapStateToProps = () => ({});
+import { RootState } from "@app/redux/store";
+
+const mapStateToProps = (state: RootState) => ({
+  currentUser: state.user.currentUser,
+});
 
 const mapDispatchToProps = { setCurrentEventId, setCurrentInvitationId };
 
