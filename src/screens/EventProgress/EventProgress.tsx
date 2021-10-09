@@ -90,6 +90,10 @@ const EventProgress: React.FC<EventProgressProps> = ({
     navigation.navigate(SCREEN_NAMES.common.events.basicDetails);
   }, [event, navigation, setCeEventFlowTitle]);
 
+  const onPendingPressed = useCallback(() => {
+    // TODO navigate to pending attendee page
+  }, []);
+
   const onDelete = useCallback(async () => {
     await deleteFoodDrive({
       variables: {
@@ -113,22 +117,34 @@ const EventProgress: React.FC<EventProgressProps> = ({
             max={event.maxCapacity ?? 0}
           />
         )}
-        {!loading && (
-          <Button
-            color="primary"
-            id="edit-btn"
-            title="Edit event"
-            disabled={event === undefined || deleteLoading}
-            onPress={onEditPressed}
-          />
+        {!loading && event && (
+          <>
+            {!event.autoAccept && (
+              <Button
+                color="warning"
+                id="pending-btn"
+                title={`${attendeeCount?.pending ?? 0} Pending`}
+                containerStyle={{ marginBottom: 10 }}
+                disabled={deleteLoading || attendeeCount?.pending === 0}
+                onPress={onPendingPressed}
+              />
+            )}
+            <Button
+              color="primary"
+              id="edit-btn"
+              title="Edit event"
+              disabled={deleteLoading}
+              onPress={onEditPressed}
+            />
+          </>
         )}
         <EventInfoCard id="event-details-card" event={event} />
-        {!loading && (
+        {!loading && event && (
           <Button
             id="cancel-close-btn"
             color="danger"
             title={`${isUpcoming ? "Cancel" : "Close"} Event`}
-            disabled={event === undefined || deleteLoading}
+            disabled={deleteLoading}
             loading={deleteLoading}
             onPress={onDelete}
           />
