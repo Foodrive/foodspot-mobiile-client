@@ -90,6 +90,10 @@ export const GET_FOOD_DRIVE_BY_ID_FULL_DETAILS = gql`
         id
         numAttendees
         status
+        attendee {
+          firstName
+          lastName
+        }
       }
     }
   }
