@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_INVITATIONS_BY_EVENT } from "@app/graphql/queries";
 import config from "@app/config";
 import useToastProvider from "@app/hooks/useToastProvider";
-import { Button, ListItem, SectionedList } from "@app/components/ui";
+import { ListItem, SectionedList } from "@app/components/ui";
 import { InvitationStatus } from "@app/utils/constants";
 import { colors, getAttendeeInfoFromEvent } from "@app/utils";
 import { useStyles } from "./styles";
@@ -162,12 +162,6 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
           id="invite-list"
           data={invites}
           renderItem={renderItem}
-        />
-        <Button
-          id="submit-btn"
-          title="Confirm"
-          disabled={loading || totalSelected === 0}
-          loading={loading}
         />
       </View>
     </ScrollView>
