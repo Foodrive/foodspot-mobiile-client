@@ -6,7 +6,7 @@ import {
 import Icon from "../Icon";
 import { colors } from "@app/utils";
 import styles from "./styles";
-import { TouchableOpacity } from "react-native";
+import { TextStyle, TouchableOpacity } from "react-native";
 
 interface ListItemProps extends RNListItemProps {
   id: string;
@@ -17,6 +17,7 @@ interface ListItemProps extends RNListItemProps {
   iconFamily?: string;
   showNav?: boolean; //show chevron right navigation icon
   onPress?: () => void;
+  titleStyle?: TextStyle;
 }
 
 const ListItem: React.FC<ListItemProps> = ({
@@ -28,6 +29,7 @@ const ListItem: React.FC<ListItemProps> = ({
   iconFamily = "ionicon",
   showNav = true,
   onPress,
+  containerStyle,
   ...rest
 }) => {
   return (
@@ -37,7 +39,7 @@ const ListItem: React.FC<ListItemProps> = ({
       disabled={onPress === undefined}
       key={id}
       data-testid={id}
-      containerStyle={styles.listStyle}
+      containerStyle={[styles.listStyle, containerStyle]}
       {...rest}
     >
       <Icon

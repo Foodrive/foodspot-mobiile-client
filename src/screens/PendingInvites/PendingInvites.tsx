@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { ScrollView, View } from "react-native";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { useNavigation } from "@react-navigation/native";
 import { PendingInvitesPropsFromRedux } from "./container";
@@ -7,11 +7,19 @@ import { useQuery } from "@apollo/client";
 import { GET_INVITATIONS_BY_EVENT } from "@app/graphql/queries";
 import config from "@app/config";
 import useToastProvider from "@app/hooks/useToastProvider";
-import { SectionedList } from "@app/components/ui";
+import { ListItem, SectionedList } from "@app/components/ui";
 import { InvitationStatus } from "@app/utils/constants";
-import { getAttendeeInfoFromEvent } from "@app/utils";
+import { colors, getAttendeeInfoFromEvent } from "@app/utils";
 import { useStyles } from "./styles";
 import { CapacityBar } from "@app/screens/EventProgress/CapacityBar";
+import { SectionedListData } from "@app/components/ui/SectionedList";
+
+interface PendingInvite {
+  id: string;
+  status: string;
+  numAttendees: number;
+  attendeeName: string;
+}
 
 const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
   eventId,
@@ -28,16 +36,38 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
     },
   });
 
-  const invites = useMemo(() => {
+  const [selectedInvites, setSelectedInvites] = useState<PendingInvite[]>([]);
+
+  const totalSelected = useMemo(
+    () =>
+      selectedInvites.reduce((acc, item) => {
+        return (acc += item.numAttendees);
+      }, 0),
+    [selectedInvites],
+  );
+
+  const invites = useMemo<SectionedListData<PendingInvite>[]>(() => {
     if (data) {
       const { getInvitations: results } = data;
-      return results.map((res: any) => ({
+      const invitations = results.map((res: any) => ({
+        id: res.id,
         status: res.status,
         numAttendees: res.numAttendees,
         attendeeName: `${res.attendee.firstName} ${res.attendee.lastName}`,
       }));
+      return [
+        {
+          title: "Pending Invites",
+          data: invitations,
+        },
+      ];
     }
-    return [];
+    return [
+      {
+        title: "Pending Invites",
+        data: [],
+      },
+    ];
   }, [data]);
 
   const attendeeInfo = useMemo(() => {
@@ -61,8 +91,50 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
     navigation.goBack();
   }, [navigation]);
 
+  const renderItem = useCallback(
+    (inv: PendingInvite) => {
+      const selectedIndex = selectedInvites.findIndex(
+        (item) => item.id === inv.id,
+      );
+      const isSelected = selectedIndex > -1;
+      const containerStyle = isSelected
+        ? { backgroundColor: colors.success }
+        : undefined;
+      return (
+        <ListItem
+          id={`${inv.id}-list-item`}
+          title={inv.attendeeName}
+          iconName="person"
+          iconColor={colors.darkBrown}
+          showNav={false}
+          otherInformation={
+            <Text
+              style={{
+                color: isSelected ? colors.white : colors.dark,
+                fontWeight: isSelected ? "bold" : "normal",
+              }}
+            >
+              {inv.numAttendees} attendees
+            </Text>
+          }
+          containerStyle={containerStyle}
+          onPress={() => {
+            const newSelected = [...selectedInvites];
+            if (isSelected) {
+              newSelected.splice(selectedIndex, 1);
+            } else {
+              newSelected.push(inv);
+            }
+            setSelectedInvites(newSelected);
+          }}
+        />
+      );
+    },
+    [selectedInvites],
+  );
+
   return (
-    <ScrollView>
+    <>
       <PageHeader
         id="pending-invites"
         title="Event Details"
@@ -72,12 +144,19 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
       <View style={styles.bodyContainer}>
         {attendeeInfo && (
           <CapacityBar
-            value={attendeeInfo.claimsLeft}
+            valueText={`(${attendeeInfo.claimsLeft} - ${totalSelected} selected)`}
+            value={attendeeInfo.claimsLeft - totalSelected}
             max={attendeeInfo.maxCapacity}
+            hasMax={false}
           />
         )}
+        <SectionedList
+          id="invite-list"
+          data={invites}
+          renderItem={renderItem}
+        />
       </View>
-    </ScrollView>
+    </>
   );
 };
 

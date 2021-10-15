@@ -10,6 +10,10 @@ export const useStyles = () =>
     },
     labelText: {
       fontFamily: montserrat.bold,
+      fontSize: RFValue(16),
+    },
+    valueText: {
+      fontFamily: montserrat.medium,
       fontSize: RFValue(14),
     },
   });

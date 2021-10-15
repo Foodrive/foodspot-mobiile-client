@@ -4,4 +4,5 @@ export interface AttendeeInfo {
   pendingCapacity: number;
   pendingInvites: number;
   claimsLeft: number;
+  claimsLeftInclPending: number;
 }

@@ -4,23 +4,32 @@ import { useStyles } from "./styles";
 import { ProgressBar } from "@app/components/ui";
 
 interface CapacityBarProps {
-  value: string | number;
-  max: string | number;
+  value: number;
+  max: number;
+  valueText?: string;
+  hasMax?: boolean;
 }
 
-const CapacityBar: React.FC<CapacityBarProps> = ({ value, max }) => {
+const CapacityBar: React.FC<CapacityBarProps> = ({
+  value,
+  valueText,
+  max,
+  hasMax = true,
+}) => {
   const styles = useStyles();
+
+  const labelText = hasMax
+    ? `${valueText ?? value} / ${max} claims remaining`
+    : `${valueText ?? value} claims remaining`;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.labelText}>
-        Capacity remaining {value} / {max}
-      </Text>
+      <Text style={styles.valueText}>{labelText}</Text>
       <ProgressBar
         id="capacity-progress"
         type="info"
-        curValue={Number(value)}
-        maxValue={Number(max)}
+        curValue={value}
+        maxValue={max}
       />
     </View>
   );

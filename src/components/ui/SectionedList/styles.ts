@@ -5,9 +5,8 @@ import { montserrat } from "@app/utils";
 const styles = StyleSheet.create({
   listStyles: {
     width: "100%",
-    paddingHorizontal: 20,
     paddingBottom: 20
-    
+
   },
   sectionContainer: {
     marginVertical: 10,

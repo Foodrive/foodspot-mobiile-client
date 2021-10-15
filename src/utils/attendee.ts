@@ -33,7 +33,8 @@ export const getAttendeeInfoFromEvent = (event: any): AttendeeInfo => {
       maxCapacity: attendeeInfo.maxCapacity,
       pendingCapacity: attendeeInfo.pendingCapacity,
       pendingInvites: attendeeInfo.pendingInvites,
-      claimsLeft: attendeeInfo.maxCapacity - totalClaimed,
+      claimsLeft: attendeeInfo.maxCapacity - attendeeInfo.claimedCapacity,
+      claimsLeftInclPending: totalClaimed,
     };
   }
   return {
@@ -42,5 +43,6 @@ export const getAttendeeInfoFromEvent = (event: any): AttendeeInfo => {
     pendingCapacity: 0,
     pendingInvites: 0,
     claimsLeft: event.maxCapacity ?? 0,
+    claimsLeftInclPending: 0,
   };
 };
