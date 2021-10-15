@@ -56,4 +56,12 @@ export const montserrat = {
   blackItalic: "Montserrat_900Black_Italic",
 };
 
-export * from "./helpers";
+/**
+ * Deep clones with data loss. Do not use if you have date functions,
+ * Infinity or undefined in the object.
+ */
+export const deepClone = <T>(item: T): T => JSON.parse(JSON.stringify(item));
+
+export * from "./dateTime";
+export * from "./attendee";
+export * from "./mappers";

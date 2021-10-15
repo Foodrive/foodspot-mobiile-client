@@ -37,6 +37,7 @@ const events = {
   eventHistoryDetails: "EventHistoryDetails",
   eventProgress: "EventProgress",
   attendeeList: "AttendeeList",
+  pendingInvites: "PendingInvites",
 };
 
 const requests = {

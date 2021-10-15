@@ -87,13 +87,8 @@ export const GET_FOOD_DRIVE_BY_ID_FULL_DETAILS = gql`
       maxCapacity
       autoAccept
       invitations {
-        id
         numAttendees
         status
-        attendee {
-          firstName
-          lastName
-        }
       }
     }
   }
