@@ -11,7 +11,7 @@ import { ListItem, SectionedList } from "@app/components/ui";
 import { InvitationStatus } from "@app/utils/constants";
 import { colors, getAttendeeInfoFromEvent } from "@app/utils";
 import { useStyles } from "./styles";
-import { CapacityBar } from "@app/screens/EventProgress/CapacityBar";
+import { CapacityBar } from "@app/components/common/CapacityBar";
 import { SectionedListData } from "@app/components/ui/SectionedList";
 
 interface PendingInvite {

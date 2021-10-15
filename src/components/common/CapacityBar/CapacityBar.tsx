@@ -24,7 +24,7 @@ const CapacityBar: React.FC<CapacityBarProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.valueText}>{labelText}</Text>
+      <Text style={styles.labelText}>{labelText}</Text>
       <ProgressBar
         id="capacity-progress"
         type="info"

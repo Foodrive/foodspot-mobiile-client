@@ -8,7 +8,7 @@ import { GET_FOOD_DRIVE_BY_ID_FULL_DETAILS } from "@app/graphql/queries";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { EventInfoCard } from "@app/components/common/EventInfoCard";
 import { useStyles } from "./styles";
-import { CapacityBar } from "./CapacityBar";
+import { CapacityBar } from "@app/components/common/CapacityBar";
 import { AttendeeCount } from "@app/utils/types";
 import { getAttendeeCount, convertFoodDriveToCreateData } from "@app/utils";
 import Button from "@app/components/ui/Button";
