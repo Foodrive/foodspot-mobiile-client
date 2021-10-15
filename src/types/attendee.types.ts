@@ -3,4 +3,5 @@ export interface AttendeeInfo {
   maxCapacity: number;
   pendingCapacity: number;
   pendingInvites: number;
+  claimsLeft: number;
 }

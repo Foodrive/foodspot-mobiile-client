@@ -25,12 +25,22 @@ export const getAttendeeCount = (
 
 export const getAttendeeInfoFromEvent = (event: any): AttendeeInfo => {
   if (event.attendeeInfo) {
-    return event.attendeeInfo;
+    const { attendeeInfo } = event;
+    const totalClaimed =
+      attendeeInfo.pendingCapacity + attendeeInfo.claimedCapacity;
+    return {
+      claimedCapacity: attendeeInfo.claimedCapacity,
+      maxCapacity: attendeeInfo.maxCapacity,
+      pendingCapacity: attendeeInfo.pendingCapacity,
+      pendingInvites: attendeeInfo.pendingInvites,
+      claimsLeft: attendeeInfo.maxCapacity - totalClaimed,
+    };
   }
   return {
     claimedCapacity: 0,
     maxCapacity: event.maxCapacity ?? 0,
     pendingCapacity: 0,
     pendingInvites: 0,
+    claimsLeft: event.maxCapacity ?? 0,
   };
 };

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ScrollView, View } from "react-native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { useNavigation } from "@react-navigation/native";
@@ -9,20 +9,16 @@ import config from "@app/config";
 import useToastProvider from "@app/hooks/useToastProvider";
 import { SectionedList } from "@app/components/ui";
 import { InvitationStatus } from "@app/utils/constants";
-import { AttendeeInfo } from "@app/types/attendee.types";
 import { getAttendeeInfoFromEvent } from "@app/utils";
-
-interface PendingInvite {
-  status: string;
-  attendeeName: string;
-  numAttendees: number;
-}
+import { useStyles } from "./styles";
+import { CapacityBar } from "@app/screens/EventProgress/CapacityBar";
 
 const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
   eventId,
 }) => {
   const navigation = useNavigation();
   const toastProvider = useToastProvider();
+  const styles = useStyles();
 
   const { data, loading, error } = useQuery(GET_INVITATIONS_BY_EVENT, {
     pollInterval: config.defaultPollInterval,
@@ -73,7 +69,14 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
         hasBack
         onBackPress={onBack}
       />
-      <View></View>
+      <View style={styles.bodyContainer}>
+        {attendeeInfo && (
+          <CapacityBar
+            value={attendeeInfo.claimsLeft}
+            max={attendeeInfo.maxCapacity}
+          />
+        )}
+      </View>
     </ScrollView>
   );
 };
