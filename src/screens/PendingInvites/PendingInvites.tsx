@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { LogBox, ScrollView, Text, View } from "react-native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { useNavigation } from "@react-navigation/native";
 import { PendingInvitesPropsFromRedux } from "./container";
@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_INVITATIONS_BY_EVENT } from "@app/graphql/queries";
 import config from "@app/config";
 import useToastProvider from "@app/hooks/useToastProvider";
-import { ListItem, SectionedList } from "@app/components/ui";
+import { Button, ListItem, SectionedList } from "@app/components/ui";
 import { InvitationStatus } from "@app/utils/constants";
 import { colors, getAttendeeInfoFromEvent } from "@app/utils";
 import { useStyles } from "./styles";
@@ -82,6 +82,10 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
   }, [data]);
 
   useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  });
+
+  useEffect(() => {
     if (error) {
       toastProvider.showError(error.message);
     }
@@ -133,8 +137,12 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
     [selectedInvites],
   );
 
+  const acceptInvites = useCallback(() => {
+    // @todo add logic for accepting invitations
+  }, []);
+
   return (
-    <>
+    <ScrollView>
       <PageHeader
         id="pending-invites"
         title="Event Details"
@@ -155,8 +163,14 @@ const PendingInvites: React.FC<PendingInvitesPropsFromRedux> = ({
           data={invites}
           renderItem={renderItem}
         />
+        <Button
+          id="submit-btn"
+          title="Confirm"
+          disabled={loading || totalSelected === 0}
+          loading={loading}
+        />
       </View>
-    </>
+    </ScrollView>
   );
 };
 
