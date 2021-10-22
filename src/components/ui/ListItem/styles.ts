@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
   listStyle: {
     borderRadius: 10,
     marginTop: 10,
+    borderWidth: 0.5,
   },
   titleText: {
     fontSize: RFValue(18),

@@ -27,12 +27,12 @@ export const getDateInfo = (startDate: string, endDate: string): DayInfo => {
     } else if (start.isSame(now, "week")) {
       result.dayText = start.format("ddd");
     } else {
-      result.dayText = start.format("DD MMMM");
+      result.dayText = start.format("DD MMM YY");
     }
     result.timeText = `${startTime} - ${endTime}`;
   } else {
-    let startDay = start.format("DD MMMM");
-    const endDay = end.format("DD MMMM");
+    let startDay = start.format("DD MMM YY");
+    const endDay = end.format("DD MMM YY");
     if (start.isSame(now, "day")) {
       startDay = "Today";
       result.isToday = true;
