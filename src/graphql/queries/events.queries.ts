@@ -86,10 +86,11 @@ export const GET_FOOD_DRIVE_BY_ID_FULL_DETAILS = gql`
       facebookPage
       maxCapacity
       autoAccept
-      invitations {
-        id
-        numAttendees
-        status
+      attendeeInfo {
+        pendingInvites
+        claimedCapacity
+        pendingCapacity
+        maxCapacity
       }
     }
   }

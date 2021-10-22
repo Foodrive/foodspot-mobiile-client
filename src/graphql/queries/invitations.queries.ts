@@ -39,7 +39,7 @@ export interface GetUserInvitation {
 }
 
 export const GET_INVITATIONS_BY_USER = gql`
-  query($getInvitationsUserId: ID!) {
+  query ($getInvitationsUserId: ID!) {
     getInvitations(userId: $getInvitationsUserId) {
       id
       attendeeId
@@ -50,6 +50,30 @@ export const GET_INVITATIONS_BY_USER = gql`
         startDate
         endDate
       }
+    }
+  }
+`;
+
+export const GET_INVITATIONS_BY_EVENT = gql`
+  query Query($eventId: ID, $statusFilter: [InvitationStatus]) {
+    getInvitations(eventId: $eventId, statusFilter: $statusFilter) {
+      id
+      attendee {
+        firstName
+        lastName
+      }
+      status
+      event {
+        ... on FoodDrive {
+          attendeeInfo {
+            pendingInvites
+            claimedCapacity
+            pendingCapacity
+            maxCapacity
+          }
+        }
+      }
+      numAttendees
     }
   }
 `;

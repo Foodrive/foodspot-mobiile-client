@@ -1,4 +1,4 @@
-import { FoodDrive } from "@app/utils/types";
+import { Food, FoodDrive, Location } from "@app/utils/types";
 import { EventCreateData, EventType } from "@app/types/event.types";
 
 export const convertFoodDriveToCreateData = (
@@ -23,4 +23,20 @@ export const convertFoodDriveToCreateData = (
   contactNumber: foodDrive.contactNumber,
   email: foodDrive.email,
   facebookPage: foodDrive.facebookPage,
+});
+
+export const createFoodItem = (
+  allergens: string[],
+  servings: number,
+  name?: string,
+  description?: string,
+): Food => ({
+  name: name ?? "Event Food",
+  description,
+  servings,
+  allergens,
+});
+
+export const createLocationFromAddress = (address: string): Location => ({
+  address,
 });

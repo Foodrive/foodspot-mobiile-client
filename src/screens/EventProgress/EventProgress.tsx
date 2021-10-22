@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import { useNavigation } from "@react-navigation/native";
@@ -6,12 +6,13 @@ import { EventProgressPropsFromRedux } from "@app/screens/EventProgress/containe
 import { useMutation, useQuery } from "@apollo/client";
 import { GET_FOOD_DRIVE_BY_ID_FULL_DETAILS } from "@app/graphql/queries";
 import useToastProvider from "@app/hooks/useToastProvider";
-import { convertFoodDriveToCreateData } from "@app/utils/mappers";
 import { EventInfoCard } from "@app/components/common/EventInfoCard";
 import { useStyles } from "./styles";
-import { CapacityBar } from "./CapacityBar";
-import { AttendeeCount } from "@app/utils/types";
-import { getAttendeeCount } from "@app/utils";
+import { CapacityBar } from "@app/components/common/CapacityBar";
+import {
+  convertFoodDriveToCreateData,
+  getAttendeeInfoFromEvent,
+} from "@app/utils";
 import Button from "@app/components/ui/Button";
 import SCREEN_NAMES from "@app/navigation/screen.names";
 import config from "@app/config";
@@ -30,9 +31,6 @@ const EventProgress: React.FC<EventProgressProps> = ({
   const navigation = useNavigation();
   const toastProvider = useToastProvider();
   const styles = useStyles();
-  const [attendeeCount, setAttendeeCount] = useState<AttendeeCount | undefined>(
-    undefined,
-  );
   const [isUpcoming, setIsUpcoming] = useState(false);
   const { loading, error, data } = useQuery(GET_FOOD_DRIVE_BY_ID_FULL_DETAILS, {
     pollInterval: config.defaultPollInterval,
@@ -45,17 +43,21 @@ const EventProgress: React.FC<EventProgressProps> = ({
     { loading: deleteLoading, error: deleteError, data: deleteData },
   ] = useMutation(DELETE_FOOD_DRIVE);
 
+  const attendeeInfo = useMemo(() => {
+    if (data) {
+      const { getFoodDriveById: event } = data;
+      return getAttendeeInfoFromEvent(event);
+    } else {
+      return undefined;
+    }
+  }, [data]);
+
   useEffect(() => {
     if (!loading && !error && data) {
       const { getFoodDriveById: event } = data;
       const eventDetails = convertFoodDriveToCreateData(event);
-      const attendeeCount = getAttendeeCount(
-        event.invitations,
-        event.maxCapacity,
-      );
       setIsUpcoming(dayjs().isBefore(eventDetails.startDate));
       setEvent(eventDetails);
-      setAttendeeCount(attendeeCount);
     } else if (error) {
       toastProvider.showError(error.message);
     }
@@ -90,6 +92,10 @@ const EventProgress: React.FC<EventProgressProps> = ({
     navigation.navigate(SCREEN_NAMES.common.events.basicDetails);
   }, [event, navigation, setCeEventFlowTitle]);
 
+  const onPendingPressed = useCallback(() => {
+    navigation.navigate(SCREEN_NAMES.events.pendingInvites);
+  }, []);
+
   const onDelete = useCallback(async () => {
     await deleteFoodDrive({
       variables: {
@@ -107,28 +113,40 @@ const EventProgress: React.FC<EventProgressProps> = ({
         onBackPress={onBack}
       />
       <View style={styles.bodyContainer}>
-        {event && attendeeCount && (
+        {attendeeInfo && (
           <CapacityBar
-            value={attendeeCount.claimsLeft}
-            max={event.maxCapacity ?? 0}
+            value={attendeeInfo.claimsLeftInclPending}
+            max={attendeeInfo.maxCapacity}
           />
         )}
-        {!loading && (
-          <Button
-            color="primary"
-            id="edit-btn"
-            title="Edit event"
-            disabled={event === undefined || deleteLoading}
-            onPress={onEditPressed}
-          />
+        {!loading && event && (
+          <>
+            {!event.autoAccept && (
+              <Button
+                color="warning"
+                id="pending-btn"
+                title={`${attendeeInfo?.pendingInvites ?? 0} Pending`}
+                containerStyle={{ marginBottom: 10 }}
+                disabled={deleteLoading || attendeeInfo?.pendingInvites === 0}
+                onPress={onPendingPressed}
+              />
+            )}
+            <Button
+              color="primary"
+              id="edit-btn"
+              title="Edit event"
+              disabled={deleteLoading}
+              onPress={onEditPressed}
+            />
+          </>
         )}
         <EventInfoCard id="event-details-card" event={event} />
-        {!loading && (
+        {!loading && event && (
           <Button
             id="cancel-close-btn"
             color="danger"
             title={`${isUpcoming ? "Cancel" : "Close"} Event`}
-            disabled={event === undefined || deleteLoading}
+            disabled={deleteLoading}
             loading={deleteLoading}
             onPress={onDelete}
           />

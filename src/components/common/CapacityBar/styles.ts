@@ -9,7 +9,7 @@ export const useStyles = () =>
       flexDirection: "column",
     },
     labelText: {
-      fontFamily: montserrat.bold,
+      fontFamily: montserrat.medium,
       fontSize: RFValue(14),
     },
   });

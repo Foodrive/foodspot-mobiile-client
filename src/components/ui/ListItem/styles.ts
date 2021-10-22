@@ -3,7 +3,11 @@ import { RFValue } from "react-native-responsive-fontsize";
 import { montserrat } from "@app/utils";
 
 const styles = StyleSheet.create({
-  listStyle: { elevation: 2, borderRadius: 10, marginTop: 10 },
+  listStyle: {
+    borderRadius: 10,
+    marginTop: 10,
+    borderWidth: 0.5,
+  },
   titleText: {
     fontSize: RFValue(18),
     fontFamily: montserrat.bold,

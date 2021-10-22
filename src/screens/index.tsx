@@ -6,6 +6,7 @@ export { default as HomeScreen } from "./Home";
 // Events screens
 export { Events } from "./Events";
 export { EventProgress } from "./EventProgress";
+export { PendingInvites } from "./PendingInvites";
 
 // Profile screens
 export { UserProfile } from "./Profile";
