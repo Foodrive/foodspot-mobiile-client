@@ -15,10 +15,11 @@ import { useNavigation } from "@react-navigation/native";
 import { PageHeader } from "@app/components/common/PageHeader";
 import styles from "./styles";
 import { regexValidator } from "@app/utils/validators";
+import useToastProvider from "@app/hooks/useToastProvider";
 
 type RegisterEvent = RegisterEventPropsFromRedux;
 
-const RegisterEvent: React.FC<RegisterEvent> = ({ eventId, userId }) => {
+const RegisterEvent: React.FC<RegisterEvent> = ({ eventId, userId, setCurrentInvitationId }) => {
   const navigation = useNavigation();
   const {
     control,
@@ -27,22 +28,25 @@ const RegisterEvent: React.FC<RegisterEvent> = ({ eventId, userId }) => {
   } = useForm();
   const [
     createInvitation,
-    { data, error, loading },
+    { error, loading },
   ] = useMutation<CreateInvitation>(CREATE_INVITATION);
-
-  // TODO Make register event/create invitation work
+  const toastProvider = useToastProvider();
+  
   const onSubmit = useCallback(async (data) => {
     try {
-      await createInvitation({
+      const { data: invitationData } = await createInvitation({
         variables: {
           createInvitationEventId: eventId,
           createInvitationUserId: userId,
           createInvitationNumAttendees: parseInt(data.dependents),
         },
       });
+      if (invitationData) {
+        setCurrentInvitationId(invitationData.id);
+      }
       navigation.navigate(SCREEN_NAMES.common.events.eventDetails);
     } catch (e) {
-      // Do nothing
+      toastProvider.showError("Failed to register to event");
     }
   }, []);
 
